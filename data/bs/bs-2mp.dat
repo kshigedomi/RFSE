@@ -1,0 +1,42 @@
+Title : Battle Of Sexes 2MP-2MP
+Discount Rate : 0.9
+Variables : p=0.8 q=0.005 l=1 g=2
+Players : Player1 Player2
+
+Automaton Player1
+States : R P1 P2
+Actions : C D
+Signals : g b
+R C
+P1 D
+P2 D
+R g R
+R b P1
+P1 g P1
+P1 b P2
+P2 g P1
+P2 b R
+
+Automaton Player2
+States : R P1 P2
+Actions : C D
+Signals : g b
+R C
+P1 D
+P2 D
+R g R
+R b P1
+P1 g P1
+P1 b P2
+P2 g P1
+P2 b R
+
+Signal Distribution
+C,C : p q q 1-p-2*q
+C,D : q 1-p-2*q p q
+D,C : q p 1-p-2*q q
+D,D : 1-p-2*q q q p
+
+Payoff Matrix
+Player1: 0 l g 0
+Player2: 0 g l 0

@@ -1,0 +1,42 @@
+CXXFLAGS = -Wall -O3 #-g -pg
+INCLUDES = -I/usr/local/include -I/usr/include/boost-1_54 -I/usr/local/lib/x86_64-linux-gnu -I/usr/include/cdd
+LIBS = -L/usr/local/lib/ 
+LDFLAGS = -lgmpxx -lgmp -lboost_regex -lcddgmp
+SRCS = rfpe.cpp RepeatedGame.cpp Automaton.cpp Belief.cpp Environment.cpp Players.cpp Equation.cpp Payoff.cpp BeliefDivision.cpp Util.cpp Reader.cpp Writer.cpp Parser.cpp Profile.cpp Loader.cpp MakeAutomaton.cpp Graph.cpp MakeGraph.cpp MakeSCG.cpp BeliefTransition.cpp CddHandler.cpp LUsolve.cpp Signal.cpp MultiSignal.cpp
+OBJS =		$(SRCS:.cpp=.o)
+OTHER_OBJS = RepeatedGame.o Automaton.o Belief.o Environment.o Players.o Equation.o Payoff.o BeliefDivision.o Util.o Reader.o Writer.o Parser.o Profile.o Loader.o BeliefTransition.o CddHandler.o LUsolve.o Deform.o
+OTHER_OBJS2 = Graph.o Util.o MakeSCG.o
+OTHER_OBJS3 = Automaton.o Util.o
+OTHER_OBJS4 = Profile.o Util.o
+OTHER_OBJS5 = Util.o
+TARGET =	rfpe
+TARGET2 = 	MakeGraph
+TARGET3 = MakeAutomaton
+TARGET4 = Signal
+TARGET5 = MultiSignal
+
+.SUFFIXES : .cpp .o
+
+all:	$(TARGET) $(TARGET2) $(TARGET3) $(TARGET4) $(TARGET5) $(TARGET6)
+
+$(TARGET):	linux_lib/rfpe.o $(patsubst %,linux_lib/%,$(OTHER_OBJS))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET) linux_lib/rfpe.o $(patsubst %,linux_lib/%,$(OTHER_OBJS)) $(LDFLAGS) 
+
+$(TARGET2): linux_lib/MakeGraph.o $(patsubst %,linux_lib/%,$(OTHER_OBJS2))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET2) linux_lib/MakeGraph.o $(patsubst %,linux_lib/%,$(OTHER_OBJS2)) $(LDFLAGS)
+
+$(TARGET3): linux_lib/MakeAutomaton.o $(patsubst %,linux_lib/%,$(OTHER_OBJS3))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET3) linux_lib/MakeAutomaton.o $(patsubst %,linux_lib/%,$(OTHER_OBJS3)) $(LDFLAGS)
+
+$(TARGET4): linux_lib/Signal.o $(patsubst %,linux_lib/%,$(OTHER_OBJS4))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET4) linux_lib/Signal.o $(patsubst %,linux_lib/%,$(OTHER_OBJS4)) $(LDFLAGS)
+
+$(TARGET5): linux_lib/MultiSignal.o $(patsubst %,linux_lib/%,$(OTHER_OBJS5))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET5) linux_lib/MultiSignal.o $(patsubst %,linux_lib/%,$(OTHER_OBJS5)) $(LDFLAGS)
+
+clean:
+	rm -f $(patsubst %,linux_lib/%,$(OBJS)) $(TARGET) $(TARGET2) $(TARGET3) $(TARGET4) $(TARGET5)
+
+linux_lib/%.o: %.cpp %.h
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ -c $<		
+

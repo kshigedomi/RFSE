@@ -1,0 +1,66 @@
+Title : Prisoner's Dilemma 1MP-1MP
+Discount Rate : 0.9
+Variables : p=0.95 x=1 c=0.1 q=0.0001 r=0.001
+Players : Player1 Player2 Player3
+
+Automaton Player1
+States : R P1 P2
+Actions : C D
+Signals : g b
+R C
+P1 D
+P2 D
+R g R
+R b P1
+P1 g P1
+P1 b P2
+P2 g P1
+P2 b R
+
+Automaton Player2
+States : R P1 P2
+Actions : C D
+Signals : g b
+R C
+P1 D
+P2 D
+R g R
+R b P1
+P1 g P1
+P1 b P2
+P2 g P1
+P2 b R
+
+Automaton Player3
+States : R P1 P2
+Actions : C D
+Signals : g b
+R C
+P1 D
+P2 D
+R g R
+R b P1
+P1 g P1
+P1 b P2
+P2 g P1
+P2 b R
+
+Signal Distribution
+C,C,C : p q q r q r r (1-p-3*q-3*r)
+C,C,D : q r r (1-p-3*q-3*r) p q q r
+C,D,C : q p r q r q (1-p-3*q-3*r) r
+C,D,D : r q (1-p-3*q-3*r) r q p r q
+D,C,C : q r p q r (1-p-3*q-3*r) q r
+D,C,D : r (1-p-3*q-3*r) q r q r p q
+D,D,C : r q q p (1-p-3*q-3*r) r r q
+D,D,D : (1-p-3*q-3*r) r r q r q q p
+
+Payoff Matrix
+C,C,C : x-c x-c x-c
+C,C,D : -c x-c x
+C,D,C : x-c x -c
+C,D,D : -c x 0
+D,C,C : x -c x-c
+D,C,D : 0 -c x
+D,D,C : x 0 -c
+D,D,D : 0 0 0

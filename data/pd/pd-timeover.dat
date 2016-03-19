@@ -1,0 +1,54 @@
+Title : Prisoner's Dilemma 4MP-4MP
+Discount Rate : 0.9
+Variables : p=0.85 q=0.005 l=1.0 g=0.5
+Players : Player1 Player2
+
+Automaton Player1
+States: D1 D2 C1 D3 D4
+Actions: C D
+Signals: g b
+D1 D
+D2 D
+C1 C
+D3 D
+D4 D
+D1 g D2
+D1 b C1
+D2 g D3
+D2 b D4
+C1 g D1
+C1 b D3
+D3 g D3
+D3 b D2
+D4 g D1
+D4 b D2
+
+Automaton Player2
+States: D1 D2 C1 D3 D4
+Actions: C D
+Signals: g b
+D1 D
+D2 D
+C1 C
+D3 D
+D4 D
+D1 g D2
+D1 b C1
+D2 g D3
+D2 b D4
+C1 g D1
+C1 b D3
+D3 g D3
+D3 b D2
+D4 g D1
+D4 b D2
+
+Signal Distribution
+C,C : p q q 1-p-2*q
+C,D : q 1-p-2*q p q
+D,C : q p 1-p-2*q q
+D,D : 1-p-2*q q q p
+
+Payoff Matrix
+Player1: 1 -l l+g 0
+Player2: 1 l+g -l 0 

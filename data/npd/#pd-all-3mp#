@@ -1,0 +1,76 @@
+Title : Prisoner's Dilemma 3MP-3MP
+Discount Rate : 0.9
+Variables : p=0.95  q=0.005 l=1.0 g=0.5
+Players : Player1 Player2
+
+Automaton Player1
+States : R P1 P2 P3
+Actions : C D1 D2 D3
+Signals : c d1 d2 d3
+R C
+P1 D3
+P2 D2
+P3 D1
+R g R
+R d1 P1
+R d2 P1
+R d3 P1
+P1 g P1
+P1 d1 P2
+P1 d2 P1
+P1 d3 P1
+P2 g P1
+P2 d1 P1
+P2 d2 P2
+P2 d3 P1
+P3 g P1
+P3 d1 P1
+P3 d2 P1
+P3 d3 R
+
+Automaton Player2
+States : R P1 P2 P3
+Actions : C D1 D2 D3
+Signals : c d1 d2 d3
+R C
+P1 D3
+P2 D2
+P3 D1
+R g R
+R d1 P1
+R d2 P1
+R d3 P1
+P1 g P1
+P1 d1 P2
+P1 d2 P1
+P1 d3 P1
+P2 g P1
+P2 d1 P1
+P2 d2 P2
+P2 d3 P1
+P3 g P1
+P3 d1 P1
+P3 d2 P1
+P3 d3 R
+
+Signal Distribution
+C,C : p q q q q r r r q r r r q r r r
+D1,C : q p q q r q r r r q r r r q r r
+D2,C : p q q q q r r r q r r r q r r r
+D3,C : p q q q q r r r q r r r q r r r
+C,D1 : q r r r p q q q q r r r q r r r
+D1,D1 : r q r r q p q q r q r r r q r r
+D2,D1 : q r r r p q q q q r r r q r r r
+D3,D1 : q r r r p q q q q r r r q r r r
+C,D2 : p q q q q r r r q r r r q r r r
+D1,D2 : q p q q r q r r r q r r r q r r
+D2,D2 : p q q q q r r r q r r r q r r r
+D3,D2 : p q q q q r r r q r r r q r r r
+C,D3 : p q q q q r r r q r r r q r r r
+D1,D3 : q p q q r q r r r q r r r q r r
+D2,D3 : p q q q q r r r q r r r q r r r
+D3,D3 : p q q q q r r r q r r r q r r r
+
+Payoff Matrix
+Player1: 1 
+Player2: 1

@@ -1,0 +1,59 @@
+Title : Extended Go-Stop Game Symmetric 1MP-1MP
+Discount Rate : 0.9
+Players : Player1 Player2
+Variables : d=1 e=3 E=0 p=0.73 q=0.01
+
+Automaton Player1
+States : G S B
+Actions : G S B
+Signals : g s r b
+G G
+S S
+B B
+G s S
+G g B
+G r B
+G b B
+S s B
+S g G
+S r B
+S b B
+B s B
+B g B
+B r S
+B b G
+
+Automaton Player2
+States : G S B
+Actions : G S B
+Signals : g s r b
+G G
+S S
+B B
+G s S
+G g B
+G r B
+G b B
+S s B
+S g G
+S r B
+S b B
+B s B
+B g B
+B r S
+B b G
+
+Signal Distribution
+G,G:p-8*E q/4+E q/8+E/2 q/8+E/2 q/4+E (1-p-q)/4+E (1-p-q)/8+E/2 (1-p-q)/8+E/2 q/8+E/2 (1-p-q)/8+E/2 0 (1-p-q)/8+E/2 q/8+E/2 (1-p-q)/8+E/2 (1-p-q)/8+E/2 0
+G,S:q/4+E (1-p-q)/4+E (1-p-q)/8+E/2 (1-p-q)/8+E/2 p-8*E q/4+E q/8+E/2 q/8+E/2 q/8+E/2 (1-p-q)/8+E/2 0 (1-p-q)/8+E/2 q/8+E/2 (1-p-q)/8+E/2 (1-p-q)/8+E/2 0
+G,B:q/4+E (1-p-q)/4+E (1-p-q)/8+E/2 (1-p-q)/8+E/2 q/4+E (1-p-q)/4+E (1-p-q)/8+E/2 (1-p-q)/8+E/2 p/2-4*E q/8+E/2 0 q/8+E/2 p/2-4*E q/8+E/2 q/8+E/2 0
+S,G:q/4+E p-8*E q/8+E/2 q/8+E/2 (1-p-q)/4+E q/4+E (1-p-q)/8+E/2 (1-p-q)/8+E/2 (1-p-q)/8+E/2 q/8+E/2 0 (1-p-q)/8+E/2 (1-p-q)/8+E/2 q/8+E/2 (1-p-q)/8+E/2 0
+S,S:(1-p-q)/4+E q/4+E (1-p-q)/8+E/2 (1-p-q)/8+E/2 q/4+E p-8*E q/8+E/2 q/8+E/2 (1-p-q)/8+E/2 q/8+E/2 0 (1-p-q)/8+E/2 (1-p-q)/8+E/2 q/8+E/2 (1-p-q)/8+E/2 0
+S,B:(1-p-q)/4+E q/4+E (1-p-q)/8+E/2 (1-p-q)/8+E/2 (1-p-q)/4+E q/4+E (1-p-q)/8+E/2 (1-p-q)/8+E/2 q/8+E/2 p/2-4*E 0 q/8+E/2 q/8+E/2 p/2-4*E q/8+E/2 0
+B,G:q/4+E q/4+E p/2-4*E p/2-4*E (1-p-q)/4+E (1-p-q)/4+E q/8+E/2 q/8+E/2 (1-p-q)/8+E/2 (1-p-q)/8+E/2 0 q/8+E/2 (1-p-q)/8+E/2 (1-p-q)/8+E/2 q/8+E/2 0
+B,S:(1-p-q)/4+E (1-p-q)/4+E q/8+E/2 q/8+E/2 q/4+E q/4+E p/2-4*E p/2-4*E (1-p-q)/8+E/2 (1-p-q)/8+E/2 0 q/8+E/2 (1-p-q)/8+E/2 (1-p-q)/8+E/2 q/8+E/2 0
+B,B:(1-p-q)/4+E (1-p-q)/4+E q/8+E/2 q/8+E/2 (1-p-q)/4+E (1-p-q)/4+E q/8+E/2 q/8+E/2 q/8+E/2 q/8+E/2 0 p/2-4*E q/8+E/2 q/8+E/2 p/2-4*E 0
+
+Payoff Matrix
+Player1: d e -d 0 0 -d 0 0 -d
+Player2: d 0 0 e 0 0 -d -d -d  

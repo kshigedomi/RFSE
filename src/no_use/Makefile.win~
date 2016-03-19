@@ -1,0 +1,48 @@
+CXXFLAGS = -Wall -O3 #-g -pg
+INCLUDES = -I/usr/local/include -I/usr/include/boost-1_54 -I/usr/local/lib/x86_64-linux-gnu -I/usr/include/cdd
+LIBS = -L/usr/local/lib/ 
+#LDFLAGS = -lcddgmp -lgmpxx.dll -lgmp.dll -lboost_regex-mt.dll
+LDFLAGS = -lgmpxx -lgmp -lboost_regex -lcddgmp
+SRCS = rfpe.cpp RepeatedGame.cpp Automaton.cpp Belief.cpp Environment.cpp Players.cpp Equation.cpp Payoff.cpp BeliefDivision.cpp Util.cpp Reader.cpp Writer.cpp Parser.cpp Profile.cpp Loader.cpp MakeAutomaton.cpp Graph.cpp MakeGraph.cpp MakeSCG.cpp BeliefTransition.cpp CddHandler.cpp LUsolve.cpp Deform.cpp Signal.cpp MultiSignal.cpp  NewCheck.cpp
+OBJS =		$(SRCS:.cpp=.o)
+OTHER_OBJS = RepeatedGame.o Automaton.o Belief.o Environment.o Players.o Equation.o Payoff.o BeliefDivision.o Util.o Reader.o Writer.o Parser.o Profile.o Loader.o BeliefTransition.o CddHandler.o LUsolve.o Deform.o
+OTHER_OBJS2 = Graph.o Util.o MakeSCG.o
+OTHER_OBJS3 = Automaton.o Util.o
+OTHER_OBJS4 = Profile.o Util.o
+OTHER_OBJS5 = Util.o
+OTHER_OBJS6 = Util.o
+TARGET =	rfpe.exe
+TARGET2 = 	MakeGraph
+TARGET3 = MakeAutomaton
+TARGET4 = Signal
+TARGET5 = MultiSignal
+TARGET6 = NewCheck
+
+.SUFFIXES : .cpp .o
+
+all:	$(TARGET) $(TARGET2) $(TARGET3) $(TARGET4) $(TARGET5) $(TARGET6)
+
+$(TARGET):	windows_lib/rfpe.o $(patsubst %,windows_lib/%,$(OTHER_OBJS))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET) windows_lib/rfpe.o $(patsubst %,windows_lib/%,$(OTHER_OBJS)) $(LDFLAGS) 
+
+$(TARGET2): windows_lib/MakeGraph.o $(patsubst %,windows_lib/%,$(OTHER_OBJS2))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET2) windows_lib/MakeGraph.o $(patsubst %,windows_lib/%,$(OTHER_OBJS2)) $(LDFLAGS)
+
+$(TARGET3): windows_lib/MakeAutomaton.o $(patsubst %,windows_lib/%,$(OTHER_OBJS3))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET3) windows_lib/MakeAutomaton.o $(patsubst %,windows_lib/%,$(OTHER_OBJS3)) $(LDFLAGS)
+
+$(TARGET4): windows_lib/Signal.o $(patsubst %,windows_lib/%,$(OTHER_OBJS4))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET4) windows_lib/Signal.o $(patsubst %,windows_lib/%,$(OTHER_OBJS4)) $(LDFLAGS)
+
+$(TARGET5): windows_lib/MultiSignal.o $(patsubst %,windows_lib/%,$(OTHER_OBJS5))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET5) windows_lib/MultiSignal.o $(patsubst %,windows_lib/%,$(OTHER_OBJS5)) $(LDFLAGS)
+
+$(TARGET6): windows_lib/NewCheck.o $(patsubst %,windows_lib/%,$(OTHER_OBJS6))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET6) windows_lib/NewCheck.o $(patsubst %,windows_lib/%,$(OTHER_OBJS6)) $(LDFLAGS)
+
+clean:
+	rm -f $(patsubst %,windows_lib/%,$(OBJS)) $(TARGET) $(TARGET2) $(TARGET3) $(TARGET4) $(TARGET5)
+
+windows_lib/%.o: %.cpp %.h
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ -c $<		
+

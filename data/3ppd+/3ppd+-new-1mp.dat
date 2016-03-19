@@ -1,0 +1,65 @@
+Title : 3PlayerPD-1MP
+Discount Rate : 0.98
+Variables : p=0.95 q=0.001 x=0.5 y=1
+Players : Player1 Player2 Player3
+Method : Expand
+
+Automaton Player1
+States : R P
+Actions : C D
+Signals : g b k
+R C
+P D
+R g R
+R b P
+R k P
+P g P
+P b P
+P k R
+
+Automaton Player2
+States : R P
+Actions : C D
+Signals : g b k
+R C
+P D
+R g R
+R b P
+R k P
+P g P
+P b P
+P k R
+
+
+Automaton Player3
+States : R P
+Actions : C D
+Signals : g b k
+R C
+P D
+R g R
+R b P
+R k P
+P g P
+P b P
+P k R
+
+Signal Distribution
+C,C,C : p q q q q q q q q q q q q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q q q q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8
+D,C,C : q q q q p q q q q (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 q q q (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 q q q (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8
+C,D,C : q q q (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 q p q q q q q q q q q q (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8
+D,D,C : (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q q q q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q q q q q q p q q q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q q q q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q
+C,C,D : q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q q q q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q q q p q q q q q q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q q q q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8
+D,C,D : (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 q q q q q q q q q q p q (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 q q q
+C,D,D : (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 q q q (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 q q q (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 q q q q p q q q q
+D,D,D : (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q q q q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q (1-p-6*q-12*q)/8 (1-p-6*q-12*q)/8 q q q q q q q q q q q q p
+
+Payoff Matrix
+C,C,C : 1 1 1
+C,C,D : -y/2 -y/2 1+x
+C,D,C : -y/2 1+x -y/2
+C,D,D : -y 1+x/2 1+x/2
+D,C,C : 1+x -y/2 -y/2
+D,C,D : 1+x/2 -y 1+x/2
+D,D,C : 1+x/2 1+x/2 -y
+D,D,D : 0 0 0

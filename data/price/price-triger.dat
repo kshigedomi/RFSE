@@ -1,0 +1,75 @@
+Title : Secret Price Cut 1MP1spot-1MP1spot                               
+Discount Rate : 0.9
+Variables : p=0.1 x=1 y=1 e=0.1
+Players : Player1 Player2 Player3
+
+Automaton Player1
+States : T1 T2 R P
+Actions : C D
+Signals : h m l
+T1 C
+T2 D
+R C
+P D
+T1 h T2
+T1 m T2
+T1 l T2
+T2 h R
+T2 m P
+T2 l P
+R h R
+R m R
+R l P
+P h P
+P m P
+P l P
+
+Automaton Player2
+States : T1 T2 R P
+Actions : C D
+Signals : h m l
+T1 D
+T2 C
+R C
+P D
+T1 h T2
+T1 m P
+T1 l P
+T2 h R
+T2 m R
+T2 l R
+R h R
+R m R
+R l P
+P h P
+P m P
+P l P
+
+Automaton Player3
+States : R P
+Actions : H L
+Signals : c
+R H
+P L
+R c R
+P c P
+
+Signal Distribution
+C,C,H : e e e e 1-8*e e e e e
+C,C,L : e e e e (1-7*e)/2 e e e (1-7*e)/2
+C,D,H : e e e e e e 1-8*e e e
+C,D,L : e e e e e e e 1-8*e e
+D,C,H : e e 1-8*e e e e e e e
+D,C,L : e e e e e 1-8*e e e e
+D,D,H : e e e e (1-7*e)/2 e e e (1-7*e)/2
+D,D,L : e e e e e e e e 1-8*e
+
+Payoff Matrix
+C,C,H : 1 1 0
+C,C,L : 0 0 0
+C,D,H : -y 1+x 0
+C,D,L : -y x 0
+D,C,H : 1+x -y 0
+D,C,L : x -y 0
+D,D,H : 0 0 0
+D,D,L : 0 0 0

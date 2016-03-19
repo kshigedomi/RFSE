@@ -1,0 +1,38 @@
+Title : Prisoner's Dilemma GT-GT
+Discount Rate : 0.9
+Variables : p=0.8 q=0.01 x=1 y=1
+Players : Player1 Player2
+
+Automaton Player1
+States : R P
+Actions : C D
+Signals : g b
+R C
+P D
+R g R
+R b P
+P g P
+P b P
+
+Automaton Player2
+States : R P
+Actions : C D
+Signals : g bp
+R C
+P D
+R g R
+R b P
+P g P
+P b P
+
+Signal Distribution
+C,C : p q q 1-p-2*q
+C,D : q 1-p-2*q p q
+D,C : q p 1-p-2*q q
+D,D : 1-p-2*q q q p
+
+Payoff Matrix
+C,C : 1 1
+C,D : -y 1+x
+D,C : 1+x -y
+D,D : 0 0

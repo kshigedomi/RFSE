@@ -1,0 +1,119 @@
+Title : Prisoner's Dilemma 1MP-1MP
+Discount Rate : 0.9
+Variables : e=0.01 x=0.12 y=0.12 p=0.8 q=0.5
+Players : Player1 Player2
+
+Automaton Player1
+States : R P
+Actions : CC CD DC DD
+Signals : gg gb bg bb
+R CC
+P DD
+R gg R
+R gb R
+R bg R
+R bb P
+P gg P
+P gb R
+P bg R
+P bb R
+
+Automaton Player2
+States : R P
+Actions : CC CD DC DD
+Signals : gg gb bg bb
+R CC
+P DD
+R gg R
+R gb R
+R bg R
+R bb P
+P gg P
+P gb R
+P bg R
+P bb R
+
+Signal Distribution
+CC,CC : (p-e)*(p-e) (p-e)*e e*(p-e) e*e
+(p-e)*e (p-e)*(1-p-e) e*e e*(1-p-e)
+e*(p-e) e*e (1-p-e)*(p-e) (1-p-e)*e
+e*e e*(1-p-e) (1-p-e)*e (1-p-e)*(1-p-e)
+CC,CD : (p-e)*(q-e) (p-e)*e e*(q-e) e*e
+(p-e)*e (p-e)*(1-q-e) e*e e*(1-q-e)
+e*(q-e) e*e (1-p-e)*(q-e) (1-p-e)*e
+e*e e*(1-q-e) (1-p-e)*e (1-p-e)*(1-q-e)
+CC,DC : (q-e)*(p-e) (q-e)*e e*(p-e) e*e
+(q-e)*e (q-e)*(1-p-e) e*e e*(1-p-e)
+e*(p-e) e*e (1-q-e)*(p-e) (1-q-e)*e
+e*e e*(1-p-e) (1-q-e)*e (1-q-e)*(1-p-e)
+CC,DD : (q-e)*(q-e) (q-e)*e e*(q-e) e*e
+(q-e)*e (q-e)*(1-q-e) e*e e*(1-q-e)
+e*(q-e) e*e (1-q-e)*(q-e) (1-q-e)*e
+e*e e*(1-q-e) (1-q-e)*e (1-q-e)*(1-q-e)
+CD,CC : (p-e)*(q-e) (p-e)*e e*(q-e) e*e
+(p-e)*e (p-e)*(1-q-e) e*e e*(1-q-e)
+e*(q-e) e*e (1-p-e)*(q-e) (1-p-e)*e
+e*e e*(1-q-e) (1-p-e)*e (1-p-e)*(1-q-e)
+CD,CD : (p-e)*((1-p)-e) (p-e)*e e*((1-p)-e) e*e
+(p-e)*e (p-e)*(1-(1-p)-e) e*e e*(1-(1-p)-e)
+e*((1-p)-e) e*e (1-p-e)*((1-p)-e) (1-p-e)*e
+e*e e*(1-(1-p)-e) (1-p-e)*e (1-p-e)*(1-(1-p)-e)
+CD,DC : (q-e)*(q-e) (q-e)*e e*(q-e) e*e
+(q-e)*e (q-e)*(1-q-e) e*e e*(1-q-e)
+e*(q-e) e*e (1-q-e)*(q-e) (1-q-e)*e
+e*e e*(1-q-e) (1-q-e)*e (1-q-e)*(1-q-e)
+CD,DD : (q-e)*((1-p)-e) (q-e)*e e*((1-p)-e) e*e
+(q-e)*e (q-e)*(1-(1-p)-e) e*e e*(1-(1-p)-e)
+e*((1-p)-e) e*e (1-q-e)*((1-p)-e) (1-q-e)*e
+e*e e*(1-(1-p)-e) (1-q-e)*e (1-q-e)*(1-(1-p)-e)
+DC,CC : (q-e)*(p-e) (q-e)*e e*(p-e) e*e
+(q-e)*e (q-e)*(1-p-e) e*e e*(1-p-e)
+e*(p-e) e*e (1-q-e)*(p-e) (1-q-e)*e
+e*e e*(1-p-e) (1-q-e)*e (1-q-e)*(1-p-e)
+DC,CD : (q-e)*(q-e) (q-e)*e e*(q-e) e*e
+(q-e)*e (q-e)*(1-q-e) e*e e*(1-q-e)
+e*(q-e) e*e (1-q-e)*(q-e) (1-q-e)*e
+e*e e*(1-q-e) (1-q-e)*e (1-q-e)*(1-q-e)
+DC,DC : ((1-p)-e)*(p-e) ((1-p)-e)*e e*(p-e) e*e
+((1-p)-e)*e ((1-p)-e)*(1-p-e) e*e e*(1-p-e)
+e*(p-e) e*e (1-(1-p)-e)*(p-e) (1-(1-p)-e)*e
+e*e e*(1-p-e) (1-(1-p)-e)*e (1-(1-p)-e)*(1-p-e)
+DC,DD : ((1-p)-e)*(q-e) ((1-p)-e)*e e*(q-e) e*e
+((1-p)-e)*e ((1-p)-e)*(1-q-e) e*e e*(1-q-e)
+e*(q-e) e*e (1-(1-p)-e)*(q-e) (1-(1-p)-e)*e
+e*e e*(1-q-e) (1-(1-p)-e)*e (1-(1-p)-e)*(1-q-e)
+DD,CC : (q-e)*(q-e) (q-e)*e e*(q-e) e*e
+(q-e)*e (q-e)*(1-q-e) e*e e*(1-q-e)
+e*(q-e) e*e (1-q-e)*(q-e) (1-q-e)*e
+e*e e*(1-q-e) (1-q-e)*e (1-q-e)*(1-q-e)
+DD,CD : (q-e)*((1-p)-e) (q-e)*e e*((1-p)-e) e*e
+(q-e)*e (q-e)*(1-(1-p)-e) e*e e*(1-(1-p)-e)
+e*((1-p)-e) e*e (1-q-e)*((1-p)-e) (1-q-e)*e
+e*e e*(1-(1-p)-e) (1-q-e)*e (1-q-e)*(1-(1-p)-e)
+DD,DC : ((1-p)-e)*(q-e) ((1-p)-e)*e e*(q-e) e*e
+((1-p)-e)*e ((1-p)-e)*(1-q-e) e*e e*(1-q-e)
+e*(q-e) e*e (1-(1-p)-e)*(q-e) (1-(1-p)-e)*e
+e*e e*(1-q-e) (1-(1-p)-e)*e (1-(1-p)-e)*(1-q-e)
+DD,DD : ((1-p)-e)*((1-p)-e) ((1-p)-e)*e e*((1-p)-e) e*e
+((1-p)-e)*e ((1-p)-e)*(1-(1-p)-e) e*e e*(1-(1-p)-e)
+e*((1-p)-e) e*e (1-(1-p)-e)*((1-p)-e) (1-(1-p)-e)*e
+e*e e*(1-(1-p)-e) (1-(1-p)-e)*e (1-(1-p)-e)*(1-(1-p)-e)
+
+
+Payoff Matrix
+CC,CC : 1+1 1+1
+CC,CD : 1+(-y) 1+1+x
+CC,DC : (-y)+1 1+x+1
+CC,DD : (-y)+(-y) 1+x+1+x
+CD,CC : 1+1+x 1+(-y)
+CD,CD : 1+0 1+0
+CD,DC : (-y)+1+x 1+x+(-y)
+CD,DD : (-y)+0 1+x+0
+DC,CC : 1+x+1 (-y)+1
+DC,CD : 1+x+(-y) (-y)+1+x
+DC,DC : 0+1 0+1
+DC,DD : 0+(-y) 0+1+x
+DD,CC : 1+x+1+x (-y)+(-y)
+DD,CD : 1+x+0 (-y)+0
+DD,DC : 0+1+x 0+(-y)
+DD,DD : 0+0 0+0

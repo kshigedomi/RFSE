@@ -1,0 +1,118 @@
+Title : Prisoner's Dilemma 1MP-1MP
+Discount Rate : 0.9
+Variables : x=0.1 y=1 e=0.01
+Players : Player1 Player2
+
+Automaton Player1
+States : R P
+Actions : CC CD DC DD
+Signals : gg gb bg bb
+R CC
+P DD
+R gg R
+R gb R
+R bg R
+R bb P
+P gg P
+P gb P
+P bg P
+P bb R
+
+Automaton Player2
+States : R P
+Actions : CC CD DC DD
+Signals : gg gb bg bb
+R CC
+P DD
+R gg R
+R gb R
+R bg R
+R bb P
+P gg P
+P gb P
+P bg P
+P bb R
+
+Signal Distribution
+CC,CC : 1-21*e 2*e 2*e 2*e
+2*e e e e
+2*e e e e
+2*e e e e
+CC,CD : 2*e e e e
+1-21*e 2*e 2*e 2*e
+2*e e e e
+2*e e e e
+CC,DC : 2*e e e e
+2*e e e e
+1-21*e 2*e 2*e 2*e
+2*e e e e
+CC,DD : 2*e e e e
+2*e e e e
+2*e e e e
+1-21*e 2*e 2*e 2*e
+CD,CC : 2*e 1-21*e 2*e 2*e
+e 2*e e e
+e 2*e e e
+e 2*e e e
+CD,CD : e 2*e e e
+2*e 1-21*e 2*e 2*e
+e 2*e e e
+e 2*e e e
+CD,DC : e 2*e e e
+e 2*e e e
+2*e 1-21*e 2*e 2*e
+e 2*e e e
+CD,DD : e 2*e e e
+e 2*e e e
+e 2*e e e
+2*e 1-21*e 2*e 2*e
+DC,CC : 2*e 2*e 1-21*e 2*e
+e e 2*e e
+e e 2*e e
+e e 2*e e
+DC,CD : e e 2*e e
+2*e 2*e 1-21*e 2*e
+e e 2*e e
+e e 2*e e
+DC,DC : e e 2*e e
+e e 2*e e
+2*e 2*e 1-21*e 2*e
+e e 2*e e
+DC,DD : e e 2*e e
+e e 2*e e
+e e 2*e e
+2*e 2*e 1-21*e 2*e
+DD,CC : 2*e 2*e 2*e 1-21*e
+e e e 2*e
+e e e 2*e
+e e e 2*e
+DD,CD : e e e 2*e
+2*e 2*e 2*e 1-21*e
+e e e 2*e
+e e e 2*e
+DD,DC : e e e 2*e
+e e e 2*e
+2*e 2*e 2*e 1-21*e
+e e e 2*e
+DD,DD : e e e 2*e
+e e e 2*e
+e e e 2*e
+2*e 2*e 2*e 1-21*e
+
+Payoff Matrix
+CC,CC : 2 2
+CC,CD : 1-y 2+x
+CC,DC : 1-y 2+x
+CC,DD : -2*y 2+2*x
+CD,CC : 2+x 1-y
+CD,CD : 1 1
+CD,DC : 1+x-y 1+x-y
+CD,DD : -y 1+x
+DC,CC : 2+x 1-y
+DC,CD : 1+x-y 1+x-y
+DC,DC : 1 1
+DC,DD : -y 1+x
+DD,CC : 2+2*x -2*y
+DD,CD : 1+x -y
+DD,DC : 1+x -y
+DD,DD : 0 0

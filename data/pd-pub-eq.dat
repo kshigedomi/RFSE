@@ -1,0 +1,15 @@
+
+
+
+States : R P1 P2
+Actions : C D
+Signals : g b
+R D
+P1 D
+P2 C
+R g P2
+R b P2
+P1 g P1
+P1 b P1
+P2 g R
+P2 b P1

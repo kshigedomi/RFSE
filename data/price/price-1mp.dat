@@ -1,0 +1,48 @@
+Title : Secret Price Cut 1MP1spot-1MP1spot                               
+Discount Rate : 0.9
+Variables : p=0.1
+Players : Player1 Player2
+
+Automaton Player1
+States : R P
+Actions : H M
+Signals : a b c d e
+R H
+P M
+R a P
+R b P
+R c R
+R d R
+R e R
+P a R
+P b R
+P c R
+P d P
+P e P
+
+Automaton Player2
+States : R P
+Actions : H M
+Signals : a b c d e
+R H
+P M
+R a P
+R b P
+R c R
+R d R
+R e R
+P a R
+P b R
+P c R
+P d P
+P e P
+
+Signal Distribution
+H,H : 
+H,M : 
+M,H : 
+M,M : 
+
+Payoff Matrix
+Player1: 4.3770072222 2.4349282854 4.4230555556 2.9978196234
+Player2: 4.3770072222 4.4230555556 2.4349282854 2.9978196234

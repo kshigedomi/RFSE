@@ -1,0 +1,120 @@
+Title : Prisoner's Dilemma 1MP-1MP
+Discount Rate : 0.9
+Variables : p=0.8 q=0.01 g=1 x=0.1
+Players : Player1 Player2
+
+Automaton Player1
+States : R1 R2 P
+Actions : CC CD DC DD
+Signals : gg gb bg bb
+R1 CC
+R2 CC
+P DD
+R1 gg R1
+R1 gb R2
+R1 bg R2
+R1 bb P
+R2 gg R1
+R2 gb P
+R2 bg P
+R2 bb P
+P gg P
+P gb P
+P bg P
+P bb R1
+
+Automaton Player2
+States : R1 R2 P
+Actions : CC CD DC DD
+Signals : gg gb bg bb
+R1 CC
+R2 CC
+P DD
+R1 gg R1
+R1 gb R2
+R1 bg R2
+R1 bb P
+R2 gg R1
+R2 gb P
+R2 bg P
+R2 bb P
+P gg P
+P gb P
+P bg P
+P bb R1
+
+Signal Distribution
+CC,CC : p*p q*p p*q q*q
+q*p (1-p-2*q)*p q*q (1-p-2*q)*q
+p*q q*q p*(1-p-2*q) q*(1-p-2*q)
+q*q (1-p-2*q)*q q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)
+CC,CD : q*p (1-p-2*q)*p q*q (1-p-2*q)*q
+p*p q*p p*q q*q
+q*q (1-p-2*q)*q q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)
+p*q q*q p*(1-p-2*q) q*(1-p-2*q)
+CC,DC : p*q q*q p*(1-p-2*q) q*(1-p-2*q)
+q*q (1-p-2*q)*q q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)
+p*p q*p p*q q*q
+q*p (1-p-2*q)*p q*q (1-p-2*q)*q
+CC,DD : q*q (1-p-2*q)*q q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)
+p*q q*q p*(1-p-2*q) q*(1-p-2*q)
+q*p (1-p-2*q)*p q*q (1-p-2*q)*q
+p*p q*p p*q q*q
+CD,CC : q*p p*p q*q p*q
+(1-p-2*q)*p q*p (1-p-2*q)*q q*q
+q*q p*q q*(1-p-2*q) p*(1-p-2*q)
+(1-p-2*q)*q q*q (1-p-2*q)*(1-p-2*q) q*(1-p-2*q)
+CD,CD : (1-p-2*q)*p q*p (1-p-2*q)*q q*q
+q*p p*p q*q p*q
+(1-p-2*q)*q q*q (1-p-2*q)*(1-p-2*q) q*(1-p-2*q)
+q*q p*q q*(1-p-2*q) p*(1-p-2*q)
+CD,DC : q*q p*q q*(1-p-2*q) p*(1-p-2*q)
+(1-p-2*q)*q q*q (1-p-2*q)*(1-p-2*q) q*(1-p-2*q)
+q*p p*p q*q p*q
+(1-p-2*q)*p q*p (1-p-2*q)*q q*q
+CD,DD : (1-p-2*q)*q q*q (1-p-2*q)*(1-p-2*q) q*(1-p-2*q)
+q*q p*q q*(1-p-2*q) p*(1-p-2*q)
+(1-p-2*q)*p q*p (1-p-2*q)*q q*q
+q*p p*p q*q p*q
+DC,CC : p*q q*q p*p q*p
+q*q (1-p-2*q)*q q*p (1-p-2*q)*p
+p*(1-p-2*q) q*(1-p-2*q) p*q q*q
+q*(1-p-2*q) (1-p-2*q)*(1-p-2*q) q*q (1-p-2*q)*q
+DC,CD : q*q (1-p-2*q)*q q*p (1-p-2*q)*p
+p*q q*q p*p q*p
+q*(1-p-2*q) (1-p-2*q)*(1-p-2*q) q*q (1-p-2*q)*q
+p*(1-p-2*q) q*(1-p-2*q) p*q q*q
+DC,DC : p*(1-p-2*q) q*(1-p-2*q) p*q q*q
+q*(1-p-2*q) (1-p-2*q)*(1-p-2*q) q*q (1-p-2*q)*q
+p*q q*q p*p q*p
+q*q (1-p-2*q)*q q*p (1-p-2*q)*p
+DC,DD : q*(1-p-2*q) (1-p-2*q)*(1-p-2*q) q*q (1-p-2*q)*q
+p*(1-p-2*q) q*(1-p-2*q) p*q q*q
+q*q (1-p-2*q)*q q*p (1-p-2*q)*p
+p*q q*q p*p q*p
+DD,CC : q*q p*q q*p p*p
+(1-p-2*q)*q q*q (1-p-2*q)*p q*p
+q*(1-p-2*q) p*(1-p-2*q) q*q p*q
+(1-p-2*q)*(1-p-2*q) q*(1-p-2*q) (1-p-2*q)*q q*q
+DD,CD : (1-p-2*q)*q q*q (1-p-2*q)*p q*p
+q*q p*q q*p p*p
+(1-p-2*q)*(1-p-2*q) q*(1-p-2*q) (1-p-2*q)*q q*q
+q*(1-p-2*q) p*(1-p-2*q) q*q p*q
+DD,DC : q*(1-p-2*q) p*(1-p-2*q) q*q p*q
+(1-p-2*q)*(1-p-2*q) q*(1-p-2*q) (1-p-2*q)*q q*q
+q*q p*q q*p p*p
+(1-p-2*q)*q q*q (1-p-2*q)*p q*p
+DD,DD : (1-p-2*q)*(1-p-2*q) q*(1-p-2*q) (1-p-2*q)*q q*q
+q*(1-p-2*q) p*(1-p-2*q) q*q p*q
+(1-p-2*q)*q q*q (1-p-2*q)*p q*p
+q*q p*q q*p p*p
+
+Payoff Matrix
+Player1: 2 1-g 1-g -2*g
+2+x 1 x+1-g -g
+x+2 x+1-g 1 -g
+2*(x+1) x+1 x+1 0
+Player2: 2 2+x 1+x+1 2*(x+1)
+1-g 1 x+1-g x+1
+1-g x+1-g 1 x+1
+-2*g -g -g 0

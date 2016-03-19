@@ -1,0 +1,45 @@
+Title : Prisoner's Dilemma 1MP-1MP
+Discount Rate : 0.9
+Variables : p=0.95 q=0.005
+Players : Player1 Player2
+
+Automaton Player1
+States : R P
+Actions : C D E
+Signals : g b e
+R C
+P E
+R g R
+R b P
+R e P
+P g P
+P b P
+P e R
+
+Automaton Player2
+States : R P
+Actions : C D E
+Signals : g b e
+R C
+P E
+R g R
+R b P
+R e P
+P g P
+P b P
+P e R
+
+Signal Distribution
+C,C : p q q q (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4
+C,D : q (1-p-4*q)/4 (1-p-4*q)/4 p q q q (1-p-4*q)/4 (1-p-4*q)/4
+C,E : q (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4 p q q
+D,C : q p q (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4
+D,D : (1-p-4*q)/4 q (1-p-4*q)/4 q p q (1-p-4*q)/4 q (1-p-4*q)/4
+D,E : (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4 q p q
+E,C : q q p (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4 q
+E,D : (1-p-4*q)/4 (1-p-4*q)/4 q q q p (1-p-4*q)/4 (1-p-4*q)/4 q
+E,E : (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4 q q q p
+
+Payoff Matrix
+Player1: 4 2 1 5 3 2 4 2 1
+Player2: 4 5 4 2 3 2 1 2 1

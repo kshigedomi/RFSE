@@ -1,0 +1,62 @@
+Title : Extended Go-Stop Game 2MP-2MP
+Discount Rate : 0.9
+Players : Player1 Player2
+Variables : d=1 e=3 E=0 p=0.9 q=0.01
+
+Automaton Player1
+States : S G B1 B2
+Actions : G S B
+Signals : s g b
+S S
+G G
+B1 B
+B2 B
+S s B1
+S g G
+S b B1
+G s S
+G g B1
+G b B1
+B1 s B1
+B1 g B1
+B1 b B2
+B2 s B1
+B2 g B1
+B2 b G
+
+Automaton Player2
+States : G S B1 B2
+Actions : G S B
+Signals : s g b
+G G
+S S
+B1 B
+B2 B
+G s S
+G g B1
+G b B1
+S s B1
+S g G
+S b B1
+B1 s B1
+B1 g B1
+B1 b B2
+B2 s B1
+B2 g B1
+B2 b S
+
+Signal Distribution
+S,S : p-8*E q/4+E q/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E
+S,G : q/4+E (1-p-q)/4+E (1-p-q)/4+E p-8*E q/4+E q/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E
+S,B : q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E p-8*E q/4+E q/4+E 
+G,S : q/4+E p-8*E q/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E
+G,G : (1-p-q)/4+E q/4+E (1-p-q)/4+E q/4+E p-8*E q/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E
+G,B : (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E q/4+E p-8*E q/4+E 
+B,S : q/4+E q/4+E p-8*E (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E
+B,G : (1-p-q)/4+E (1-p-q)/4+E q/4+E q/4+E q/4+E p-8*E (1-p-q)/4+E (1-p-q)/4+E q/4+E
+B,B : (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E q/4+E q/4+E p-8*E
+
+Payoff Matrix
+Player1: d e -d 0 0 -d 0 0 -d
+Player2: d 0 0 e 0 0 -d -d -d   
+ 

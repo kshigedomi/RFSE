@@ -1,0 +1,66 @@
+Title : Prisoner's Dilemma 1MP-1MP
+Discount Rate : 0.9
+Variables : p=0.95 x=1 c=0.1
+Players : Player1 Player2 Player3
+
+Automaton Player1
+States : R1 P R2
+Actions : C D
+Signals : g b
+R1 C
+P D
+R2 C
+R1 g R2
+R1 b P
+P g P
+P b R1
+R2 g R1
+R2 b R1
+
+Automaton Player2
+States : R1 P R2
+Actions : C D
+Signals : g b
+R1 C
+P D
+R2 C
+R1 g R2
+R1 b P
+P g P
+P b R1
+R2 g R1
+R2 b R1
+
+Automaton Player3
+States : R1 P R2
+Actions : C D
+Signals : g b
+R1 C
+P D
+R2 C
+R1 g R2
+R1 b P
+P g P
+P b R1
+R2 g R1
+R2 b R1
+
+Signal Distribution
+C,C,C : p*p*p p*p*(1-p) p*(1-p)*p p*(1-p)*(1-p) (1-p)*p*p (1-p)*p*(1-p) (1-p)*(1-p)*p (1-p)*(1-p)*(1-p)
+C,C,D : (1-p)*p*p (1-p)*p*(1-p) (1-p)*(1-p)*p (1-p)*(1-p)*(1-p) p*p*p p*p*(1-p) p*(1-p)*p p*(1-p)*(1-p)
+C,D,C : p*p*(1-p) p*p*p p*(1-p)*(1-p) p*(1-p)*p (1-p)*p*(1-p) (1-p)*p*p (1-p)*(1-p)*(1-p) (1-p)*p*(1-p)
+C,D,D : (1-p)*p*(1-p) (1-p)*p*p (1-p)*(1-p)*(1-p) (1-p)*(1-p)*p p*p*(1-p) p*p*p p*(1-p)*(1-p) p*(1-p)*p
+D,C,C : p*(1-p)*p p*(1-p)*(1-p) p*p*p p*p*(1-p) (1-p)*(1-p)*p (1-p)*(1-p)*(1-p) (1-p)*p*p (1-p)*p*(1-p)
+D,C,D : (1-p)*(1-p)*p (1-p)*(1-p)*(1-p) (1-p)*p*p (1-p)*p*(1-p) p*(1-p)*p p*(1-p)*(1-p) p*p*p p*p*(1-p)
+D,D,C : p*(1-p)*(1-p) p*(1-p)*p p*p*(1-p) p*p*p (1-p)*(1-p)*(1-p) (1-p)*(1-p)*p (1-p)*p*(1-p) (1-p)*p*p
+D,D,D : (1-p)*(1-p)*(1-p) (1-p)*(1-p)*p (1-p)*p*(1-p) (1-p)*p*p p*(1-p)*(1-p) p*(1-p)*p p*p*(1-p) p*p*p
+
+Payoff Matrix
+C,C,C : x-c x-c x-c
+C,C,D : -c x-c x
+C,D,C : x-c x -c
+C,D,D : -c x 0
+D,C,C : x -c x-c
+D,C,D : 0 -c x
+D,D,C : x 0 -c
+D,D,D : 0 0 0

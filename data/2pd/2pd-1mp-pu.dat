@@ -1,0 +1,138 @@
+Title : Prisoner's Dilemma 1MP-1MP
+Discount Rate : 0.9
+Variables : e=0.1 n=0.00001 x=0.1 y=1
+Players : Player1 Player2
+
+Automaton Player1
+States : RR RP PR PP
+Actions : CC CD DC DD
+Signals : gg gb bg bb
+RR CC
+RP CD
+PR DC
+PP DD
+RR gg RR
+RR gb RP
+RR bg PR
+RR bb PP
+RP gg RP
+RP gb RR
+RP bg PP
+RP bb PR
+PR gg PR
+PR gb PP
+PR bg RR
+PR bb RP
+PP gg PP
+PP gb PR
+PP bg RP
+PP bb RR
+
+Automaton Player2
+States : RR RP PR PP
+Actions : CC CD DC DD
+Signals : gg gb bg bb
+RR CC
+RP CD
+PR DC
+PP DD
+RR gg RR
+RR gb RP
+RR bg PR
+RR bb PP
+RP gg RP
+RP gb RR
+RP bg PP
+RP bb PR
+PR gg PR
+PR gb PP
+PR bg RR
+PR bb RP
+PP gg PP
+PP gb PR
+PP bg RP
+PP bb RR
+
+Signal Distribution
+CC,CC : (1-e-n)*(1-e-n) n*(1-e-n) (1-e-n)*n n*n
+n*(1-e-n) (e-n)*(1-e-n) n*n (e-n)*n
+(1-e-n)*n n*n (1-e-n)*(e-n) n*(e-n)
+n*n (e-n)*n n*(e-n) (e-n)*(e-n)
+CC,CD : (e-n)*(1-e-n) n*(1-e-n) (e-n)*n n*n
+n*(1-e-n) (1-e-n)*(1-e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(e-n) n*(e-n)
+n*n (1-e-n)*n n*(e-n) (1-e-n)*(e-n)
+CC,DC : (1-e-n)*(e-n) n*(e-n) (1-e-n)*n n*n
+n*(e-n) (e-n)*(e-n) n*n (e-n)*n
+(1-e-n)*n n*n (1-e-n)*(1-e-n) n*(1-e-n)
+n*n (e-n)*n n*(1-e-n) (e-n)*(1-e-n)
+CC,DD : (e-n)*(e-n) n*(e-n) (e-n)*n n*n
+n*(e-n) (1-e-n)*(e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(1-e-n) n*(1-e-n)
+n*n (1-e-n)*n n*(1-e-n) (1-e-n)*(1-e-n)
+CD,CC : (e-n)*(1-e-n) n*(1-e-n) (e-n)*n n*n
+n*(1-e-n) (1-e-n)*(1-e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(e-n) n*(e-n)
+n*n (1-e-n)*n n*(e-n) (1-e-n)*(e-n)
+CD,CD : (e-n)*(1-e-n) n*(1-e-n) (e-n)*n n*n
+n*(1-e-n) (1-e-n)*(1-e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(e-n) n*(e-n)
+n*n (1-e-n)*n n*(e-n) (1-e-n)*(e-n)
+CD,DC : (e-n)*(e-n) n*(e-n) (e-n)*n n*n
+n*(e-n) (1-e-n)*(e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(1-e-n) n*(1-e-n)
+n*n (1-e-n)*n n*(1-e-n) (1-e-n)*(1-e-n)
+CD,DD : (e-n)*(e-n) n*(e-n) (e-n)*n n*n
+n*(e-n) (1-e-n)*(e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(1-e-n) n*(1-e-n)
+n*n (1-e-n)*n n*(1-e-n) (1-e-n)*(1-e-n)
+DC,CC : (1-e-n)*(e-n) n*(e-n) (1-e-n)*n n*n
+n*(e-n) (e-n)*(e-n) n*n (e-n)*n
+(1-e-n)*n n*n (1-e-n)*(1-e-n) n*(1-e-n)
+n*n (e-n)*n n*(1-e-n) (e-n)*(1-e-n)
+DC,CD : (e-n)*(e-n) n*(e-n) (e-n)*n n*n
+n*(e-n) (1-e-n)*(e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(1-e-n) n*(1-e-n)
+n*n (1-e-n)*n n*(1-e-n) (1-e-n)*(1-e-n)
+DC,DC : (1-e-n)*(e-n) n*(e-n) (1-e-n)*n n*n
+n*(e-n) (e-n)*(e-n) n*n (e-n)*n
+(1-e-n)*n n*n (1-e-n)*(1-e-n) n*(1-e-n)
+n*n (e-n)*n n*(1-e-n) (e-n)*(1-e-n)
+DC,DD : (e-n)*(e-n) n*(e-n) (e-n)*n n*n
+n*(e-n) (1-e-n)*(e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(1-e-n) n*(1-e-n)
+n*n (1-e-n)*n n*(1-e-n) (1-e-n)*(1-e-n)
+DD,CC : (e-n)*(e-n) n*(e-n) (e-n)*n n*n
+n*(e-n) (1-e-n)*(e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(1-e-n) n*(1-e-n)
+n*n (1-e-n)*n n*(1-e-n) (1-e-n)*(1-e-n)
+DD,CD : (e-n)*(e-n) n*(e-n) (e-n)*n n*n
+n*(e-n) (1-e-n)*(e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(1-e-n) n*(1-e-n)
+n*n (1-e-n)*n n*(1-e-n) (1-e-n)*(1-e-n)
+DD,DC : (e-n)*(e-n) n*(e-n) (e-n)*n n*n
+n*(e-n) (1-e-n)*(e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(1-e-n) n*(1-e-n)
+n*n (1-e-n)*n n*(1-e-n) (1-e-n)*(1-e-n)
+DD,DD : (e-n)*(e-n) n*(e-n) (e-n)*n n*n
+n*(e-n) (1-e-n)*(e-n) n*n (1-e-n)*n
+(e-n)*n n*n (e-n)*(1-e-n) n*(1-e-n)
+n*n (1-e-n)*n n*(1-e-n) (1-e-n)*(1-e-n)
+
+Payoff Matrix
+CC,CC : 2 2
+CC,CD : 1-y 2+x
+CC,DC : 1-y 2+x
+CC,DD : -2*y 2+2*x
+CD,CC : 2+x 1-y
+CD,CD : 1 1
+CD,DC : 1+x-y 1+x-y
+CD,DD : -y 1+x
+DC,CC : 2+x 1-y
+DC,CD : 1+x-y 1+x-y
+DC,DC : 1 1
+DC,DD : -y 1+x
+DD,CC : 2+2*x -2*y
+DD,CD : 1+x -y
+DD,DC : 1+x -y
+DD,DD : 0 0

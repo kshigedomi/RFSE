@@ -1,0 +1,52 @@
+Title : Extended GoStop-tft shiteki kansoku
+Discount Rate : 0.9
+Players : Player1 Player2
+Variables : E=0 p=0.9 q=0.051
+
+Automaton Player1
+States : R P
+Actions : C D E
+Signals : g b z
+R C
+P D
+R g P
+R b P
+R z R
+P g R
+P b P
+P z P
+
+Automaton Player2
+States : R P
+Actions : C D E
+Signals : g b z
+R C
+P D
+R g P
+R b P
+R z P
+P g R
+P b P
+P z P
+
+Signal Distribution
+C,C : p-8*E q/4+E q/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E
+C,D : q/4+E (1-p-q)/4+E (1-p-q)/4+E p-8*E q/4+E q/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E
+C,E : q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E p-8*E q/4+E q/4+E 
+D,C : q/4+E p-8*E q/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E
+D,D : (1-p-q)/4+E q/4+E (1-p-q)/4+E q/4+E p-8*E q/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E
+D,E : (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E q/4+E p-8*E q/4+E
+E,C : q/4+E q/4+E p-8*E (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E
+E,D : (1-p-q)/4+E (1-p-q)/4+E q/4+E q/4+E q/4+E p-8*E (1-p-q)/4+E (1-p-q)/4+E q/4+E
+E,E : (1-p-q)/4+E (1-p-q)/4+E q/4+E (1-p-q)/4+E (1-p-q)/4+E q/4+E q/4+E q/4+E p-8*E
+
+Payoff Matrix
+C,C : 2 2
+C,D : 0 5
+C,E : -1 2
+D,C : 5 0
+D,D : 1 1
+D,E : 0 0
+E,C : 2 -1
+E,D : 0 0
+E,E : -1 -1

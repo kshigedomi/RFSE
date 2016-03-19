@@ -1,0 +1,136 @@
+Title : Prisoner's Dilemma 1MP-1MP
+Discount Rate : 0.9
+Variables : o=0.7 p=0.14 q=0.015 r=0.005 l=1 g=0.5 c=0.1 s=0.9 d=0.9
+Players : Player1 Player2 Environment
+
+Automaton Player1
+States : R P
+Actions : H M L
+Signals : h m l
+R H
+P L
+R h R
+R m P
+R l P
+P h P
+P m P
+P l R
+
+Automaton Player2
+States : R P
+Actions : H M L
+Signals : h m l
+R H
+P L
+R h R
+R m P
+R l P
+P h P
+P m P
+P l R
+
+Automaton Environment
+States : R P
+Actions : C D
+Signals : s c
+R C
+P D
+R s R
+R c P
+P c R
+P s P
+
+Signal Distribution
+H,H,C : p*s p*(1-s) o/2*s o/2*(1-s) p/4*s p/4*(1-s)
+o/2*s o/2*(1-s) p/2*s p/2*(1-s) q/2*s q/2*(1-s)
+p/4*s p/4*(1-s) q/2*s q/2*(1-s) r*s r*(1-s)
+H,H,D : r*s r*(1-s) q/2*s q/2*(1-s) p/4*s p/4*(1-s)
+q/2*s q/2*(1-s) p/2*s p/2*(1-s) o/2*s o/2*(1-s)
+p/4*s p/4*(1-s) o/2*s o/2*(1-s) p*s p*(1-s)
+H,M,C : p*s p*(1-s) o*(1-d)*s o*(1-d)*(1-s) p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s)
+o*d*s o*d*(1-s) p*2*d*(1-d)*s p*2*d*(1-d)*(1-s) q*(1-d)*s q*(1-d)*(1-s)
+p*d*d*s p*d*d*(1-s) q*d*s q*d*(1-s) r*s r*(1-s)
+H,M,D : r*s r*(1-s) q*(1-d)*s q*(1-d)*(1-s) p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s)
+q*d*s q*d*(1-s) p*2*d*(1-d)*s p*2*d*(1-d)*(1-s) o*(1-d)*s o*(1-d)*(1-s)
+p*d*d*s p*d*d*(1-s) o*d*s o*d*(1-s) p*s p*(1-s)
+H,L,C : p*s p*(1-s) o*(1-d)*s o*(1-d)*(1-s) p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s)
+o*d*s o*d*(1-s) p*2*d*(1-d)*s p*2*d*(1-d)*(1-s) q*(1-d)*s q*(1-d)*(1-s)
+p*d*d*s p*d*d*(1-s) q*d*s q*d*(1-s) r*s r*(1-s)
+H,L,D : r*s r*(1-s) q*(1-d)*s q*(1-d)*(1-s) p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s)
+q*d*s q*d*(1-s) p*2*d*(1-d)*s p*2*d*(1-d)*(1-s) o*(1-d)*s o*(1-d)*(1-s)
+p*d*d*s p*d*d*(1-s) o*d*s o*d*(1-s) p*s p*(1-s)
+M,H,C : p*s p*(1-s) o*d*s o*d*(1-s) p*d*d*s p*d*d*(1-s)
+o*(1-d)*s o*(1-d)*(1-s) p*2*d*(1-d)*s p*2*d*(1-d)*(1-s) q*d*s q*d*(1-s)
+p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s) q*(1-d)*s q*(1-d)*(1-s) r*s r*(1-s)
+M,H,D : r*s r*(1-s) q*d*s q*d*(1-s) p*d*d*s p*d*d*(1-s)
+q*(1-d)*s q*(1-d)*(1-s) p*2*(1-d)*d*s p*2*(1-d)*d*(1-s) o*d*s o*d*(1-s)
+p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s) o*(1-d)*s o*(1-d)*(1-s) p*s p*(1-s)
+M,M,C : p*s p*(1-s) o/2*s o/2*(1-s) p/4*s p/4*(1-s)
+o/2*s o/2*(1-s) p/2*s p/2*(1-s) q/2*s q/2*(1-s)
+p/4*s p/4*(1-s) q/2*s q/2*(1-s) r*s r*(1-s)
+M,M,D : r*s r*(1-s) q/2*s q/2*(1-s) p/4*s p/4*(1-s)
+q/2*s q/2*(1-s) p/2*s p/2*(1-s) o/2*s o/2*(1-s)
+p/4*s p/4*(1-s) o/2*s o/2*(1-s) p*s p*(1-s)
+M,L,C : p*s p*(1-s) o*(1-d)*s o*(1-d)*(1-s) p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s)
+o*d*s o*d*(1-s) p*2*d*(1-d)*s p*2*d*(1-d)*(1-s) q*(1-d)*s q*(1-d)*(1-s)
+p*d*d*s p*d*d*(1-s) q*d*s q*d*(1-s) r*s r*(1-s)
+M,L,D : r*s r*(1-s) q*(1-d)*s q*(1-d)*(1-s) p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s)
+q*d*s q*d*(1-s) p*2*d*(1-d)*s p*2*d*(1-d)*(1-s) o*(1-d)*s o*(1-d)*(1-s)
+p*d*d*s p*d*d*(1-s) o*d*s o*d*(1-s) p*s p*(1-s)
+L,H,C : p*s p*(1-s) o*d*s o*d*(1-s) p*d*d*s p*d*d*(1-s)
+o*(1-d)*s o*(1-d)*(1-s) p*2*d*(1-d)*s p*2*d*(1-d)*(1-s) q*d*s q*d*(1-s)
+p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s) q*(1-d)*s q*(1-d)*(1-s) r*s r*(1-s)
+L,H,D : r*s r*(1-s) q*d*s q*d*(1-s) p*d*d*s p*d*d*(1-s)
+q*(1-d)*s q*(1-d)*(1-s) p*2*(1-d)*d*s p*2*(1-d)*d*(1-s) o*d*s o*d*(1-s)
+p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s) o*(1-d)*s o*(1-d)*(1-s) p*s p*(1-s)
+L,M,C : p*s p*(1-s) o*d*s o*d*(1-s) p*d*d*s p*d*d*(1-s)
+o*(1-d)*s o*(1-d)*(1-s) p*2*d*(1-d)*s p*2*d*(1-d)*(1-s) q*d*s q*d*(1-s)
+p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s) q*(1-d)*s q*(1-d)*(1-s) r*s r*(1-s)
+L,M,D : r*s r*(1-s) q*d*s q*d*(1-s) p*d*d*s p*d*d*(1-s)
+q*(1-d)*s q*(1-d)*(1-s) p*2*(1-d)*d*s p*2*(1-d)*d*(1-s) o*d*s o*d*(1-s)
+p*(1-d)*(1-d)*s p*(1-d)*(1-d)*(1-s) o*(1-d)*s o*(1-d)*(1-s) p*s p*(1-s)
+L,L,C : p*s p*(1-s) o/2*s o/2*(1-s) p/4*s p/4*(1-s)
+o/2*s o/2*(1-s) p/2*s p/2*(1-s) q/2*s q/2*(1-s)
+p/4*s p/4*(1-s) q/2*s q/2*(1-s) r*s r*(1-s)
+L,L,D : r*s r*(1-s) q/2*s q/2*(1-s) p/4*s p/4*(1-s)
+q/2*s q/2*(1-s) p/2*s p/2*(1-s) o/2*s o/2*(1-s)
+p/4*s p/4*(1-s) o/2*s o/2*(1-s) p*s p*(1-s)
+
+Payoff Matrix
+Player1: (2*(p+o/2+p/4)+(o/2+p/2+q/2))*(2-c)
+(2*(r+q/2+p/4)+(q/2+p/2+o/2))*(2-c)
+(2*(p+o*(1-d)+p*(1-d)*(1-d))+(o*d+2*p*d*(1-d)+q*(1-d)))*(2-c)
+(2*(r+q*(1-d)+p*(1-d)*(1-d))+(q*d+2*p*d*(1-d)+o*(1-d)))*(2-c)
+(2*(p+o*(1-d)+p*(1-d)*(1-d))+(o*d+2*p*d*(1-d)+q*(1-d)))*(2-c)
+(2*(r+q*(1-d)+p*(1-d)*(1-d))+(q*d+2*p*d*(1-d)+o*(1-d)))*(2-c)
+(2*(p+o*d+*p*d*d)+(o*(1-d)+2*p*(1-d)*d+q*d))*(15/10-c)
+(2*(r+q*d+p*d*d)+(q*(1-d)+2*p*(1-d)*d+o*d))*(15/10-c)
+(2*(p+o/2+p/4)+(o/2+p/2+q/2))*(15/10-c)
+(2*(r+q/2+p/4)+(q/2+p/2+o/2))*(15/10-c)
+(2*(p+o*(1-d)+*p*(1-d)*(1-d))+(o*d+2*p*d*(1-d)+q*(1-d)))*(15/10-c)
+(2*(r+q*(1-d)+p*(1-d)*(1-d))+(q*d+2*p*d*(1-d)+o*(1-d)))*(15/10-c)
+(2*(p+o*d+*p*d*d)+(o*(1-d)+2*p*(1-d)*d+q*d))*(1-c)
+(2*(r+q*d+p*d*d)+(q*(1-d)+2*p*(1-d)*d+o*d))*(1-c)
+(2*(p+o*d+*p*d*d)+(o*(1-d)+2*p*(1-d)*d+q*d))*(1-c)
+(2*(r+q*d+p*d*d)+(q*(1-d)+2*p*(1-d)*d+o*d))*(1-c)
+(2*(p+o/2+p/4)+(o/2+p/2+q/2))*(1-c)
+(2*(r+q/2+p/4)+(q/2+p/2+o/2))*(1-c)
+Player2: (2*(p+o/2+p/4)+(o/2+p/2+q/2))*(2-c)
+(2*(r+q/2+p/4)+(q/2+p/2+o/2))*(2-c)
+(2*(p+o*d+*p*d*d)+(o*(1-d)+2*p*(1-d)*d+q*d))*(15/10-c)
+(2*(r+q*d+p*d*d)+(q*(1-d)+2*p*(1-d)*d+o*d))*(15/10-c)
+(2*(p+o*d+*p*d*d)+(o*(1-d)+2*p*(1-d)*d+q*d))*(1-c)
+(2*(r+q*d+p*d*d)+(q*(1-d)+2*p*(1-d)*d+o*d))*(1-c)
+(2*(p+o*(1-d)+*p*(1-d)*(1-d))+(o*d+2*p*d*(1-d)+q*(1-d)))*(2-c)
+(2*(r+q*(1-d)+p*(1-d)*(1-d))+(q*d+2*p*d*(1-d)+o*(1-d)))*(2-c)
+(2*(p+o/2+p/4)+(o/2+p/2+q/2))*(15/10-c)
+(2*(r+q/2+p/4)+(q/2+p/2+o/2))*(15/10-c)
+(2*(p+o*d+*p*d*d)+(o*(1-d)+2*p*(1-d)*d+q*d))*(1-c)
+(2*(r+q*d+p*d*d)+(q*(1-d)+2*p*(1-d)*d+o*d))*(1-c)
+(2*(p+o*(1-d)+*p*(1-d)*(1-d))+(o*d+2*p*d*(1-d)+q*(1-d)))*(2-c)
+(2*(r+q*(1-d)+p*(1-d)*(1-d))+(q*d+2*p*d*(1-d)+o*(1-d)))*(2-c)
+(2*(p+o*(1-d)+*p*(1-d)*(1-d))+(o*d+2*p*d*(1-d)+q*(1-d)))*(15/10-c)
+(2*(r+q*(1-d)+p*(1-d)*(1-d))+(q*d+2*p*d*(1-d)+o*(1-d)))*(15/10-c)
+(2*(p+o/2+p/4)+(o/2+p/2+q/2))*(1-c)
+(2*(r+q/2+p/4)+(q/2+p/2+o/2))*(1-c)
+Environment: 0 0 0 0 0 0 0 0

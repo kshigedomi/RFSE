@@ -1,0 +1,48 @@
+Title : Chicken Game 2MP-2MP
+Discount Rate : 0.9
+Variables : p=0.9 q=0.005 l=0.3 g=1.2
+Players : Player1 Player2
+
+Automaton Player1
+States : C0 D0 D1 C1
+Actions : C D
+Signals : g b
+C0 C
+D0 D
+D1 D
+C1 C
+C0 g D1
+C0 b D0
+D0 g D0
+D0 b C0
+D1 g D0
+D1 b C1
+C1 g C1
+C1 b D0
+
+Automaton Player2
+States : C0 D0 D1 C1
+Actions : C D
+Signals : g b
+C0 C
+D0 D
+D1 D
+C1 C
+C0 g D1
+C0 b D0
+D0 g D0
+D0 b C0
+D1 g D0
+D1 b C1
+C1 g C1
+C1 b D0
+
+Signal Distribution
+C,C : p q q 1-p-2*q
+C,D : q 1-p-2*q p q
+D,C : q p 1-p-2*q q
+D,D : 1-p-2*q q q p
+
+Payoff Matrix
+Player1: 1 l g 0
+Player2: 1 g l 0 

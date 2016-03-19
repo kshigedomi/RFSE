@@ -1,0 +1,648 @@
+Title : Prisoner's Dilemma 1MP-1MP
+Discount Rate : 0.9
+Variables : p=0.7 q=0.01 x=0.01 y=0.01
+Players : Player1 Player2
+
+Automaton Player1
+States : R P1 P2
+Actions : CCC CCD CDC CDD DCC DCD DDC DDD
+Signals : ggg ggb gbg gbb bgg bgb bbg bbb
+R CCC
+P1 DDD
+P2 CDD
+R ggg R
+R ggb R
+R gbg R
+R gbb R
+R bgg P2
+R bgb P1
+R bbg P1
+R bbb P1
+P1 ggg P1
+P1 ggb P1
+P1 gbg P1
+P1 gbb P1
+P1 bgg R
+P1 bgb R
+P1 bbg R
+P1 bbb R
+P2 ggg R
+P2 ggb R
+P2 gbg R
+P2 gbb R
+P2 bgg P1
+P2 bgb P1
+P2 bbg P1
+P2 bbb P1
+
+Automaton Player2
+States : R P1 P2
+Actions : CCC CCD CDC CDD DCC DCD DDC DDD
+Signals : ggg ggb gbg gbb bgg bgb bbg bbb
+R CCC
+P1 DDD
+P2 CDD
+R ggg R
+R ggb R
+R gbg R
+R gbb R
+R bgg P2
+R bgb P1
+R bbg P1
+R bbb P1
+P1 ggg P1
+P1 ggb P1
+P1 gbg P1
+P1 gbb P1
+P1 bgg R
+P1 bgb R
+P1 bbg R
+P1 bbb R
+P2 ggg R
+P2 ggb R
+P2 gbg R
+P2 gbb R
+P2 bgg P1
+P2 bgb P1
+P2 bbg P1
+P2 bbb P1
+
+Signal Distribution
+CCC,CCC : p*p*p p*p*q p*q*p p*q*q q*p*p q*p*q q*q*p q*q*q
+p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q)
+CCC,CCD : p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*p*p p*p*q p*q*p p*q*q q*p*p q*p*q q*q*p q*q*q
+p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q
+CCC,CDC : p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+p*p*p p*p*q p*q*p p*q*q q*p*p q*p*q q*q*p q*q*q
+p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+CCC,CDD : p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*p*p p*p*q p*q*p p*q*q q*p*p q*p*q q*q*p q*q*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+CCC,DCC : q*p*p q*p*q q*q*p q*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q)
+p*p*p p*p*q p*q*p p*q*q q*p*p q*p*q q*q*p q*q*q
+p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+CCC,DCD : q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q
+p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*p*p p*p*q p*q*p p*q*q q*p*p q*p*q q*q*p q*q*q
+p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+CCC,DDC : q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+p*p*p p*p*q p*q*p p*q*q q*p*p q*p*q q*q*p q*q*q
+p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+CCC,DDD : q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*p*p p*p*q p*q*p p*q*q q*p*p q*p*q q*q*p q*q*q
+CCD,CCC : p*p*q p*p*p p*q*q p*q*p q*p*q q*p*p q*q*q q*q*p
+p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+q*p*q q*p*p q*q*q q*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q
+CCD,CCD : p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+p*p*q p*p*p p*q*q p*q*p q*p*q q*p*p q*q*q q*q*p
+p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*p*q q*p*p q*q*q q*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p
+CCD,CDC : p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+p*p*q p*p*p p*q*q p*q*p q*p*q q*p*p q*q*q q*q*p
+p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q
+q*p*q q*p*p q*q*q q*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+CCD,CDD : p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+p*p*q p*p*p p*q*q p*q*p q*p*q q*p*p q*q*q q*q*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*p*q q*p*p q*q*q q*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+CCD,DCC : q*p*q q*p*p q*q*q q*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q
+p*p*q p*p*p p*q*q p*q*p q*p*q q*p*p q*q*q q*q*p
+p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+CCD,DCD : q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*p*q q*p*p q*q*q q*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p
+p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+p*p*q p*p*p p*q*q p*q*p q*p*q q*p*p q*q*q q*q*p
+p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+CCD,DDC : q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q
+q*p*q q*p*p q*q*q q*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+p*p*q p*p*p p*q*q p*q*p q*p*q q*p*p q*q*q q*q*p
+p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+CCD,DDD : q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*p*q q*p*p q*q*q q*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+p*p*q p*p*p p*q*q p*q*p q*p*q q*p*p q*q*q q*q*p
+CDC,CCC : p*q*p p*q*q p*p*p p*p*q q*q*p q*q*q q*p*p q*p*q
+p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+CDC,CCD : p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+p*q*p p*q*q p*p*p p*p*q q*q*p q*q*q q*p*p q*p*q
+p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+CDC,CDC : p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*q*p p*q*q p*p*p p*p*q q*q*p q*q*q q*p*p q*p*q
+p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q)
+CDC,CDD : p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+p*q*p p*q*q p*p*p p*p*q q*q*p q*q*q q*p*p q*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q
+CDC,DCC : q*q*p q*q*q q*p*p q*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+p*q*p p*q*q p*p*p p*p*q q*q*p q*q*q q*p*p q*p*q
+p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+CDC,DCD : q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+p*q*p p*q*q p*p*p p*p*q q*q*p q*q*q q*p*p q*p*q
+p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+CDC,DDC : q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q)
+p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*q*p p*q*q p*p*p p*p*q q*q*p q*q*q q*p*p q*p*q
+p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+CDC,DDD : q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q
+p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+p*q*p p*q*q p*p*p p*p*q q*q*p q*q*q q*p*p q*p*q
+CDD,CCC : p*q*q p*q*p p*p*q p*p*p q*q*q q*q*p q*p*q q*p*p
+p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+q*q*q q*q*p q*p*q q*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+CDD,CCD : p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+p*q*q p*q*p p*p*q p*p*p q*q*q q*q*p q*p*q q*p*p
+p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q
+q*q*q q*q*p q*p*q q*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+CDD,CDC : p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+p*q*q p*q*p p*p*q p*p*p q*q*q q*q*p q*p*q q*p*p
+p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*q*q q*q*p q*p*q q*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q
+CDD,CDD : p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+p*q*q p*q*p p*p*q p*p*p q*q*q q*q*p q*p*q q*p*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q
+q*q*q q*q*p q*p*q q*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p
+CDD,DCC : q*q*q q*q*p q*p*q q*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+p*q*q p*q*p p*p*q p*p*p q*q*q q*q*p q*p*q q*p*p
+p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+CDD,DCD : q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q
+q*q*q q*q*p q*p*q q*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+p*q*q p*q*p p*p*q p*p*p q*q*q q*q*p q*p*q q*p*p
+p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+CDD,DDC : q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*q*q q*q*p q*p*q q*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q
+p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+p*q*q p*q*p p*p*q p*p*p q*q*q q*q*p q*p*q q*p*p
+p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+CDD,DDD : q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q
+q*q*q q*q*p q*p*q q*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p
+p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+p*q*q p*q*p p*p*q p*p*p q*q*q q*q*p q*p*q q*p*p
+DCC,CCC : q*p*p q*p*q q*q*p q*q*q p*p*p p*p*q p*q*p p*q*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q)
+(1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*p*p q*p*q q*q*p q*q*q
+(1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+DCC,CCD : q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q p*p*p p*p*q p*q*p p*q*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q
+(1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*p*p q*p*q q*q*p q*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+DCC,CDC : q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q p*p*p p*p*q p*q*p p*q*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+(1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*p*p q*p*q q*q*p q*q*q
+(1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+DCC,CDD : q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q p*p*p p*p*q p*q*p p*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+(1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*p*p q*p*q q*q*p q*q*q
+DCC,DCC : (1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*p*p q*p*q q*q*p q*q*q
+(1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q p*p*p p*p*q p*q*p p*q*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q)
+DCC,DCD : (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*p*p q*p*q q*q*p q*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q p*p*p p*p*q p*q*p p*q*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q
+DCC,DDC : (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+(1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*p*p q*p*q q*q*p q*q*q
+(1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q p*p*p p*p*q p*q*p p*q*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+DCC,DDD : (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q
+(1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*p*p (1-p-2*q)*p*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*p*p q*p*q q*q*p q*q*q
+q*q*q q*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q)
+q*q*p q*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q p*q*p p*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q
+q*p*q q*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*p*q p*p*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*p*p q*p*q q*q*p q*q*q p*p*p p*p*q p*q*p p*q*q
+DCD,CCC : q*p*q q*p*p q*q*q q*q*p p*p*q p*p*p p*q*q p*q*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q
+(1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*p*q q*p*p q*q*q q*q*p
+(1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+DCD,CCD : q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q
+q*p*q q*p*p q*q*q q*q*p p*p*q p*p*p p*q*q p*q*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p
+(1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*p*q q*p*p q*q*q q*q*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+DCD,CDC : q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q
+q*p*q q*p*p q*q*q q*q*p p*p*q p*p*p p*q*q p*q*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+(1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*p*q q*p*p q*q*q q*q*p
+(1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+DCD,CDD : q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q
+q*p*q q*p*p q*q*q q*q*p p*p*q p*p*p p*q*q p*q*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+(1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*p*q q*p*p q*q*q q*q*p
+DCD,DCC : (1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*p*q q*p*p q*q*q q*q*p
+(1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+q*p*q q*p*p q*q*q q*q*p p*p*q p*p*p p*q*q p*q*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q
+DCD,DCD : (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*p*q q*p*p q*q*q q*q*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q
+q*p*q q*p*p q*q*q q*q*p p*p*q p*p*p p*q*q p*q*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p
+DCD,DDC : (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+(1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*p*q q*p*p q*q*q q*q*p
+(1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q
+q*p*q q*p*p q*q*q q*q*p p*p*q p*p*p p*q*q p*q*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q
+DCD,DDD : (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p
+(1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*p*q (1-p-2*q)*p*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*p*q q*p*p q*q*q q*q*p
+q*q*(1-p-2*q) q*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q
+q*q*q q*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p p*q*q p*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p
+q*p*(1-p-2*q) q*p*q q*q*(1-p-2*q) q*q*q p*p*(1-p-2*q) p*p*q p*q*(1-p-2*q) p*q*q
+q*p*q q*p*p q*q*q q*q*p p*p*q p*p*p p*q*q p*q*p
+DDC,CCC : q*q*p q*q*q q*p*p q*p*q p*q*p p*q*q p*p*p p*p*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q q*q*p q*q*q q*p*p q*p*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+(1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+DDC,CCD : q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q p*q*p p*q*q p*p*p p*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q q*q*p q*q*q q*p*p q*p*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+DDC,CDC : q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q p*q*p p*q*q p*p*p p*p*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q)
+(1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q q*q*p q*q*q q*p*p q*p*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+DDC,CDD : q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q p*q*p p*q*q p*p*p p*p*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q q*q*p q*q*q q*p*p q*p*q
+DDC,DCC : (1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q q*q*p q*q*q q*p*p q*p*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+(1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q p*q*p p*q*q p*p*p p*p*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+DDC,DCD : (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q q*q*p q*q*q q*p*p q*p*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q p*q*p p*q*q p*p*p p*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q
+DDC,DDC : (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q q*q*p q*q*q q*p*p q*p*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q p*q*p p*q*q p*p*p p*p*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q)
+DDC,DDD : (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q)
+(1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*p (1-p-2*q)*q*q q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*p*q (1-p-2*q)*p*(1-p-2*q) q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q)
+(1-p-2*q)*q*p (1-p-2*q)*q*q (1-p-2*q)*p*p (1-p-2*q)*p*q q*q*p q*q*q q*p*p q*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*(1-p-2*q) q*q*q q*q*(1-p-2*q) p*(1-p-2*q)*q p*(1-p-2*q)*(1-p-2*q) p*q*q p*q*(1-p-2*q)
+q*(1-p-2*q)*p q*(1-p-2*q)*q q*q*p q*q*q p*(1-p-2*q)*p p*(1-p-2*q)*q p*q*p p*q*q
+q*q*q q*q*(1-p-2*q) q*p*q q*p*(1-p-2*q) p*q*q p*q*(1-p-2*q) p*p*q p*p*(1-p-2*q)
+q*q*p q*q*q q*p*p q*p*q p*q*p p*q*q p*p*p p*p*q
+DDD,CCC : q*q*q q*q*p q*p*q q*p*p p*q*q p*q*p p*p*q p*p*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p q*q*q q*q*p q*p*q q*p*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+(1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+DDD,CCD : q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q
+q*q*q q*q*p q*p*q q*p*p p*q*q p*q*p p*p*q p*p*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p q*q*q q*q*p q*p*q q*p*p
+(1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+DDD,CDC : q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q
+q*q*q q*q*p q*p*q q*p*p p*q*q p*q*p p*p*q p*p*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+(1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p q*q*q q*q*p q*p*q q*p*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+DDD,CDD : q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q
+q*q*q q*q*p q*p*q q*p*p p*q*q p*q*p p*p*q p*p*p
+(1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p q*q*q q*q*p q*p*q q*p*p
+DDD,DCC : (1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p q*q*q q*q*p q*p*q q*p*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+(1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+q*q*q q*q*p q*p*q q*p*p p*q*q p*q*p p*p*q p*p*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q
+DDD,DCD : (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p q*q*q q*q*p q*p*q q*p*p
+(1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q
+q*q*q q*q*p q*p*q q*p*p p*q*q p*q*p p*p*q p*p*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p
+DDD,DDC : (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+(1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p q*q*q q*q*p q*p*q q*p*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q
+q*q*q q*q*p q*p*q q*p*p p*q*q p*q*p p*p*q p*p*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q
+DDD,DDD : (1-p-2*q)*(1-p-2*q)*(1-p-2*q) (1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q
+(1-p-2*q)*(1-p-2*q)*q (1-p-2*q)*(1-p-2*q)*p (1-p-2*q)*q*q (1-p-2*q)*q*p q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p
+(1-p-2*q)*q*(1-p-2*q) (1-p-2*q)*q*q (1-p-2*q)*p*(1-p-2*q) (1-p-2*q)*p*q q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q
+(1-p-2*q)*q*q (1-p-2*q)*q*p (1-p-2*q)*p*q (1-p-2*q)*p*p q*q*q q*q*p q*p*q q*p*p
+q*(1-p-2*q)*(1-p-2*q) q*(1-p-2*q)*q q*q*(1-p-2*q) q*q*q p*(1-p-2*q)*(1-p-2*q) p*(1-p-2*q)*q p*q*(1-p-2*q) p*q*q
+q*(1-p-2*q)*q q*(1-p-2*q)*p q*q*q q*q*p p*(1-p-2*q)*q p*(1-p-2*q)*p p*q*q p*q*p
+q*q*(1-p-2*q) q*q*q q*p*(1-p-2*q) q*p*q p*q*(1-p-2*q) p*q*q p*p*(1-p-2*q) p*p*q
+q*q*q q*q*p q*p*q q*p*p p*q*q p*q*p p*p*q p*p*p
+
+Payoff Matrix
+CCC,CCC : 1+1+1 1+1+1
+CCC,CCD : 1+1+(-y) 1+1+1+x
+CCC,CDC : 1+(-y)+1 1+1+x+1
+CCC,CDD : 1+(-y)+(-y) 1+1+x+1+x
+CCC,DCC : (-y)+1+1 1+x+1+1
+CCC,DCD : (-y)+1+(-y) 1+x+1+1+x
+CCC,DDC : (-y)+(-y)+1 1+x+1+x+1
+CCC,DDD : (-y)+(-y)+(-y) 1+x+1+x+1+x
+CCD,CCC : 1+1+1+x 1+1+(-y)
+CCD,CCD : 1+1+0 1+1+0
+CCD,CDC : 1+(-y)+1+x 1+1+x+(-y)
+CCD,CDD : 1+(-y)+0 1+1+x+0
+CCD,DCC : (-y)+1+1+x 1+x+1+(-y)
+CCD,DCD : (-y)+1+0 1+x+1+0
+CCD,DDC : (-y)+(-y)+1+x 1+x+1+x+(-y)
+CCD,DDD : (-y)+(-y)+0 1+x+1+x+0
+CDC,CCC : 1+1+x+1 1+(-y)+1
+CDC,CCD : 1+1+x+(-y) 1+(-y)+1+x
+CDC,CDC : 1+0+1 1+0+1
+CDC,CDD : 1+0+(-y) 1+0+1+x
+CDC,DCC : (-y)+1+x+1 1+x+(-y)+1
+CDC,DCD : (-y)+1+x+(-y) 1+x+(-y)+1+x
+CDC,DDC : (-y)+0+1 1+x+0+1
+CDC,DDD : (-y)+0+(-y) 1+x+0+1+x
+CDD,CCC : 1+1+x+1+x 1+(-y)+(-y)
+CDD,CCD : 1+1+x+0 1+(-y)+0
+CDD,CDC : 1+0+1+x 1+0+(-y)
+CDD,CDD : 1+0+0 1+0+0
+CDD,DCC : (-y)+1+x+1+x 1+x+(-y)+(-y)
+CDD,DCD : (-y)+1+x+0 1+x+(-y)+0
+CDD,DDC : (-y)+0+1+x 1+x+0+(-y)
+CDD,DDD : (-y)+0+0 1+x+0+0
+DCC,CCC : 1+x+1+1 (-y)+1+1
+DCC,CCD : 1+x+1+(-y) (-y)+1+1+x
+DCC,CDC : 1+x+(-y)+1 (-y)+1+x+1
+DCC,CDD : 1+x+(-y)+(-y) (-y)+1+x+1+x
+DCC,DCC : 0+1+1 0+1+1
+DCC,DCD : 0+1+(-y) 0+1+1+x
+DCC,DDC : 0+(-y)+1 0+1+x+1
+DCC,DDD : 0+(-y)+(-y) 0+1+x+1+x
+DCD,CCC : 1+x+1+1+x (-y)+1+(-y)
+DCD,CCD : 1+x+1+0 (-y)+1+0
+DCD,CDC : 1+x+(-y)+1+x (-y)+1+x+(-y)
+DCD,CDD : 1+x+(-y)+0 (-y)+1+x+0
+DCD,DCC : 0+1+1+x 0+1+(-y)
+DCD,DCD : 0+1+0 0+1+0
+DCD,DDC : 0+(-y)+1+x 0+1+x+(-y)
+DCD,DDD : 0+(-y)+0 0+1+x+0
+DDC,CCC : 1+x+1+x+1 (-y)+(-y)+1
+DDC,CCD : 1+x+1+x+(-y) (-y)+(-y)+1+x
+DDC,CDC : 1+x+0+1 (-y)+0+1
+DDC,CDD : 1+x+0+(-y) (-y)+0+1+x
+DDC,DCC : 0+1+x+1 0+(-y)+1
+DDC,DCD : 0+1+x+(-y) 0+(-y)+1+x
+DDC,DDC : 0+0+1 0+0+1
+DDC,DDD : 0+0+(-y) 0+0+1+x
+DDD,CCC : 1+x+1+x+1+x (-y)+(-y)+(-y)
+DDD,CCD : 1+x+1+x+0 (-y)+(-y)+0
+DDD,CDC : 1+x+0+1+x (-y)+0+(-y)
+DDD,CDD : 1+x+0+0 (-y)+0+0
+DDD,DCC : 0+1+x+1+x 0+(-y)+(-y)
+DDD,DCD : 0+1+x+0 0+(-y)+0
+DDD,DDC : 0+0+1+x 0+0+(-y)
+DDD,DDD : 0+0+0 0+0+0

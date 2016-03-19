@@ -1,0 +1,51 @@
+Title : Battle Of Sexes 1MP-1MP
+Discount Rate : 0.9
+Variables : p=0.8 q=0.005 e=0.000001 l=1 g=2
+Players : Player1 Player2
+
+Automaton Player1
+States : C D
+Actions : C D N
+Signals : c d n0 n1
+C C
+D D
+C c C
+C d D
+C n0 C
+C n1 C
+D c C
+D d D
+D n0 D
+D n1 D
+
+
+Automaton Player2
+States : C D
+Actions : C D N
+Signals : c d n0 n1
+C C
+D D
+C c C
+C d D
+C n0 C
+C n1 C
+D c C
+D d D
+D n0 D
+D n1 D
+
+
+Signal Distribution
+C,C : p q q/2 q/2 q (1-p-4*q-e)/4 (1-p-4*q-e)/8 (1-p-4*q-e)/8 q/2 (1-p-4*q-e)/8 e/2 (1-p-4*q-e)/8 q/2 (1-p-4*q-e)/8 (1-p-4*q-e)/8 e/2
+C,D : q (1-p-4*q-e)/4 (1-p-4*q-e)/8 (1-p-4*q-e)/8 p q q/2 q/2 q/2 (1-p-4*q-e)/8 e/2 (1-p-4*q-e)/8 q/2 (1-p-4*q-e)/8 (1-p-4*q-e)/8 e/2
+C,N : q (1-p-4*q-e)/4 (1-p-4*q-e)/8 (1-p-4*q-e)/8 q (1-p-4*q-e)/4 (1-p-4*q-e)/8 (1-p-4*q-e)/8 p/2 q/2 e/2 q/2 p/2 q/2 q/2 e/2
+D,C : q p q/2 q/2 (1-p-4*q-e)/4 q (1-p-4*q-e)/8 (1-p-4*q-e)/8 (1-p-4*q-e)/8 q/2 e/2 (1-p-4*q-e)/8 (1-p-4*q-e)/8 q/2 (1-p-4*q-e)/8 e/2
+D,D : (1-p-4*q-e)/4 q (1-p-4*q-e)/8 (1-p-4*q-e)/8 q p q/2 q/2 (1-p-4*q-e)/8 q/2 e/2 (1-p-4*q-e)/8 (1-p-4*q-e)/8 q/2 (1-p-4*q-e)/8 e/2
+D,N : (1-p-4*q-e)/4 q (1-p-4*q-e)/8 (1-p-4*q-e)/8 (1-p-4*q-e)/4 q (1-p-4*q-e)/8 (1-p-4*q-e)/8 q/2 p/2 e/2 q/2 q/2 p/2 q/2 e/2
+N,C : q q p/2 p/2 (1-p-4*q-e)/4 (1-p-4*q-e)/4 q/2 q/2 (1-p-4*q-e)/8 (1-p-4*q-e)/8 e/2 q/2 (1-p-4*q-e)/8 (1-p-4*q-e)/8 q/2 e/2
+N,D : (1-p-4*q-e)/4 (1-p-4*q-e)/4 q/2 q/2 q q p/2 p/2 (1-p-4*q-e)/8 (1-p-4*q-e)/8 e/2 q/2 (1-p-4*q-e)/8 (1-p-4*q-e)/8 q/2 e/2
+N,N : (1-p-4*q-e)/4 (1-p-4*q-e)/4 q/2 q/2 (1-p-4*q-e)/4 (1-p-4*q-e)/4 q/2 q/2 q/2 q/2 e/2 p/2 q/2 q/2 p/2 e/2
+
+Payoff Matrix
+Player1: 0 l 0 g 0 0 0 0 0
+Player2: 0 g 0 l 0 0 0 0 0

@@ -1,0 +1,62 @@
+Title : 3PD-2NMP
+Discount Rate : 0.9
+Variables : p=0.97 q=0.005
+Players : Player1 Player2
+Method : Expand
+
+Automaton Player1
+States : N0 D0 D1
+Actions : C N D
+Signals : g n b
+N0 N
+D0 D
+D1 D
+N0 g D0
+N0 n N0
+N0 b D0
+D0 g D0
+D0 n D0
+D0 b D1
+D1 g D0
+D1 n D0
+D1 b N0
+
+Automaton Player2
+States : N0 D0 D1
+Actions : C N D
+Signals : g n b
+N0 N
+D0 D
+D1 D
+N0 g D0
+N0 n N0
+N0 b D0
+D0 g D0
+D0 n D0
+D0 b D1
+D1 g D0
+D1 n D0
+D1 b N0
+
+Signal Distribution
+C,C : p q q q (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4
+C,N : q (1-p-4*q)/4 (1-p-4*q)/4 p q q q (1-p-4*q)/4 (1-p-4*q)/4
+C,D : q (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4 p q q
+N,C : q p q (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4
+N,N : (1-p-4*q)/4 q (1-p-4*q)/4 q p q (1-p-4*q)/4 q (1-p-4*q)/4
+N,D : (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4 q p q
+D,C : q q p (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4 q
+D,N : (1-p-4*q)/4 (1-p-4*q)/4 q q q p (1-p-4*q)/4 (1-p-4*q)/4 q
+D,D : (1-p-4*q)/4 (1-p-4*q)/4 q (1-p-4*q)/4 (1-p-4*q)/4 q q q p
+
+
+Payoff Matrix
+C,C : 1 1
+C,N : 0 1.25
+C,D : -1 1.5
+N,C : 1.25 0
+N,N : 0.5 0.5
+N,D : -0.5 0.75
+D,C : 1.5 -1
+D,N : 0.75 -0.5
+D,D : 0 0

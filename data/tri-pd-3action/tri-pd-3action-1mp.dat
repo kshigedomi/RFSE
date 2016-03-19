@@ -1,0 +1,101 @@
+Title : Prisoner's Dilemma 1MP-1MP
+Discount Rate : 0.9
+Variables : p=0.95 x=1 c=0.1 l=0.1 y=0.5
+Players : Player1 Player2 Player3
+
+Automaton Player1
+States : R P
+Actions : C D I
+Signals : g b i
+R C
+P D
+R g R
+R i P
+R b P
+P g P
+P i P
+P b P
+
+Automaton Player2
+States : R P
+Actions : C D I
+Signals : g b i
+R C
+P D
+R g R
+R i P
+R b P
+P g P
+P i P
+P b P
+
+Automaton Player3
+States : R P
+Actions : C D I
+Signals : g b i
+R C
+P D
+R g R
+R i P
+R b P
+P g P
+P i P
+P b P
+
+Signal Distribution
+C,C,C : p q q q r r q r r q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8
+C,C,D : q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 p q q q r r q r r q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8
+C,C,I : q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 p q q q r r q r r
+C,D,C : q p q r q r r q r r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8
+C,D,D : r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 q p q r q r r q r r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8
+C,D,I : r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 q p q r q r r q r
+C,I,C : q q p r r q r r q r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r
+C,I,D : r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r q q p r r q r r q r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r
+C,I,I : r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r q q p r r q r r q
+D,C,C : q r r p q q q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8
+D,C,D : r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r p q q q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8
+D,C,I : r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r p q q q r r
+D,D,C : r q r q p q r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8
+D,D,D : (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r q p q r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8
+D,D,I : (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r q p q r q r
+D,I,C : r r q q q p r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r
+D,I,D : (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q q q p r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r
+D,I,I : (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q q q p r r q
+I,C,C : q r r q r r p q q r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r
+I,C,D : r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r q r r q r r p q q r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r
+I,C,I : r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 q r r q r r q r r p q q
+I,D,C : r q r r q r q p q (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r
+I,D,D : (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r r q r r q r q p q (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r
+I,D,I : (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 r q r r q r r q r q p q
+I,I,C : r r q r r q q q p (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q
+I,I,D : (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q r r q r r q q q p (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q
+I,I,I : (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r (1-p-6*q-12*r)/8 (1-p-6*q-12*r)/8 r r r q r r q r r q q q p
+
+Payoff Matrix
+C,C,C : x-c x-c x-c
+C,C,D : -c x-c x
+C,C,I : y-c x-c x-l
+C,D,C : x-c x -c
+C,D,D : -c x 0
+C,D,I : y-c x -l
+C,I,C : x-c x-l y-c
+C,I,D : -c x-l y
+C,I,I : y-c x-l y-l
+D,C,C : x -c x-c
+D,C,D : 0 -c x
+D,C,I : y -c x-l
+D,D,C : x 0 -c
+D,D,D : 0 0 0
+D,D,I : y 0 -l
+D,I,C : x -l y-c
+D,I,D : 0 -l y
+D,I,I : y -l y-l
+I,C,C : x-l y-c x-c
+I,C,D : -l y-c x
+I,C,I : y-l y-c x-l
+I,D,C : x-l y -c
+I,D,D : -l y 0
+I,D,I : y-l y -l
+I,I,C : x-l y-l y-c
+I,I,D : -l y-l y
+I,I,I : y-l y-l y-l

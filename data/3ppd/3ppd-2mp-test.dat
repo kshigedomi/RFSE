@@ -1,0 +1,62 @@
+Title : 3PlayerPD-2MP
+Discount Rate : 0.9
+Variables : p=0.95 q=0.005 r=0.001 l=1 g=0.5
+Players : Player1 Player2 Player3
+Method : Expand
+
+Automaton Player1
+States : C0 D0 C1
+Actions : C D
+Signals : g b
+C0 C
+D0 D
+C1 C
+C0 g C1
+C0 b D0
+D0 g C0
+D0 b D0
+C1 g C1
+C1 b C0
+
+Automaton Player2
+States : C0 D0 C1
+Actions : C D
+Signals : g b
+C0 C
+D0 D
+C1 C
+C0 g C1
+C0 b D0
+D0 g C0
+D0 b D0
+C1 g C1
+C1 b C0
+
+Automaton Player3
+States : C0 D0 C1
+Actions : C D
+Signals : g b
+C0 C
+D0 D
+C1 C
+C0 g C1
+C0 b D0
+D0 g C0
+D0 b D0
+C1 g C1
+C1 b C0
+
+Signal Distribution
+C,C,C : p q q r q r r 1-p-3*q-3*r 
+D,C,C : r 1-p-3*q-3*r q r q r p q 
+C,D,C : r q 1-p-3*q-3*r r q p r q 
+D,D,C : 1-p-3*q-3*r r r q r q q p 
+C,C,D : r q q p 1-p-3*q-3*r r r q 
+D,C,D : 1-p-3*q-3*r r r q r q q p 
+C,D,D : 1-p-3*q-3*r r r q r q q p 
+D,D,D : 1-p-3*q-3*r r r q r q q p 
+
+Payoff Matrix
+Player1: 1 -l -l -l l+g l+g l+g 0
+Player2: 1 -l l+g l+g -l -l l+g 0
+Player3: 1 l+g -l l+g -l l+g -l 0
