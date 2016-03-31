@@ -58,12 +58,12 @@ bool Belief::checkValidity() const
 {
 	PreciseNumber sum = ZERO;
 	for (int i = 0; i < dimension; i++) {
-		if ((belief[i] < ZERO && !equal(belief[i], ZERO)) || (belief[i] > ONE && !equal(belief[i], ONE))) {
+		if ((belief[i] < ZERO && !MyUtil::equal(belief[i], ZERO)) || (belief[i] > ONE && !MyUtil::equal(belief[i], ONE))) {
 			return false;
 		}
 		sum += belief[i];
 	}
-	if (!equal(sum, ONE)) return false;
+	if (!MyUtil::equal(sum, ONE)) return false;
 	return true;
 }
 
@@ -90,9 +90,9 @@ vector<PreciseNumber> Belief::getVector() const {
  */
 string Belief::toString() const{
    string res;
-   res += "(" + rationalToString(belief[0]);
+   res += "(" + MyUtil::rationalToString(belief[0]);
    for (int i = 1; i < dimension; ++i)
-      res += ", " + rationalToString(belief[i]);
+      res += ", " + MyUtil::rationalToString(belief[i]);
    res += ")";
    return res;
 }
@@ -101,9 +101,12 @@ string Belief::toString() const{
  * 機能: 信念をセット
  * 引数: どの index を value にセットするか
  */
-void Belief::set(int index, PreciseNumber value) {
-	if (abs(value) == 0) value = 0;
-	belief[index] = value;
+void Belief::set(const int index, const PreciseNumber& value) {
+	if (abs(value) == 0) {
+        belief[index] = ZERO;
+    } else {
+        belief[index] = value;
+    }
 }
 
 /*
@@ -147,7 +150,7 @@ bool operator > (const Belief& lhs, const Belief& rhs) {
 bool operator == (const Belief& lhs, const Belief& rhs) {
 	if (lhs.getDimension() != rhs.getDimension()) return false;
 	for (int i = 0; i < rhs.getDimension(); i++) {
-		if (!equal(lhs.get(i), rhs.get(i))) return false;
+		if (!MyUtil::equal(lhs.get(i), rhs.get(i))) return false;
 	}
 	return true;
 }
@@ -156,7 +159,7 @@ bool operator == (const Belief& lhs, const Belief& rhs) {
 bool operator != (const Belief& lhs, const Belief& rhs) {
 	if (lhs.getDimension() != rhs.getDimension()) return true;
 	for (int i = 0; i < rhs.getDimension(); i++) {
-		if (!equal(lhs.get(i), rhs.get(i))) return true;
+		if (!MyUtil::equal(lhs.get(i), rhs.get(i))) return true;
 	}
 	return false;
 }
@@ -198,17 +201,18 @@ ostream& operator<<(ostream& os, const Belief& b) {
  * 返り値: 期待値最大の ex のインデックスとその利得
  */
 pair<int, PreciseNumber> getMaxIndexAndReward(const Belief &b, const vector<vector<PreciseNumber> > &ex) {
-   PreciseNumber maxReward = -INF;
-   int maxIndex = 0;
-   const vector<PreciseNumber>::size_type size = ex.size();
-   for (vector<PreciseNumber>::size_type i = 0; i < size; ++i) {
-	 const PreciseNumber reward = getRewardFromAlphaVectorAndBelief(ex[i], b); // この信念における利得を計算
-      if (reward > maxReward) {
-         maxReward = reward;
-         maxIndex = i;
-      }
+    PreciseNumber maxReward = -INF;
+    int maxIndex = 0;
+    typedef vector<PreciseNumber>::size_type size_type;
+    const size_type size = ex.size();
+    for (size_type i = 0; i < size; ++i) {
+        const PreciseNumber reward = getRewardFromAlphaVectorAndBelief(ex[i], b); // この信念における利得を計算
+        if (reward > maxReward) {
+            maxReward = reward;
+            maxIndex = i;
+        }
    }
-   return make_pair(maxIndex, maxReward);
+    return make_pair(maxIndex, maxReward);
 }
 
 /*
@@ -217,8 +221,8 @@ pair<int, PreciseNumber> getMaxIndexAndReward(const Belief &b, const vector<vect
  * 返り値: 期待値最大の利得
  */
 PreciseNumber getMaxReward(const Belief &b, const vector<vector<PreciseNumber> > &ex) {
-   const pair<int, PreciseNumber> maxInfo = getMaxIndexAndReward(b, ex);
-   return maxInfo.second;
+    const pair<int, PreciseNumber> maxInfo = getMaxIndexAndReward(b, ex);
+    return maxInfo.second;
 }
 
 /*
@@ -237,105 +241,3 @@ vector<Belief> makeBeliefSpace(const int opponentStates) {
    return beliefSpace;
 }
 
-/*
- * 機能: 信念を2次元の gnuplot 用のポイントに変える
- * 引数: poly（凸集合の端点）
- * 返り値: gnuplot 用のポイントの集合 
- * メモ: 信念で囲まれる領域を filledcurves close で書けるように
- *       "x y1 y2" という形式に変えている
- * 注意: もちろん3次元の信念にしか使えない
- */
-vector<string> gnuplotString(const vector<Belief> &poly) {
-  /*
-   * 信念空間そのものは高さ1,1辺 2/sqrt(3) の正三角形で描く
-   * 原点は底辺の真ん中で,その対角をなす頂点が, b=(1,0,0) の点
-   * すると,
-   * Belief = (a, b, c) とすると point = ((1-a)/sqrt(3) - 2*b/sqrt(3), a)
-   * 例えば, Belief = (0, 1, 0) なら point = (-1/sqrt(3), 0)
-   */
-   vector<pair<PreciseNumber, PreciseNumber> > points;
-   for (vector<Belief>::size_type i = 0; i < poly.size(); ++i) {
-      PreciseNumber y = poly[i].get(0);
-      PreciseNumber x = (1-poly[i].get(0))/sqrt(3)-2*poly[i].get(1)/sqrt(3);
-      points.push_back(make_pair(x, y));
-   }
-   sort(points.begin(), points.end());
-
-  /*
-   * gnuplot の filledcurves closed が使えるように,
-   * "x, minY, maxY" という形に変える
-   * そのために,真ん中の頂点に対応する minY or maxY を見つける必要がある
-   */
-
-   vector<string> res;
-   // 端は閉じている
-   res.push_back(rationalToString(points[0].first) + "\t" + rationalToString(points[0].second) + "\t" + rationalToString(points[0].second));
-
-   for (vector<pair<PreciseNumber, PreciseNumber> >::size_type i = 1; i < points.size() - 1; ++i) {
-	 const pair<PreciseNumber, PreciseNumber> target = points[i]; // target の minY or maxY を見つけ出す
-	 PreciseNumber maxY = target.second, minY = target.second; // point は凸集合の端点なので,maxY か minY は元の Y と同じ
-      for (vector<pair<PreciseNumber, PreciseNumber> >::size_type l = 0; l < i; ++l) {
-         for (vector<pair<PreciseNumber, PreciseNumber> >::size_type r = i+1; r < points.size(); ++r) {
-		   // points[l] と points[r] で引かれる直線の式を見つける
-            const PreciseNumber xGap = points[r].first-points[l].first;
-            if (xGap != ZERO) {
-               const PreciseNumber slope = (points[r].second - points[l].second)/xGap;
-               const PreciseNumber y = slope*target.first + points[l].second - slope*points[l].first;
-               maxY = max(maxY, y);
-               minY = min(minY, y);
-            }
-         }
-      }
-      res.push_back(rationalToString(target.first) + "\t" + rationalToString(minY) + "\t" + rationalToString(maxY));
-   }
-
-   // 端は閉じている
-   res.push_back(rationalToString(points[points.size()-1].first) + "\t" + rationalToString(points[points.size() - 1].second) + "\t" + rationalToString(points[points.size()-1].second));
-   return res;
-}
-vector<string> gnuplotString2(const vector<Belief> &poly) {
-  /*
-   * 信念空間そのものは高さ1 の直角三角形で描く
-   * 原点は直角で，(1,0) が b=(1,0,0), (0,1) が b=(0,1,0)
-   */
-   vector<pair<PreciseNumber, PreciseNumber> > points;
-   for (vector<Belief>::size_type i = 0; i < poly.size(); ++i) {
-	 const PreciseNumber x = poly[i].get(0);
-	 const PreciseNumber y = poly[i].get(1);
-	 points.push_back(make_pair(x, y));
-   }
-   sort(points.begin(), points.end());
-
-  /*
-   * gnuplot の filledcurves closed が使えるように,
-   * "x, minY, maxY" という形に変える
-   * そのために,真ん中の頂点に対応する minY or maxY を見つける必要がある
-   */
-
-   vector<string> res;
-   // 端は閉じている
-   res.push_back(rationalToString(points[0].first) + "\t" + rationalToString(points[0].second) + "\t" + rationalToString(points[0].second));
-
-   for (vector<pair<PreciseNumber, PreciseNumber> >::size_type i = 1; i < points.size() - 1; ++i) {
-	 const pair<PreciseNumber, PreciseNumber> target = points[i]; // target の minY or maxY を見つけ出す
-	 PreciseNumber maxY = target.second, minY = target.second; // point は凸集合の端点なので,maxY か minY は元の Y と同じ
-      for (vector<pair<PreciseNumber, PreciseNumber> >::size_type l = 0; l < i; ++l) {
-         for (vector<pair<PreciseNumber, PreciseNumber> >::size_type r = i+1; r < points.size(); ++r) {
-		   // points[l] と points[r] で引かれる直線の式を見つける
-            const PreciseNumber xGap = points[r].first-points[l].first;
-            if (xGap != ZERO) {
-               const PreciseNumber slope = (points[r].second - points[l].second)/xGap;
-               const PreciseNumber y = slope*target.first + points[l].second - slope*points[l].first;
-               maxY = max(maxY, y);
-               minY = min(minY, y);
-            }
-         }
-      }
-      res.push_back(rationalToString(target.first) + "\t" + rationalToString(minY) + "\t" + rationalToString(maxY));
-   }
-
-   // 端は閉じている
-   res.push_back(rationalToString(points[points.size()-1].first) + "\t" + rationalToString(points[points.size() - 1].second) + "\t" + rationalToString(points[points.size()-1].second));
-   return res;
-}
-         

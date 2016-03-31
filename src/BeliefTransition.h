@@ -1,6 +1,10 @@
 #ifndef BELIEFTRANSITION_H_
 #define BELIEFTRANSITION_H_
 
+#ifndef AUTOMATON_H_
+#include "Automaton.h"
+#endif
+
 #ifndef COMMON_H_
 #include "Common.h"
 #endif
@@ -21,8 +25,8 @@
 #include "Payoff.h"
 #endif
 
-#ifndef PLAYERS_H_
-#include "Players.h"
+#ifndef JOINTFSA_H_
+#include "JointFSA.h"
 #endif
 
 class MissNextBelief{};
@@ -39,7 +43,7 @@ class BeliefTransition {
     vector<vector<vector<vector<PreciseNumber> > > > beliefTransition;
 
  public:
-    void make(const Environment &env, const Payoff &pd, const Players &pls);
+    void make(const Environment &env, const Payoff &pd, const vector<Automaton> &pls);
     Belief nextBelief(const Belief &b, const int myAction, const int mySignal) const;
     vector<Belief> nextBeliefSet(const vector<Belief> &bd, const int action, const int signal) const;
     vector<Belief> nextBeliefDivision(const vector<Belief> &bd, const int action, const int signal) const;
@@ -48,11 +52,11 @@ class BeliefTransition {
     BeliefMatrix nextBeliefMatrix(const BeliefMatrix &bMatrix, const pair<int, int> &lastOb) const;
     Belief nextBeliefFromBeliefMatrix(const Belief &b, const BeliefMatrix &bMatrix) const;
 
-    Belief oldNextBelief(const Environment &env, const Players &pls, const Belief &bp, const int myAction, const int mySignal) const;
+    Belief oldNextBelief(const Environment &env, const vector<Automaton> &ms, const Belief &bp, const int myAction, const int mySignal) const;
     
-    void test(const Environment &env, const Players &pls, const Belief &bp) const;
-    void test(const Environment &env, const Players &pls, const Belief &bp, const int myAction, const int mySignal) const;
-    string toString(const Environment &environment, const Players &players) const;
+    void test(const Environment &env, const vector<Automaton> &ms, const Belief &bp) const;
+    void test(const Environment &env, const vector<Automaton> &ms, const Belief &bp, const int myAction, const int mySignal) const;
+    string toString(const Environment &environment, const vector<Automaton> &ms) const;
 };
 ostream& operator<<(ostream &os, const Belief& b);
 #endif

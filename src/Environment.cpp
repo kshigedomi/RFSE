@@ -18,228 +18,171 @@
 #include "Environment.h"
 
 Environment::Environment() {
-	numPlayers = 0;
-	totalNumOfActions = 0;
-	totalNumOfSignals = 0;
+	this->numPlayers = 0;
+	this->totalNumOfActions = 0;
+	this->totalNumOfSignals = 0;
     // existCDOption = false;
 }
 
-Environment::Environment(const PreciseNumber &dR, const vector<int> &nA, const vector<int> &nS) {
-	configure(dR, nA, nS);
+Environment::Environment(const vector<int> &nA, const vector<int> &nS) {
+	this->configure(nA, nS);
 }
 
 Environment::~Environment() {
 }
 
-/*
-* check validity at signal distribution and correlation devise if exists.
-*/
-bool Environment::checkEnvironment(const Players& pls) const {
+bool Environment::isValidEnvironment( void ) const {
 	PreciseNumber sum = ZERO;
-    for (int apIndex = 0; apIndex < getNumberOfActionProfiles(); ++apIndex) {
-       sum = ZERO;
-       for (int spIndex = 0; spIndex < getNumberOfSignalProfiles(); ++spIndex) {
-          const PreciseNumber prob = getSignalDistribution(apIndex, spIndex);
-		  if (prob < ZERO  || prob > ONE ) {
-			 cout << "ERROR: Signal Distribution Error " << endl;
-			 cout << "Action: " + pls.actionProfileToString(pls.getActionProfile(apIndex)) << endl;
-			 cout << "Signal: " + pls.signalProfileToString(pls.getSignalProfile(spIndex)) << endl;
-			 cout << "Prob: " + rationalToString(prob)<< endl;
-			 cout << "RawProb: " + getRawSignalDistribution(apIndex, spIndex) << endl;
-			return false;
-          }
-          sum += prob;
-       }
-       if (!equal(sum, ONE)) {
-           cout << "ERROR: Signal Distribution Error" << endl;
-           cout << "Action : " + pls.actionProfileToString(pls.getActionProfile(apIndex)) << endl;
-           cout << "Sum : " + rationalToString(sum) << endl;
-		cout << "RawProb: " + getRawSignalDistribution(0,0) << endl;
-          return false;
-       }
+    ActionProfile ap;
+    
+    for (int apIndex = 0; apIndex < this->getNumberOfActionProfiles(); ++apIndex) {
+        sum = ZERO;
+        for (int spIndex = 0; spIndex < this->getNumberOfSignalProfiles(); ++spIndex) {
+            const PreciseNumber prob = this->getSignalDistribution(apIndex, spIndex);
+            if (prob <= ZERO  || prob >= ONE ) {
+                return false;
+            }
+            sum += prob;
+        }
+        if (!MyUtil::equal(sum, ONE)) {
+            return false;
+        }
     }
     return true;
 }
 
-void Environment::configure(const PreciseNumber &dR, const vector<int> &nA, const vector<int> &nS) {
-	discountRate = dR;
-	numPlayers = nA.size();
-	numActionsOfPlayer = nA;
-	numSignalsOfPlayer = nS;
+/*
+* check validity at signal distribution and correlation devise if exists.
+*/
+void Environment::checkEnvironment( void ) const {
+	PreciseNumber sum = ZERO;
+    ActionProfile ap;
+    
+    for (int apIndex = 0; apIndex < this->getNumberOfActionProfiles(); ++apIndex) {
+        sum = ZERO;
+        for (int spIndex = 0; spIndex < this->getNumberOfSignalProfiles(); ++spIndex) {
+            const PreciseNumber prob = this->getSignalDistribution(apIndex, spIndex);
+            if (prob <= ZERO  || prob >= ONE ) {
+                throw EnvironmentException("Signal Distiribution Error\n"
+                                           "Actions : " + ActionProfile(apIndex).toString() + "\n"
+                                           "Signals : " + SignalProfile(spIndex).toString() + "\n"
+                                           "Prob : " + MyUtil::rationalToString(prob) + "\n"
+                                           "RawProb : " + this->getRawSignalDistribution(apIndex, spIndex));
+            }
+            sum += prob;
+        }
+        if (!MyUtil::equal(sum, ONE)) {
+            throw EnvironmentException("Signal Distiribution Error\n"
+                                       "Actions : " + ActionProfile(apIndex).toString() + "\n"
+                                       "Sum : " + MyUtil::rationalToString(sum) + "\n"
+                                       "RawProb : " + this->getRawSignalDistribution(0, 0));
+        }
+    }
+}
 
-	totalNumOfActions = accumulate(numActionsOfPlayer.begin(), numActionsOfPlayer.end(), 1, multiplies<int>());
-	totalNumOfSignals = accumulate(numSignalsOfPlayer.begin(), numSignalsOfPlayer.end(), 1, multiplies<int>());
+void Environment::configure(const vector<int> &nA, const vector<int> &nS) {
+	this->numPlayers = nA.size();
+	this->numActionsOfPlayer = nA;
+	this->numSignalsOfPlayer = nS;
 
-	signalDistribution.resize(totalNumOfActions);
-	rawSignalDistribution.resize(totalNumOfActions);
+	this->totalNumOfActions = accumulate(numActionsOfPlayer.begin(), numActionsOfPlayer.end(), 1, multiplies<int>());
+	this->totalNumOfSignals = accumulate(numSignalsOfPlayer.begin(), numSignalsOfPlayer.end(), 1, multiplies<int>());
+
+	this->signalDistribution.resize(totalNumOfActions);
+    this->rawSignalDistribution.resize(totalNumOfActions);
 
 	for (int i = 0; i < totalNumOfActions; i++) {
-		signalDistribution[i].resize(totalNumOfSignals);
-		rawSignalDistribution[i].resize(totalNumOfSignals);
+		this->signalDistribution[i].resize(this->totalNumOfSignals);
+		this->rawSignalDistribution[i].resize(this->totalNumOfSignals);
 	}
 }
 
 void Environment::setDiscountRate(const PreciseNumber &dR) {
-	discountRate = dR;
-}
-
-void Environment::setSignalDistribution(const ActionProfile &ap, const SignalProfile &sp, const PreciseNumber &pr) {
-	setSignalDistribution(ap.getIndex(numActionsOfPlayer), sp.getIndex(numSignalsOfPlayer), pr);
+	this->discountRate = dR;
 }
 
 void Environment::setSignalDistribution(int ap, int sp, const PreciseNumber &pr) {
-	signalDistribution[ap][sp] = pr;
+	this->signalDistribution[ap][sp] = pr;
 }
 
-bool Environment::setRawSignalDistribution(const ActionProfile &ap, const SignalProfile &sp, const string &pr) {
-	return setRawSignalDistribution(ap.getIndex(numActionsOfPlayer), sp.getIndex(numSignalsOfPlayer), pr);
-}
-
-bool Environment::setRawSignalDistribution(int ap, int sp, const string &pr) {
-   if (ap < rawSignalDistribution.size() && sp < rawSignalDistribution[ap].size()) { // 型違い warning は仕方ない
-	rawSignalDistribution[ap][sp] = pr;
-	return true;
-  } else {
-     cout << ap << endl;
-     cout << rawSignalDistribution.size() << endl;
-     cout << sp << endl;
-     cout << rawSignalDistribution[ap].size() << endl;
-	return false;
-  }
-}
-
-void Environment::setEnvironmentFromEnvironment(const Environment &env, const bool transition, const int me) {
-	*this = env;
-	if (transition) {
-       swap(numActionsOfPlayer[PLAYER], numActionsOfPlayer[me]);
-       swap(numSignalsOfPlayer[PLAYER], numSignalsOfPlayer[me]);
-       for (int apIndex = 0; apIndex < getNumberOfActionProfiles(); ++apIndex) {
-          ActionProfile pastAp(apIndex, numActionsOfPlayer);
-          pastAp.swap(PLAYER, me);
-          for (int spIndex = 0; spIndex < getNumberOfSignalProfiles(); ++spIndex) {
-             SignalProfile pastSp(spIndex, numSignalsOfPlayer);
-             pastSp.swap(PLAYER, me);
-             PreciseNumber prob = env.getSignalDistribution(pastAp, pastSp);
-             string rawProb = env.getRawSignalDistribution(pastAp, pastSp);
-             setSignalDistribution(apIndex, spIndex, prob);
-             setRawSignalDistribution(apIndex, spIndex, rawProb);
-          }
-       }
+bool Environment::setRawSignalDistribution(const int ap, const int sp, const string &pr) {
+    if (ap < this->rawSignalDistribution.size() && sp < this->rawSignalDistribution[ap].size()) { // 型違い warning は仕方ない
+        this->rawSignalDistribution[ap][sp] = pr;
+    } else {
+        throw range_error("Environment::setRawSignalDistribution(" + MyUtil::toString(ap) + ", " + MyUtil::toString(sp) + ", " + pr + ")");
     }
 }
-             
-
-vector<int> Environment::getNumberOfActionsOfPlayer() const {
-	return numActionsOfPlayer;
-}
-
-vector<int> Environment::getNumberOfSignalsOfPlayer() const {
-	return numSignalsOfPlayer;
-}
-
 
 PreciseNumber Environment::getDiscountRate() const {
-	return discountRate;
+	return this->discountRate;
 }
 
-PreciseNumber Environment::getSignalDistribution(const ActionProfile &ap, const SignalProfile &sp) const {
-	return getSignalDistribution(ap.getIndex(numActionsOfPlayer), sp.getIndex(numSignalsOfPlayer));
+PreciseNumber Environment::getSignalDistribution(const int ap, const int sp) const {
+	return this->signalDistribution[ap][sp];
 }
 
-PreciseNumber Environment::getSignalDistribution(int ap, int sp) const {
-	return signalDistribution[ap][sp];
-}
-
-string Environment::getRawSignalDistribution(const ActionProfile &ap, const SignalProfile &sp) const {
-	return getRawSignalDistribution(ap.getIndex(numActionsOfPlayer), sp.getIndex(numSignalsOfPlayer));
-}
-
-string Environment::getRawSignalDistribution(int ap, int sp) const {
-	return rawSignalDistribution[ap][sp];
+string Environment::getRawSignalDistribution(const int ap, const int sp) const {
+	return this->rawSignalDistribution[ap][sp];
 }
 
 int Environment::getNumberOfActionProfiles() const {
-	return totalNumOfActions;
+	return this->totalNumOfActions;
 }
 
 int Environment::getNumberOfSignalProfiles() const {
-	return totalNumOfSignals;
+	return this->totalNumOfSignals;
 }
-/*
-int Environment::getNumberOfStateProfiles() const {
-	return totalNumOfStates;
-}
-vector<int> Environment::getNumberOfStatesOfPlayer() const {
-	return numStatesOfPlayer;
-}
-*/
-string Environment::toString(const Players &players) const {
-   string s;
-   s += "* Discount rate : " + rationalToString(discountRate) + "\n";
+
+string Environment::toString( void ) const {
+    string s("");
+   s += "* Discount rate : " + MyUtil::rationalToString(discountRate) + "\n";
    s += "* Raw signal distribution\n";
-   s += rawSignalDistributionToString(players);
+   s += this->rawSignalDistributionToString();
    s += "* Signal distribution\n";
-   s += signalDistributionToString(players);
+   s += this->signalDistributionToString();
    return s;
 }
 
-void Environment::view(const Players &players) const {
-   cout << toString(players) << endl;
-}
-
-string Environment::rawSignalDistributionToString(const Players &players) const{
+string Environment::rawSignalDistributionToString( void ) const{
    string res;
-   for (int apIndex = 0; apIndex < getNumberOfActionProfiles(); ++apIndex) {
-      res += rawSignalDistributionToString(ActionProfile(apIndex, numActionsOfPlayer), players);
-   }
+   ActionProfile ap;
+   do {
+      res += this->rawSignalDistributionToString(ap);
+   } while (ap.next());
    return res;
 }
 
-string Environment::rawSignalDistributionToString(const ActionProfile &ap, const Players &players) const{
-   const int space = 10;
-   const int apIndex = ap.getIndex(numActionsOfPlayer);
+string Environment::rawSignalDistributionToString(const ActionProfile &ap) const{
+    const int space = 10;
+    // Action
+    string res = "Action : " + ap.toString() + "\n" ;
+    // Raw Signal Distribution
+    SignalProfile sp;
+    do {
+        const string rawProb = this->getRawSignalDistribution(ap.getIndex(), sp.getIndex());
+        res += "** Signal : " + sp.toString() + " " + MyUtil::spaceToString(rawProb, space) + "\n";
+    } while (sp.next());
+    return res;
+}
+
+string Environment::signalDistributionToString( void ) const{
+   string res;
+   ActionProfile ap;
+   do {
+       res += this->signalDistributionToString(ap);
+   } while (ap.next());
+   return res;
+}
+string Environment::signalDistributionToString(const ActionProfile &ap) const{
+   string res = "";
    // Action
-   string res = "Action : (" + players.getNameOfActions(PLAYER, ap[0]);
-   for (int pl = OPPONENT; pl < numPlayers; ++pl) 
-      res += ", " + players.getNameOfActions(pl,ap[pl]);
-   res += ")\n";
-   // Raw Signal Distribution
-   for (int spIndex = 0; spIndex < getNumberOfSignalProfiles(); ++spIndex) {
-      const SignalProfile sp = players.getSignalProfile(spIndex);
-      res += "** Signal : (" + players.getNameOfSignals(PLAYER, sp[PLAYER]);
-      for (int pl = OPPONENT; pl < players.getNumberOfPlayers(); ++pl)
-         res += ", " + players.getNameOfSignals(pl, sp[pl]);
-      res += ")  ";
-      const string rawProb = getRawSignalDistribution(apIndex, spIndex);
-      res += spaceToString(rawProb, space) + "\n";
-   }
-   return res;
-}
-
-string Environment::signalDistributionToString(const Players &players) const{
-   string res;
-   for (int apIndex = 0; apIndex < getNumberOfActionProfiles(); ++apIndex) {
-      res += signalDistributionToString(ActionProfile(apIndex, numActionsOfPlayer), players);
-   }
-   return res;
-}
-string Environment::signalDistributionToString(const ActionProfile &ap, const Players &players) const{
-   string res;
-   const int apIndex = ap.getIndex(numActionsOfPlayer);
-   // Action
-   res += "Action : " + players.getNameOfActions(PLAYER, ap[0]);
-   for (int player = OPPONENT; player < numPlayers; ++player)
-      res += ", " + players.getNameOfActions(player, ap[player]);
-   res += "\n";
+   res += "Action : " + ap.toString() + "\n" ;
    // Signal Distribution
-   for (int spIndex = 0; spIndex < getNumberOfSignalProfiles(); ++spIndex) {
-      const SignalProfile sp = players.getSignalProfile(spIndex);
-      res += "** Signal : (" + players.getNameOfSignals(PLAYER, sp[PLAYER]);
-      for (int pl = OPPONENT; pl < players.getNumberOfPlayers(); ++pl)
-         res += ", " + players.getNameOfSignals(pl, sp[pl]);
-      res += ")  ";
-      res += rationalToString(getSignalDistribution(apIndex, spIndex)) + "\n";
-   }
+   SignalProfile sp;
+   do {
+       res += "** Signal : " + sp.toString()
+           + MyUtil::rationalToString(getSignalDistribution(ap.getIndex(), sp.getIndex())) + "\n";
+   } while (sp.next());
    return res;
 }
 
@@ -247,47 +190,13 @@ string Environment::signalDistributionToString(const ActionProfile &ap, const Pl
 * Hint: rawSignalDistribution holds string, for example "1-p-2*q", corresponding action profile and signal distribution.
 * Input:	variables: mappings string to number like p=0.95.
 */
-void Environment::setSignalDistributionFromRawSignalDistribution(map<string, PreciseNumber> &variables){
-   for (int apIndex = 0; apIndex < getNumberOfActionProfiles(); ++apIndex) {
-      for (int spIndex = 0; spIndex < getNumberOfSignalProfiles(); ++spIndex) {
-         string rawProb = getRawSignalDistribution(apIndex, spIndex);
-         setSignalDistribution(apIndex, spIndex, parseEquation(rawProb, variables));
-      }
-   }
+void Environment::setSignalDistributionFromRawSignalDistribution(const map<string, PreciseNumber> &variables){
+    for (int apIndex = 0; apIndex < this->getNumberOfActionProfiles(); ++apIndex) {
+        for (int spIndex = 0; spIndex < this->getNumberOfSignalProfiles(); ++spIndex) {
+            const string rawProb = this->getRawSignalDistribution(apIndex, spIndex);
+            this->setSignalDistribution(apIndex, spIndex, Parser::parseEquation(rawProb, variables));
+        }
+    }
 }
-
-/*
-void Environment::setRawCorrelationDevice(StateProfile sp, string v) {
-	setRawCorrelationDevice(sp.getIndex(numStatesOfPlayer), v);
-}
-
-void Environment::setRawCorrelationDevice(int sp, string v) {
-	rawCorrelationDevice[sp] = v;
-}
-
-vector<string> Environment::getRawCorrelationDevice() {
-	return rawCorrelationDevice;
-}
-
-void Environment::setCorrelationDevice(StateProfile sp, PreciseNumber v) {
-	setCorrelationDevice(sp.getIndex(numStatesOfPlayer), v);
-}
-
-void Environment::setCorrelationDevice(int sp, PreciseNumber v) {
-	correlationDevice[sp] = v;
-}
-
-vector<PreciseNumber> Environment::getCorrelationDevice() {
-	return correlationDevice;
-}
-void Environment::setCorrelationDeviceFromRawCorrelationDevice(map<string, PreciseNumber> variables) {
-	for (int i = 0; i < numStatesOfPlayer[0]; i++) {
-		for (int j = 0; j < numStatesOfPlayer[1]; j++) {
-			StateProfile sp(i, j);
-			setCorrelationDevice(sp, parseEquation(rawCorrelationDevice[sp.getIndex(numStatesOfPlayer)], variables));
-		}
-	}
-}
-*/
 
 

@@ -21,10 +21,6 @@
 #include "Profile.h"
 #endif
 
-#ifndef PLAYERS_H_
-#include "Players.h"
-#endif
-
 #ifndef UTIL_H_
 #include "Util.h"
 #endif
@@ -43,25 +39,20 @@ public:
 	virtual ~Payoff();
 	void configure(int nP, const vector<int> &nA);
 
-	void setRawPayoff(int player, const ActionProfile &ap, const string &reward);
 	void setRawPayoff(int player, int ap, const string &reward);
 
-	void setPayoff(int player, const ActionProfile &ap, const PreciseNumber &reward);
 	void setPayoff(int player, int ap, const PreciseNumber &reward);
 
 	void setPayoffFromRawPayoff(map<string, PreciseNumber> &variables);
 	void setPayoffFromPayoff(const Payoff &po, bool transition, const int me);
 
-	PreciseNumber getPayoff(int player, const ActionProfile &ap) const;
 	PreciseNumber getPayoff(int player, int ap) const;
 
-	string getRawPayoff(int player, const ActionProfile &ap) const;
 	string getRawPayoff(int player, int ap) const;
 
 	int getNumberOfActionProfiles() const;
 
-	void view(const Players &players) const;
-    string toString(const Players &players) const;
+    string toString() const;
 
 	const static bool modeDebug = true;
 	template<typename T> static void debugTitle(T msg) { if (modeDebug) { cout << "************ " << msg << " **************" << endl; } }

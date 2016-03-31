@@ -13,19 +13,10 @@
  */
 #include "Profile.h"
 
-Profile::Profile() {
-	dimension = 0;
-}
-
 Profile::~Profile() {
 }
 
-/*
-* Name: Profile(constructor)
-* Function: convert index of jointFSA to respective index of state, action, or signal
-* Input: index: index of jointFSA. bounds: radix like numStatesOfPlayer
-*/
-Profile::Profile(int index, const vector<int> &bounds) {
+Profile::Profile(int index, const vector<int> &argBounds, const vector<vector<string> >& name) : bounds(argBounds), nameData(name) {
 	dimension = bounds.size();
 	data.resize(dimension);
 	for (int i = dimension - 1; i >= 0; i--) {
@@ -34,75 +25,18 @@ Profile::Profile(int index, const vector<int> &bounds) {
 	}
 }
 
-Profile::Profile(const int myData, int index, const vector<int> &bounds) {
-   dimension = bounds.size();
-   data.resize(dimension);
-   for (int i = dimension - 1; i > 0; --i) {
-      data[i] = index % bounds[i];
-      index /= bounds[i];
-   }
-   data[PLAYER] = myData;
-}
-
-Profile::Profile(const int myData, const Profile &p) {
-   dimension = p.getSize() + 1;
-   data.resize(dimension);
-   for (int i = dimension - 1; i > 0; --i)
-      data[i] = p[i-1];
-   data[0] = myData;
-}
-
-Profile::Profile(const vector<int> &vec) {
-   dimension = vec.size();
-   data = vec;
-}
-
-Profile::Profile(int a) {
-	dimension = 1;
-	data.resize(dimension);
-	data[0] = a;
-}
-
-Profile::Profile(int a, int b) {
-	dimension = 2;
-	data.resize(dimension);
-	data[0] = a; data[1] = b;
-}
-
-Profile::Profile(int a, int b, int c) {
-	dimension = 3;
-	data.resize(dimension);
-	data[0] = a; data[1] = b; data[2] = c;
-}
-
-Profile::Profile(int a, int b, int c, int d) {
-	dimension = 4;
-	data.resize(dimension);
-	data[0] = a; data[1] = b; data[2] = c; data[3] = d;
-}
-
-Profile::Profile(int a, int b, int c, int d, int e) {
-	dimension = 5;
-	data.resize(dimension);
-	data[0] = a; data[1] = b; data[2] = c; data[3] = d; data[4] = e;
-}
-
-Profile::Profile(int a, int b, int c, int d, int e, int f) {
-	dimension = 6;
-	data.resize(dimension);
-	data[0] = a; data[1] = b; data[2] = c; data[3] = d; data[4] = e; data[5] = f;
+Profile::Profile(const int playerData, const Profile& opData, const vector<int> &argBounds, const vector<vector<string> >& name)
+    :  bounds(argBounds), nameData(name) {
+	this->dimension = bounds.size();
+    this->data.push_back(playerData);
+    copy(opData.begin(), opData.end(), back_inserter(this->data));
 }
 
 int Profile::getSize() const{
 	return dimension;
 }
 
-/*
-* Name: getIndex
-* Function: get index as joint FSA.
-* Input: bounds: radix like numActionsOfPlayers, numStatesOfPlayers, or numSignalsOfPlayer.
-*/
-int Profile::getIndex(const vector<int> &bounds) const{
+int Profile::getIndex() const{
 	int res = 0;
 	for (int i = 0; i < dimension; i++) {
 		res *= bounds[i];
@@ -111,58 +45,67 @@ int Profile::getIndex(const vector<int> &bounds) const{
 	return res;
 }
 
-int Profile::operator[] (int index) const{
-	if (index >= dimension) return -1;
+int& Profile::operator[] (const int index) {
 	return data[index];
 }
 
-void Profile::swap(const int i, const int j) {
-   swap(data[i], data[j]);
+const int& Profile::operator[] (const int index) const{
+	return data[index];
 }
 
-void Profile::view() const{
-	cout << "(";
-	for (int i = 0; i < dimension; i++) {
-		if (i > 0) cout << ",";
-		cout << data[i];
-	}
-	cout << ")" << endl;
+int& Profile::at(int index) {
+    return data.at(index);
 }
 
-void Profile::setValue(int index, int value){
-    if (index < dimension) {
-        data[index] = value;
-    } else {
-        cout<<"Wrong index in setting value for a profile!";
+const int& Profile::at(int index) const {
+    return data.at(index);
+}
+
+vector<int>::iterator Profile::begin( void ) {
+    return data.begin();
+}
+
+vector<int>::const_iterator Profile::begin( void ) const {
+    return data.begin();
+}
+
+vector<int>::iterator Profile::end( void ) {
+    return data.end();
+}
+
+vector<int>::const_iterator Profile::end( void ) const {
+    return data.end();
+}
+
+/*
+ * 機能: 次のプロファイルにする。
+ * 返り値: 次のプロファイルが存在しないなら false， そうでないなら true
+ */
+bool Profile::next() {
+    for (int i = dimension-1; i >= 0; --i) {
+        ++data[i];
+        if (data[i] < bounds[i])
+            return true;
+        else
+            data[i] = 0;
     }
+    return false;
 }
 
-int Profile::getValue(int index){
-    if (index < dimension) {
-        return data[index];
-    } else {
-        return -1;
-    }
+string Profile::toString() const {
+  string res = "(";
+  for (int i = 0; i < dimension; ++i) {
+	if (i != 0)
+	  res +=",";
+	res += nameData[i][data[i]];
+  }
+  res += ")";
+  return res;
 }
-
-Profile Profile::getOpponentProfile() const {
-  vector<int> opData;
-  copy(data.begin() + 1, data.end(), back_inserter(opData));
-  return Profile(opData);
-}
-
-string Profile::toString() const{
-   string res = "(";
-   res += ::toString(data[0]);
-   for (int i = 1; i < dimension; ++i)
-      res += ", " + ::toString(data[i]);
-   res += ")";
-   return res;
-}
+    
 
 ostream& operator<<(ostream &os, const Profile &p) {
-   os << p.toString();
-   return os;
+    return os << p.toString();
 }
 
 bool operator==(const Profile &lp, const Profile &rp) {
@@ -174,4 +117,45 @@ bool operator==(const Profile &lp, const Profile &rp) {
   }
   return true;
 }
-	
+
+ActionProfile::ActionProfile (int index)
+    : Profile(index, ActionProfile::numActionsOfPlayer, ActionProfile::nameActionsOfPlayer) {}
+ActionProfile::ActionProfile (const int a, const OpponentActionProfile &opAction)
+    : Profile(a, opAction, ActionProfile::numActionsOfPlayer, ActionProfile::nameActionsOfPlayer) {}
+vector<int> ActionProfile::numActionsOfPlayer;
+vector<vector<string> > ActionProfile::nameActionsOfPlayer;
+
+OpponentActionProfile::OpponentActionProfile (int index)
+    : Profile(index, OpponentActionProfile::numActionsOfOpponentPlayer, OpponentActionProfile::nameActionsOfOpponentPlayer) {}
+vector<int> OpponentActionProfile::numActionsOfOpponentPlayer;
+vector<vector<string> > OpponentActionProfile::nameActionsOfOpponentPlayer;
+
+
+StateProfile::StateProfile (int index)
+    : Profile(index, StateProfile::numStatesOfPlayer, StateProfile::nameStatesOfPlayer) {}
+StateProfile::StateProfile (const int a, const OpponentStateProfile &opState)
+    : Profile(a, opState, StateProfile::numStatesOfPlayer, StateProfile::nameStatesOfPlayer) {}
+vector<int> StateProfile::numStatesOfPlayer;
+vector<vector<string> > StateProfile::nameStatesOfPlayer;
+OpponentStateProfile::OpponentStateProfile (int index)
+    : Profile(index, OpponentStateProfile::numStatesOfOpponentPlayer, OpponentStateProfile::nameStatesOfOpponentPlayer) {}
+vector<int> OpponentStateProfile::numStatesOfOpponentPlayer;
+    // 自分プレイヤの状態の名前
+vector<vector<string> > OpponentStateProfile::nameStatesOfOpponentPlayer;
+
+
+SignalProfile::SignalProfile (int index)
+    : Profile(index, SignalProfile::numSignalsOfPlayer, SignalProfile::nameSignalsOfPlayer) {}
+SignalProfile::SignalProfile (const int a, const OpponentSignalProfile &opSignal)
+    : Profile(a, opSignal, SignalProfile::numSignalsOfPlayer, SignalProfile::nameSignalsOfPlayer) {}
+vector<int> SignalProfile::numSignalsOfPlayer;
+vector<vector<string> > SignalProfile::nameSignalsOfPlayer;
+
+OpponentSignalProfile::OpponentSignalProfile (int index)
+    : Profile(index, OpponentSignalProfile::numSignalsOfOpponentPlayer, OpponentSignalProfile::nameSignalsOfOpponentPlayer) {}
+vector<int> OpponentSignalProfile::numSignalsOfOpponentPlayer;
+vector<vector<string> > OpponentSignalProfile::nameSignalsOfOpponentPlayer;
+
+
+
+

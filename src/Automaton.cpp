@@ -37,10 +37,10 @@ Automaton::~Automaton() {
  * 機能: 状態数，行動数，シグナル数のセット，および resize
  */
 void Automaton::setNumberOfStates(const int nOSt) {
-   numStates = nOSt;
-   actionChoice.resize(numStates);
-   stateTransition.resize(numStates);
-   nameStates.resize(numStates);
+    this->numStates = nOSt;
+    actionChoice.resize(numStates);
+    stateTransition.resize(numStates);
+    nameStates.resize(numStates);
 }
 
 void Automaton::setNumberOfActions(const int nOAc) {
@@ -66,7 +66,7 @@ bool Automaton::checkRegularity() {
          tmp[st][nextState] = true;
       }
    }
-   return ::checkRegularity(tmp, 10);
+   return MyUtil::checkRegularity(tmp, 10);
 }
 /*
  * 機能: 状態を足す．
@@ -88,82 +88,84 @@ string Automaton::getNameOfActions(int index) const {
 string Automaton::getNameOfSignals(int index) const {
 	return nameSignals[index];
 }
+vector<string> Automaton::getNameOfStates() const {
+    return nameStates;
+}
+vector<string> Automaton::getNameOfActions() const {
+    return nameActions;
+}
+vector<string> Automaton::getNameOfSignals() const {
+    return nameSignals;
+}
 
 /*
  * 機能: 名前をセット
- * 返り値: セットしたら，true
- * メモ: 先に状態数，行動数，シグナル数を決める
+ * メモ: 状態数と異なる場合は例外を送出
  */
-bool Automaton::setNameOfStates(const vector<string> &names){
-   if (names.size() != getNumberOfStates()) { //型違い warning は仕方ない
-      return false;
-  } else {
-      nameStates = names;
-      return true;
+void Automaton::setNameOfStates(const vector<string> &names) {
+   if (names.size() != this->getNumberOfStates()) { //型違い warning は仕方ない
+       cout << "length_error" << endl;
+       throw length_error("Automaton::setNameOfStates");
+   } else {
+       this->nameStates = names;
    }
 }
 
-bool Automaton::setNameOfActions(const vector<string> &names) {
-   if (names.size() != getNumberOfActions()) //型違い warning は仕方ない
-      return false;
+void Automaton::setNameOfActions(const vector<string> &names) {
+   if (names.size() != this->getNumberOfActions()) //型違い warning は仕方ない
+       throw length_error("Automaton::setNameOfActions");
    else {
       nameActions = names;
-      return true;
    }
 }
 
-bool Automaton::setNameOfSignals(vector<string> &names) {
-   if (names.size() != getNumberOfSignals()) //型違い warning は仕方ない
-      return false;
+void Automaton::setNameOfSignals(const vector<string> &names) {
+   if (names.size() != this->getNumberOfSignals()) //型違い warning は仕方ない
+       throw length_error("Automaton::setNameOfSignals");
    else {
       nameSignals = names;
-      return true;
    }
 }
 
-bool Automaton::setNameOfState(const int state, const string &name) const {
+void Automaton::setNameOfState(const int state, const string &name) {
   if (state < getNumberOfStates()) {
 	nameStates[state] = name;
-	return true;
   } else {
-	return false;
+      throw range_error("Automaton::setNameOfState(" + MyUtil::toString(state) + ", " + name);
   }
 }
 
-bool Automaton::setNameOfAction(const int action, const string &name) {
+void Automaton::setNameOfAction(const int action, const string &name) {
   if (action < getNumberOfActions()) {
 	nameActions[action] = name;
-	return true;
   } else {
-	return false;
+      throw range_error("Automaton::setNameOfAction(" + MyUtil::toString(action) + ", " + name);
   }
 }
 
-bool Automaton::setNameOfSignal(const int signal, const string &name) {
-  if (signal < getNumberOfSignals()) {
-   nameSignals[signal] = name;
-   return true;
-  } else {
-	return false;
-  }
+void Automaton::setNameOfSignal(const int signal, const string &name) {
+    if (signal < getNumberOfSignals()) {
+        nameSignals[signal] = name;
+    } else {
+        throw range_error("Automaton::setNameOfSignal(" + MyUtil::toString(signal) + ", " + name);
+    }
 }
 
 /*
  * 機能: 選択行動をセット
  * 返り値: セットできたら true
  */
-bool Automaton::setActionChoice(const int state, const int action) {
+void Automaton::setActionChoice(const int state, const int action) {
   if (state < getNumberOfStates() && action < getNumberOfActions()) {
       this->actionChoice[state] = action;
-      return true;
    } else {
-      return false;
+      throw range_error("Automaton::setActionChoice(" + MyUtil::toString(state) + ", " + MyUtil::toString(action));
    }
 }
 /*
  * 機能: 選択行動を取得
  */
-int Automaton::getActionChoice(int state) const {
+int Automaton::getActionChoice(const int state) const {
 	return actionChoice[state];
 }
 
@@ -171,22 +173,21 @@ int Automaton::getActionChoice(int state) const {
  * 機能: 状態遷移をセット
  * 返り値: セットできたら true
  */
-bool Automaton::setStateTransition(const int state, const int signal, const int nextState) {
+void Automaton::setStateTransition(const int state, const int signal, const int nextState) {
   if (state < getNumberOfStates() && signal < getNumberOfSignals() && nextState < getNumberOfStates()) {
-	this->stateTransition[state][signal] = nextState;
-	return true;
+      this->stateTransition[state][signal] = nextState;
   } else {
-	return false;
+      throw range_error("Automaton::setStateTransition(" + MyUtil::toString(state) + ", " +  MyUtil::toString(signal) + ", " + MyUtil::toString(nextState));
   }
 }
 /*
  * 機能: 状態遷移を取得
  */
-int Automaton::getStateTransition(int state, int signal) const {
+int Automaton::getStateTransition(const int state, const int signal) const {
   return stateTransition[state][signal];
 }
 
-vector<int> Automaton::getStateTransition(int state) const {
+vector<int> Automaton::getStateTransition(const int state) const {
 	return stateTransition[state];
 }
 
@@ -207,16 +208,28 @@ int Automaton::getNumberOfSignals() const {
 /*
  * 機能: 状態数，行動数，シグナル数を取得
  */
-int Automaton::getIndexOfStates(string state) const {
-	return getIndex(nameStates, state);
+int Automaton::getIndexOfStates(const string& state) const {
+	const int res = MyUtil::getIndex(nameStates, state);
+    if (res < getNumberOfStates())
+        return res;
+    else
+        throw out_of_range("Automaton::getIndexOfStates(" + state + ")");
 }
 
-int Automaton::getIndexOfActions(string action) const {
-	return getIndex(nameActions, action);
+int Automaton::getIndexOfActions(const string& action) const {
+	const int res = MyUtil::getIndex(nameActions, action);
+    if (res < getNumberOfActions())
+        return res;
+    else
+        throw out_of_range("Automaton::getIndexOfActions(" + action + ")");
 }
 
-int Automaton::getIndexOfSignals(string signal) const {
-	return getIndex(nameSignals, signal);
+int Automaton::getIndexOfSignals(const string& signal) const {
+	const int res = MyUtil::getIndex(nameSignals, signal);
+    if (res < getNumberOfSignals())
+        return res;
+    else
+        throw out_of_range("Automaton::getIndexOfSignals(" + signal + ")");
 }
 
 /*
@@ -270,12 +283,12 @@ string Automaton::toRawString() const {
    // 選択行動
    res += "ActionChoice\n";
    for (int st = 0; st < numStates; ++st)
-      res += ::toString(st) + " " + ::toString(actionChoice[st]) + "\n";
+      res += MyUtil::toString(st) + " " + MyUtil::toString(actionChoice[st]) + "\n";
    // 状態遷移
    res += "StateTransition\n";
    for (int st = 0; st < numStates; ++st) {
       for (int sg = 0; sg < numSignals; ++sg)
-         res += ::toString(st) + " " + ::toString(sg) + " " + ::toString(stateTransition[st][sg]) + "\n";
+         res += MyUtil::toString(st) + " " + MyUtil::toString(sg) + " " + MyUtil::toString(stateTransition[st][sg]) + "\n";
    }
    return res;
 }
@@ -482,50 +495,36 @@ Automaton Automaton::deleteTransientFSA() {
 }
 
 /*
- * 機能: 選択行動から状態に名前をつける
- * メモ: 何かに使う
- */
-void Automaton::setExactNames() const{
-   vector<int> countAction(numActions, 0);
-   for (int st = 0; st < numStates; ++st) {
-      const int ac = actionChoice[st];
-      const string acStr = getNameOfActions(ac);
-      setNameOfState(st, acStr + ::toString(countAction[ac]));
-      ++countAction[ac];
-   }
-}
-
-/*
  * 機能: 文字列化
  */
 string Automaton::toString() const {
    string s;
    s += "States :";
-   for (int state = 0; state < getNumberOfStates(); ++state)
-      s += " " + getNameOfStates(state);
+   for (int state = 0; state < this->getNumberOfStates(); ++state)
+      s += " " + this->getNameOfStates(state);
    s += "\n";
    s += "Actions :";
-   for (int action = 0; action < getNumberOfActions(); ++action)
-      s += " " + getNameOfActions(action);
+   for (int action = 0; action < this->getNumberOfActions(); ++action)
+      s += " " + this->getNameOfActions(action);
    s += "\n";
    s += "Signals :";
-   for (int signal = 0; signal < getNumberOfSignals(); ++signal)
-      s += " " + getNameOfSignals(signal);
+   for (int signal = 0; signal < this->getNumberOfSignals(); ++signal)
+      s += " " + this->getNameOfSignals(signal);
    s += "\n";
-   for (int st=0; st<getNumberOfStates(); st++) {
-      s += getNameOfStates(st);
+   for (int st=0; st < this->getNumberOfStates(); st++) {
+      s += this->getNameOfStates(st);
       s += " ";
-      s += getNameOfActions(getActionChoice(st));
+      s += this->getNameOfActions(getActionChoice(st));
       s += "\n";
    }
-   for (int st=0; st<getNumberOfStates(); st++) {
-      for (int sg=0; sg<getNumberOfSignals(); sg++) {
-         int nextstate = getStateTransition(st,sg);
-         s += getNameOfStates(st);
+   for (int st=0; st < this->getNumberOfStates(); st++) {
+      for (int sg=0; sg < this->getNumberOfSignals(); sg++) {
+         int nextstate = this->getStateTransition(st,sg);
+         s += this->getNameOfStates(st);
          s += " ";
-         s += getNameOfSignals(sg);
+         s += this->getNameOfSignals(sg);
          s += " ";
-         s += getNameOfStates(nextstate);
+         s += this->getNameOfStates(nextstate);
          s += "\n";
       }
    }

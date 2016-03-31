@@ -5,9 +5,9 @@ int main(int argc, char *argv[]) {
       cout << "USAGE : MakeAutomaton datafiledir prefixdir numStates numActions numSignals" << endl;
       exit(1);
    }
-   const int numStates = toInteger(argv[3]);
-   const int numActions = toInteger(argv[4]);
-   const int numSignals = toInteger(argv[5]);
+   const int numStates = MyUtil::toInteger(argv[3]);
+   const int numActions = MyUtil::toInteger(argv[4]);
+   const int numSignals = MyUtil::toInteger(argv[5]);
    MakeAutomaton maker(argv[1], numStates, numActions, numSignals);
    ofstream fout(argv[2]);
    maker.put(fout);
@@ -43,9 +43,9 @@ bool MakeAutomaton::nextMatrix() {
       getline(fin, buf);
       if (buf.find("REGULAR GRAPH", 0) != string::npos) {
          for (int state = 0; state < numStates; ++state) {
-            const vector<string> matrixStr = splitAtSpace(fin);
+            const vector<string> matrixStr = MyUtil::splitAtSpace(fin);
             for (int nextState = 0; nextState < numStates; ++nextState) {
-               matrix[state][nextState] = toInteger(matrixStr[nextState]);
+               matrix[state][nextState] = MyUtil::toInteger(matrixStr[nextState]);
             }
          }
          return true;
@@ -148,7 +148,7 @@ void MakeAutomaton::setAutomaton() {
 }
 
 bool MakeAutomaton::nextActionChoices() {
-   return increment(actionChoices, numActions);
+   return MyUtil::increment(actionChoices, numActions);
 }
 
 // check not doing same action at all states
@@ -159,7 +159,7 @@ bool MakeAutomaton::checkActionChoices() const{
 
 bool MakeAutomaton::nextTransitions() {
    for (int state = 0; state < numStates; ++state) {
-      if (increment(signalToTransitions[state], getNumberOfBranches(state)))
+      if (MyUtil::increment(signalToTransitions[state], getNumberOfBranches(state)))
          return true;
    }
    return false;
@@ -192,19 +192,19 @@ string MakeAutomaton::toString() const {
    res += "* Matrix *\n";
    for (int i = 0; i < numStates; ++i) {
       for (int j = 0; j < numStates; ++j)
-         res += ::toString(matrix[i][j]);
+         res += MyUtil::toString(matrix[i][j]);
       res += "\n";
    }
 
    res += "* ActionChoice *\n";
    for (int i = 0; i < numStates; ++i)
-      res += ::toString(actionChoices[i]);
+      res += MyUtil::toString(actionChoices[i]);
    res +="\n";
 
    res += "* SignalToTransitions *\n";
    for (int i = 0; i < numStates; ++i) {
       for (int j = 0; j < numSignals; ++j)
-         res += ::toString(signalToTransitions[i][j]);
+         res += MyUtil::toString(signalToTransitions[i][j]);
       res += "\n";
    }
 

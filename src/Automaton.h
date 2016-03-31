@@ -20,7 +20,7 @@ class Automaton {
 	int numStates;
 	int numActions;
 	int numSignals;
-	mutable vector<string> nameStates;
+	vector<string> nameStates;
 	vector<string> nameActions;
 	vector<string> nameSignals;
 
@@ -37,35 +37,36 @@ public:
     void addOneState();
     bool checkRegularity();
 
-    void setWorstStrategy();
-
     void setNumberOfStates(const int nOSt);
     void setNumberOfActions(const int nOAc);
     void setNumberOfSignals(const int nOSg);
 
-    bool setActionChoice(const int state, const int action);
-	bool setStateTransition(const int state, const int signal, const int nextState);
-	int getActionChoice(int state) const;
-	int getStateTransition(int state, int signal) const;
-	vector<int> getStateTransition(int state) const;
+    void setActionChoice(const int state, const int action);
+	void setStateTransition(const int state, const int signal, const int nextState);
+	int getActionChoice(const int state) const;
+	int getStateTransition(const int state, const int signal) const;
+	vector<int> getStateTransition(const int state) const;
 
 	int getNumberOfStates() const;
 	int getNumberOfActions() const;
 	int getNumberOfSignals() const;
 
-	int getIndexOfStates(string state) const;
-	int getIndexOfActions(string action) const;
-	int getIndexOfSignals(string signal) const;
+	int getIndexOfStates(const string& state) const;
+	int getIndexOfActions(const string& action) const;
+	int getIndexOfSignals(const string& signal) const;
 
-	string getNameOfStates(int index) const;
-	bool setNameOfStates(const vector<string> &names);
-    bool setNameOfState(const int state, const string &name) const;
-	string getNameOfActions(int index) const;
-	bool setNameOfActions(const vector<string> &names);
-    bool setNameOfAction(const int state, const string &name);
-	string getNameOfSignals(int index) const;
-	bool setNameOfSignals(vector<string> &names);
-    bool setNameOfSignal(const int state, const string &name);
+    vector<string> getNameOfStates() const;
+	string getNameOfStates(const int index) const;
+	void setNameOfStates(const vector<string> &names);
+    void setNameOfState(const int state, const string &name);
+    vector<string> getNameOfActions() const;
+	string getNameOfActions(const int index) const;
+	void setNameOfActions(const vector<string> &names);
+    void setNameOfAction(const int state, const string &name);
+    vector<string> getNameOfSignals() const;
+	string getNameOfSignals(const int index) const;
+	void setNameOfSignals(const vector<string> &names);
+    void setNameOfSignal(const int state, const string &name);
 
 	vector<string> getNamesOfStates() const;
 	vector<string> getNamesOfActions() const;

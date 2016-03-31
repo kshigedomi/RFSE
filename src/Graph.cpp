@@ -120,7 +120,7 @@ string Graph::toString() const {
    string res;
    for (int i = 0; i < numOfStates; ++i) {
       for (int j = 0; j < numOfStates; ++j) {
-         res += ::toString(matrix[i][j]) + " ";
+         res += MyUtil::toString(matrix[i][j]) + " ";
       }
       res += "\n";
    }

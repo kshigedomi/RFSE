@@ -28,16 +28,16 @@
 #include "Payoff.h"
 #endif
 
-#ifndef PLAYERS_H_
-#include "Players.h"
-#endif
-
 #ifndef LOADER_H_
 #include "Loader.h"
 #endif
 
 #ifndef REPEATEDGAME_H_
 #include "RepeatedGame.h"
+#endif
+
+#ifndef REWARDEQUATION_H_
+#include "RewardEquation.h"
 #endif
 
 #ifndef UTIL_H_
@@ -52,65 +52,99 @@
 #include "Writer.h"
 #endif
 
-#include <boost/timer.hpp>
-#include <boost/regex.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <dirent.h>
-#include <sys/stat.h>
-
 enum Option {
-   NONE,AUTOMATONS,PARA,
-   REGULAR,PARA_REGULAR,SPECIAL,
-   REWARD,ASYM,PUBLIC,
+    NONE,AUTOMATONS,PARA,
+    REGULAR,SPECIAL,REWARD,
 };
 
-struct Range {
-	PreciseNumber from, to, interval;
-	bool error;
+class RFSE {
 
-	Range() : error(false) { }
-	Range(string sbuf) {
-		boost::regex expr("([0-9\\.]+),([0-9\\.]+),([0-9\\.]+)");
-		boost::smatch what;
+ private:
+    RepeatedGame rg;
+    Payoff payoff;
+    Environment environment;
+    vector<Automaton> automatons;
+    map<string,PreciseNumber> variables;
 
-		error = false;
+    void setAllAutomatons(const Automaton &m);
 
-		if (boost::regex_match(sbuf, what, expr)) {
-			from = numberToRational(what[1]);
-			to = numberToRational(what[2]);
-			interval = numberToRational(what[3]);
-		}
-		else {
-			error = true;
-		}
-	}
+    ///<summary>
+    ///均衡判定前の下準備を行う．
+    ///</summary>
+    ///<remark><code>setSignalDistributionFromRawSignalDistribution</code>が呼ばれている場合のみ正しく動作する．</remark>
+    void setRepeatedGame();
 
-	string numberToRational(string number) {
-		int pos = number.find(".");
-		string res = "";
+    ///<summary>
+    ///均衡判定前の下準備を行う．
+    ///具体的には変数をシグナル分布と利得表にセットする．
+    ///</summary>
+    void setVariablesToEnvironmentAndPayoff();
 
-		if (pos == (signed)string::npos) {
-			res = number;
-		}
-		else {
-			bool negative = false;
-			if (number[0] == '-') {
-				negative = true;
+    ///<summary>
+    ///平均利得を計算する．
+    ///x軸をコード中で指定された値にして動かす．"[x軸の値]\t[平均利得]"がファイルに記入される．
+    ///なお平均利得は均衡でないときは，-1とする．
+    ///</summary>
+    ///<param name=out>出力ファイル名</param>
+    void checkReward(const string &out);
+  
+    ///<summary>
+    ///均衡になるパラメータの範囲を計算する．
+    ///x軸，y軸をコード中で指定された値にして動かす．"[x軸の値]\t[y軸の始まり]\t[y軸の終わり]"がファイルに記入される．
+    ///</summary>
+    ///<param name=out>出力ファイル名</param>
+    ///<remark>
+    ///y軸の値を上げていき均衡にならなくなったら，記入してx軸を動かす．
+    ///従って，均衡になる範囲が凸でないなら，正しく動作しない．
+    ///</remark>
+    void checkParameter(const string &out);
 
-			}
-			string part1 = number.substr((negative ? 1 : 0), pos - (negative ? 1 : 0));
-			string part2 = number.substr(pos + 1);
+    ///<summary>
+    ///regularなオートマトンを<paramref name=in>から受け取り均衡判定する．
+    ///</summary>
+    ///<param name=in>対象となるファイル名．./MakeAutomatonで作られた．</param>
+    ///<param name=out>出力ファイル名</param>
+    ///<remark>すべてのプレイヤが同じオートマトンを用いる．</remark>
+    void checkRegularAutomatons(const string &in, const string &out);
 
-			if (part1.length() == 1 && part1[0] == '0') part1 = "";
+    ///<summary>
+    ///特に使用意図を指定しない関数．
+    ///</summary>
+    ///<param name=out>出力ファイル名</param>
+    void checkSpecial(const string &out);
 
-			string d = "1";
-			for (int i = 0; i < (signed)part2.length(); i++) d += "0";
-			res = (negative ? "-" : "") + part1 + part2 + "/" + d;
-		}
+    ///<summary>
+    ///<paramref name=in>の中のオートマトンに対し均衡判定を行う．
+    ///</summary>
+    ///<param name=in>対象となるファイル名．<code>checkRegularAutomaton</code>を用いて作られたことを仮定する．</param>
+    ///<param name=out>出力ファイル名</param>
+    ///<remark>コードを変更することで，読み込み対象となるオートマトンに変更を加える．詳しくは<code>Loader</code>クラスを見よ．</remark>
+    void checkAutomatons(const string &in, const string &out);
 
-		return res;
-	}
+    ///<summary>
+    ///均衡判定を行う．いろいろな情報を出力する．
+    ///</summary>
+    ///<param name=out>出力ファイル名</param>
+    void checkAllInformations(const string &out);
 
+ public:
+    ///<summary>
+    ///このメソッドは次のことを行う．
+    ///1.<paramref name=datafile>から各種データを受け取る．
+    ///2.<paramref name=argv>からオプションを受け取る．
+    ///3.オプションに従いrfseの判定を行い，結果を<paramref name=prefix>とオプションで指定されたファイルに書き込む．
+    ///もし何らかのエラーが生じた際は，エラーメッセージを出した後実行は停止する．
+    ///</summary>
+    ///<param name=datafile>データファイルの名前．</param>
+    ///<param name=prefix>書き込みファイルの名前．この文字列にさらにオプションで指定された名前が付与されて書き込みファイルの名前となる．</param>
+    ///<param name=argc><paramref name=argv>の個数</param>
+    ///<param name=argv>
+    ///実行した際の文字列．
+    ///つまり，rfpe [datafile] [output-prefix] {[variables], ...}
+    ///もしくはrfpe [datafile] [output-prefix] [option] {[input-data] [varables], ...}
+    ///</param>
+    ///<remark>最初に呼ばれることを想定していて，このメソッドからクラス内の各種メソッドを呼び出す．</remark>
+    void checkRFSE(const string &datafile, const string &prefix, int argc, char **argv);
 };
 
 #endif /* SEMINAL_H_ */

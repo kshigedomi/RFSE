@@ -24,60 +24,50 @@
 #include "Payoff.h"
 #endif
 
-#ifndef PLAYERS_H_
-#include "Players.h"
-#endif
-
 #ifndef UTIL_H_
 #include "Util.h"
 #endif
 
-enum READSTATUS {
-	NOERROR = 0,
-	FILENOTFOUND = 1,
-	ITEMNOTFOUND = 2,
-	SYNTAXERROR = 3,
-    ERROR = 4,
-};
-
 class Reader {
-private:
-	ifstream fin;
+ public:
 
-	string title;
-	PreciseNumber discountRate;
-	vector<string> players;
-	map<string, PreciseNumber> variables;
-	vector<string> rawCorrelationDevice;
-	int numPlayers;
+    class ReaderException : public ios_base::failure {
+ public:
+ ReaderException(const string& tmp) : ios_base::failure(tmp){}
+ };
+ private:
+    
+ ifstream fin;
 
-	vector<int> numStatesOfPlayer;
-	vector<int> numActionsOfPlayer;
-	vector<int> numSignalsOfPlayer;
+ vector<string> rawCorrelationDevice;
+ int numPlayers;
 
-public:
-	Reader();
-	Reader(const string &nameDataFile);
-	virtual ~Reader();
+ vector<int> numStatesOfPlayer;
+ vector<int> numActionsOfPlayer;
+ vector<int> numSignalsOfPlayer;
 
-	READSTATUS read(string &tit, Environment &env, Payoff &po, Players &pls);
-	ifstream &readLine(ifstream &fin, string &s);
+ public:
+ Reader();
+ Reader(const string &nameDataFile);
+ virtual ~Reader();
 
-	READSTATUS readTitle();
-	READSTATUS readDiscountRate();
-	READSTATUS readPlayers();
-	READSTATUS readVariables();
-	void setVariable(const string &name, const PreciseNumber &value);
-	READSTATUS readAutomaton(const string &namePlayer, Automaton &am);
-	READSTATUS readItem(const string &tag, vector<string> &data, bool startFirst = false);
-	//	READSTATUS readPayoffMatrix(const Players &pls, Payoff &po);
-	READSTATUS readPayoffMatrix(const Players &pls, Payoff &po);
-	READSTATUS readSignalDistribution(Environment &env, const Players &pls);
-	READSTATUS readExcelSignalDistribution(Environment &env, const Players &pls);
-	READSTATUS readCorrelationDevice(Environment &env);
-	int getIndexOfPlayers(const string &player);
+ void read(string &tit, Environment &env, Payoff &po, vector<Automaton>& ms, map<string, PreciseNumber>& variables);
+ ifstream &readLine(ifstream &fin, string &s);
 
-	map<string, PreciseNumber> getVariables() const;
+ void readTitle(string &title);
+ void readDiscountRate(Environment &env);
+ void readPlayers(vector<string> &playerNames);
+ void readVariables(map<string, PreciseNumber> &varaibles);
+ void setVariable(const string &name, const PreciseNumber &value);
+ void readAutomaton(const string &namePlayer, Automaton &am);
+ void readItem(const string &tag, vector<string> &data, bool startFirst = false);
+ //	void readPayoffMatrix(const Players &pls, Payoff &po);
+ void readPayoffMatrix(Payoff &po, const vector<Automaton> &ms);
+ void readSignalDistribution(Environment &env, const vector<Automaton> &pls);
+ void readExcelSignalDistribution(Environment &env, const vector<Automaton> &pls);
+ void readCorrelationDevice(Environment &env);
+
+ map<string, PreciseNumber> getVariables() const;
 
 };
 

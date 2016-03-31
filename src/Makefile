@@ -6,14 +6,14 @@ else
 endif
 
 LIBNAME = $(OSNAME)_lib
-CXXFLAGS = -Wall -O3 #-static -static-libgcc -static-libstdc++ -pthread #-g -pg
+CXXFLAGS = -Wall -march=i686 #-static -static-libgcc -static-libstdc++ -pthread #-g -pg
 INCLUDES = -I/usr/local/include -I/usr/local/lib/ -I/usr/include/cdd -I/usr/include -I/C/Boost/include/boost-1_60
 LIBS = -L/usr/local/lib -L/C/Boost/lib -L/C/minGW/lib
-LDFLAGS = -lcddgmp -lgmpxx -lgmp -lboost_regex-mgw49-mt-s-1_60
+LDFLAGS = -lcddgmp -lgmpxx -lgmp -lboost_regex-mgw49-mt-1_60	
 #LDFLAGS = -lcddgmp -lgmpxx -lgmp -lboost_regex
-SRCS = rfpe.cpp RepeatedGame.cpp Automaton.cpp Belief.cpp Environment.cpp Players.cpp Equation.cpp Payoff.cpp BeliefDivision.cpp Util.cpp Reader.cpp Writer.cpp Parser.cpp Profile.cpp Loader.cpp BeliefTransition.cpp CddHandler.cpp MakeAutomaton.cpp Graph.cpp MakeSCG.cpp MakeGraph.cpp Signal.cpp MultiSignal.cpp
+SRCS = rfpe.cpp RepeatedGame.cpp Automaton.cpp Belief.cpp Environment.cpp RewardEquation.cpp Equation.cpp Payoff.cpp BeliefDivision.cpp Util.cpp Reader.cpp Writer.cpp Parser.cpp Profile.cpp Loader.cpp BeliefTransition.cpp CddHandler.cpp MakeAutomaton.cpp Graph.cpp MakeSCG.cpp MakeGraph.cpp Signal.cpp MultiSignal.cpp JointFSA.cpp
 OBJS =		$(SRCS:.cpp=.o)
-OTHER_OBJS = RepeatedGame.o Automaton.o Belief.o Environment.o Players.o Equation.o Payoff.o BeliefDivision.o Util.o Reader.o Writer.o Parser.o Profile.o Loader.o BeliefTransition.o CddHandler.o
+OTHER_OBJS = RepeatedGame.o Automaton.o Belief.o Environment.o Equation.o Payoff.o BeliefDivision.o Util.o Reader.o Writer.o Parser.o Profile.o Loader.o BeliefTransition.o CddHandler.o RewardEquation.o JointFSA.o
 OTHER_OBJS2 = Graph.o Util.o MakeSCG.o
 OTHER_OBJS3 = Automaton.o Util.o
 OTHER_OBJS4 = Profile.o Util.o

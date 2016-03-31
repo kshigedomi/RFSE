@@ -35,7 +35,7 @@
 #include <queue>
 #include <gmpxx.h>
 #include <boost/regex.hpp>
-#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string.hpp> 
 #include <boost/functional.hpp>
 #include <boost/bind.hpp>
 
@@ -74,11 +74,12 @@ Inequality(vector < vector<PreciseNumber> > ce, vector<bool> il) : coefficient(c
 };
 
 struct OneShotExtension {
-  int action;
-  vector<int> transition;
+public:
+    int action;
+    vector<int> transition;
 OneShotExtension(const int ac, const vector<int> &ts) : action(ac), transition(ts) {}
 OneShotExtension(const int nOfSg) : transition(vector<int> (nOfSg)) {}
-  OneShotExtension() {}
+    OneShotExtension() {}
 };
 
 typedef struct OneShotExtension OneShotExtension;

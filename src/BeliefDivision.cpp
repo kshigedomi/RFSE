@@ -99,7 +99,7 @@ string BeliefDivision::toString() const {
   string res;
   res += "** BeliefDivision **\n";
   for (int div = 0; div < getNumberOfDivisions(); ++div) {
-	res += "* division " + ::toString(div) + "\n";
+	res += "* division " + MyUtil::toString(div) + "\n";
 	vector<Belief> ex =  getDivision(div);
 	for (vector<Belief>::size_type i = 0; i < ex.size(); ++i)
 	  res += ex[i].toString() + "\n";

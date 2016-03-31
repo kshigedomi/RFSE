@@ -14,76 +14,47 @@
 #include "Payoff.h"
 
 Payoff::Payoff() {
-	totalNumOfActions = 0;
-	numPlayers = 0;
+	this->totalNumOfActions = 0;
+	this->numPlayers = 0;
 }
 
 Payoff::~Payoff() {
 }
 
-void Payoff::setPayoffFromPayoff(const Payoff &po, const bool transition, const int me) {
-   *this = po;
-
-   if (transition) {
-      swap(numActionsOfPlayer[me], numActionsOfPlayer[PLAYER]);
-      for (int apIndex = 0; apIndex < getNumberOfActionProfiles(); ++apIndex) {
-         // me == PLAYER(past)
-         setPayoff(me, apIndex, po.getPayoff(PLAYER, apIndex));
-         setRawPayoff(me, apIndex, po.getRawPayoff(PLAYER, apIndex));
-         // PLAYER == me(past)
-         setPayoff(PLAYER, apIndex, po.getPayoff(me, apIndex));
-         setRawPayoff(PLAYER, apIndex, po.getRawPayoff(me, apIndex));
-      }
-   }
-}
-
 Payoff::Payoff(int nP, const vector<int> &nA) {
-	configure(nP, nA);
+	this->configure(nP, nA);
 }
 
 void Payoff::configure(int nP, const vector<int> &nA) {
-	numPlayers = nP;
-	numActionsOfPlayer = nA;
-	totalNumOfActions = accumulate(numActionsOfPlayer.begin(), numActionsOfPlayer.end(), 1, multiplies<int>());
+	this->numPlayers = nP;
+	this->numActionsOfPlayer = nA;
+	this->totalNumOfActions = accumulate(this->numActionsOfPlayer.begin(), this->numActionsOfPlayer.end(), 1, multiplies<int>());
 
-	payoff.resize(numPlayers);
-	rawPayoff.resize(numPlayers);
+	this->payoff.resize(numPlayers);
+	this->rawPayoff.resize(numPlayers);
 	for (int i = 0; i < numPlayers; i++) {
-		rawPayoff[i].resize(totalNumOfActions);
-		payoff[i].resize(totalNumOfActions);
+		this->rawPayoff[i].resize(totalNumOfActions);
+		this->payoff[i].resize(totalNumOfActions);
 	}
 }
 
-void Payoff::setPayoff(int player, int ap, const PreciseNumber &reward) {
-	payoff[player][ap] = reward;
+void Payoff::setPayoff(const int player, const int ap, const PreciseNumber &reward) {
+	this->payoff[player][ap] = reward;
 }
 
-void Payoff::setPayoff(int player, const ActionProfile &ap, const PreciseNumber &reward) {
-	setPayoff(player, ap.getIndex(numActionsOfPlayer), reward);
+void Payoff::setRawPayoff(const int player, const int ap, const string &reward) {
+    if (player < this->numPlayers && ap < this->totalNumOfActions)
+        this->rawPayoff[player][ap] = reward;
+    else
+        throw range_error("Payoff::setRawPayoff(" + MyUtil::toString(player) + ", " + MyUtil::toString(ap) + ", " + reward + ")");
 }
 
-void Payoff::setRawPayoff(int player, int ap, const string &reward) {
-	rawPayoff[player][ap] = reward;
+PreciseNumber Payoff::getPayoff(const int player, const int ap) const{
+	return this->payoff[player][ap];
 }
 
-void Payoff::setRawPayoff(int player, const ActionProfile &ap, const string &reward) {
-	setRawPayoff(player, ap.getIndex(numActionsOfPlayer), reward);
-}
-
-PreciseNumber Payoff::getPayoff(int player, int ap) const{
-	return payoff[player][ap];
-}
-
-PreciseNumber Payoff::getPayoff(int player, const ActionProfile &ap) const{
-	return getPayoff(player, ap.getIndex(numActionsOfPlayer));
-}
-
-string Payoff::getRawPayoff(int player, const ActionProfile &ap) const{
-	return getRawPayoff(player, ap.getIndex(numActionsOfPlayer));
-}
-
-string Payoff::getRawPayoff(int player, int ap) const{
-	return rawPayoff[player][ap];
+string Payoff::getRawPayoff(const int player, const int ap) const{
+	return this->rawPayoff[player][ap];
 }
 
 /*
@@ -91,50 +62,38 @@ string Payoff::getRawPayoff(int player, int ap) const{
 * Input:	variables: mappings string to number like g=-0.5.
 */
 void Payoff::setPayoffFromRawPayoff(map<string, PreciseNumber> &variables) {
-   for (int player = 0; player < numPlayers; ++player) {
-      for (int apIndex = 0; apIndex < getNumberOfActionProfiles(); ++apIndex) {
-         setPayoff(player, apIndex, parseEquation(rawPayoff[player][apIndex], variables));
+   for (int player = 0; player < this->numPlayers; ++player) {
+      for (int apIndex = 0; apIndex < this->getNumberOfActionProfiles(); ++apIndex) {
+          this->setPayoff(player, apIndex, Parser::parseEquation(this->rawPayoff[player][apIndex], variables));
       }
    }
 }
 
 int Payoff::getNumberOfActionProfiles() const{
-	return totalNumOfActions;
+	return this->totalNumOfActions;
 }
 
-void Payoff::view(const Players &players) const{
-   cout << toString(players) << endl;
-}
-
-string Payoff::toString(const Players &players) const {
+string Payoff::toString() const {
    const int space = 10;
    string res;
    res += "* Raw Payoff Matrix\n";
-   for (int apIndex = 0; apIndex < getNumberOfActionProfiles(); ++apIndex) {
+   for (int apIndex = 0; apIndex < this->getNumberOfActionProfiles(); ++apIndex) {
       // action
-      const ActionProfile ap(apIndex, numActionsOfPlayer);
-      res += "Action : (" + players.getNameOfActions(PLAYER, ap[PLAYER]);
-      for (int pl = OPPONENT; pl < numPlayers; ++pl)
-         res += ", " + players.getNameOfActions(pl, ap[pl]);
-      res += ")\n";
+       res += "Action : " + ActionProfile(apIndex).toString() + "\n";
       // RawPayoffMatrix
-      res += "(" + spaceToString(getRawPayoff(PLAYER, apIndex), space);
-      for (int player = OPPONENT; player < numPlayers; ++player)
-         res += ", " + spaceToString(getRawPayoff(player, apIndex), space);
+      res += "(" + MyUtil::spaceToString(this->getRawPayoff(PLAYER, apIndex), space);
+      for (int player = OPPONENT; player < this->numPlayers; ++player)
+          res += ", " + MyUtil::spaceToString(this->getRawPayoff(player, apIndex), space);
       res += ")\n";
    }
    res += "* Payoff Matrix\n";
-   for (int apIndex = 0; apIndex < getNumberOfActionProfiles(); ++apIndex) {
+   for (int apIndex = 0; apIndex < this->getNumberOfActionProfiles(); ++apIndex) {
       // action
-      const ActionProfile ap(apIndex, numActionsOfPlayer);
-      res += "Action : (" + players.getNameOfActions(PLAYER, ap[PLAYER]);
-      for (int pl = OPPONENT; pl < numPlayers; ++pl)
-         res += ", " + players.getNameOfActions(pl, ap[pl]);
-      res += ")\n";
+      res += "Action : " + ActionProfile(apIndex).toString() + "\n";
       // PayoffMatrix
-      res += "(" + rationalToString(getPayoff(PLAYER, apIndex));
-      for (int player = OPPONENT; player < numPlayers; ++player)
-         res += ", " + rationalToString(getPayoff(player, apIndex));
+      res += "(" + MyUtil::rationalToString(this->getPayoff(PLAYER, apIndex));
+      for (int player = OPPONENT; player < this->numPlayers; ++player)
+          res += ", " + MyUtil::rationalToString(this->getPayoff(player, apIndex));
       res += ")\n";
    }
    return res;

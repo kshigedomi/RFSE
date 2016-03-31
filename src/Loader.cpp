@@ -63,20 +63,20 @@ bool Loader::setNextAutomatonAndVariables(map<string, PreciseNumber> &values) {
          }
 		*/
          // state
-         vector<string> stateNames = splitAtSpace(fin);
+          vector<string> stateNames = MyUtil::splitAtSpace(fin);
          for (int state = 0; state < numOfStates; ++state)
             automaton.setNameOfState(state, stateNames[state + 2]);
          // action
-         vector<string> actionNames = splitAtSpace(fin);
+         vector<string> actionNames = MyUtil::splitAtSpace(fin);
          for (int action = 0; action < numOfActions; ++action)
             automaton.setNameOfAction(action, actionNames[action + 2]);
          // signal
-         vector<string> signalNames = splitAtSpace(fin);
+         vector<string> signalNames = MyUtil::splitAtSpace(fin);
          for (int signal = 0; signal < numOfSignals; ++signal)
             automaton.setNameOfSignal(signal, signalNames[signal + 2]);
          // actionChoice
          for (int count = 0; count < numOfStates; ++count) {
-            vector<string> actionChoice = splitAtSpace(fin);
+            vector<string> actionChoice = MyUtil::splitAtSpace(fin);
             const int state = automaton.getIndexOfStates(actionChoice[0]);
             const int action = automaton.getIndexOfActions(actionChoice[1]);
             automaton.setActionChoice(state, action);
@@ -84,7 +84,7 @@ bool Loader::setNextAutomatonAndVariables(map<string, PreciseNumber> &values) {
          // transition
          for (int countState = 0; countState < numOfStates; ++countState) {
             for (int countSignal = 0; countSignal < numOfSignals; ++countSignal) {
-               vector<string> transition = splitAtSpace(fin);
+               vector<string> transition = MyUtil::splitAtSpace(fin);
                const int state = automaton.getIndexOfStates(transition[0]);
                const int signal = automaton.getIndexOfSignals(transition[1]);
                const int nextState = automaton.getIndexOfStates(transition[2]);
@@ -109,9 +109,9 @@ bool Loader::setNextAutomatonFromRawString() {
             return false;
          }
          for (int count = 0; count < numOfStates; ++count) {
-            vector<string> actionChoice = splitAtSpace(fin);
-            const int state = toInteger(actionChoice[0]);
-            const int action = toInteger(actionChoice[1]);
+            vector<string> actionChoice = MyUtil::splitAtSpace(fin);
+            const int state = MyUtil::toInteger(actionChoice[0]);
+            const int action = MyUtil::toInteger(actionChoice[1]);
             automaton.setActionChoice(state, action);
          }
          // transition
@@ -121,10 +121,10 @@ bool Loader::setNextAutomatonFromRawString() {
 		 }         
          for (int countState = 0; countState < numOfStates; ++countState) {
             for (int countSignal = 0; countSignal < numOfSignals; ++countSignal) {
-               vector<string> transition = splitAtSpace(fin);
-               const int state = toInteger(transition[0]);
-               const int signal = toInteger(transition[1]);
-               const int nextState = toInteger(transition[2]);
+               vector<string> transition = MyUtil::splitAtSpace(fin);
+               const int state = MyUtil::toInteger(transition[0]);
+               const int signal = MyUtil::toInteger(transition[1]);
+               const int nextState = MyUtil::toInteger(transition[2]);
                automaton.setStateTransition(state, signal, nextState);
             }
          }

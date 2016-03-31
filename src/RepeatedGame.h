@@ -36,14 +36,17 @@
 #include "Payoff.h"
 #endif
 
-#ifndef PLAYERS_H_
-#include "Players.h"
+#ifndef REWARDEQUATION_H_
+#include "RewardEquation.h"
 #endif
 
 #ifndef UTIL_H_
 #include "Util.h"
 #endif
 
+#ifndef JOINTFSA_H_
+#include "JointFSA.h"
+#endif
 
 #ifndef BELIERTRANSITION_H_
 #include "BeliefTransition.h"
@@ -78,31 +81,29 @@ class RepeatedGame {
   bool global_flag;
   bool nobd_flag;
   
+  int numPlayers;
   int playerStates;
   int playerActions;
   int playerSignals;
   int opponentStates;
   int opponentSignals;
 
-  int numPlayers;
   int numJointStates;
   int numJointActions;
   int numJointSignals;
 
-  Players players;
   Environment environment;
   Payoff payoff;
+  vector<Automaton> automatons;
+  RewardEquation rewardEquation;
 
-  vector<Equation> equations;
   vector<Belief> invariantDistribution;
   BeliefDivision initialBeliefDivision;
   BeliefDivision targetBeliefDivision;
 
   vector<Belief> failure;
-
   vector<vector<PreciseNumber> > alphaVectors;
 
-  vector<struct OneShotExtension> oneShotExtensions;
   int maxIteration;
 
   BeliefTransition beliefTransition;
@@ -114,28 +115,20 @@ class RepeatedGame {
   long count_test ;
 
   map<string, PreciseNumber> globalVar;
-  void setVariables(map<string, PreciseNumber> &vars);
 
   RepeatedGame();
-  RepeatedGame(const Environment &env, const Payoff &po, const Players &pls);
+  RepeatedGame(const Environment &env, const Payoff &po, const vector<Automaton> &ms, const RewardEquation& eq);
   virtual ~RepeatedGame();
 
-  void configure(const Environment &env, const Payoff &po, const Players &pls);
+  void configure(const Environment &env, const Payoff &po, const vector<Automaton> &ms, const RewardEquation& eq);
 
-  void solveJointFSA();
-
-  void setRewardEquation(const int player);
-  void solveRewardEquation(const int player);
-  vector< vector<PreciseNumber> > makeRewardEquation(const int player);
-  void makeAlphaVectors();
   vector<vector<PreciseNumber> > getAlphaVectors() const;
-    
-  PreciseNumber getReward(const int player, const StateProfile &sp);
-  PreciseNumber getReward(const int player, const int state);
+
+  PreciseNumber getReward(const int sp) const;
 
   void solve();
 
-  void makeOneShotExtension();
+  vector<OneShotExtension> makeOneShotExtensions();
   void makeBeliefDivision();
   void makeTargetBeliefDivision();
 
@@ -163,7 +156,6 @@ class RepeatedGame {
   bool isInnerPointOfDivision(const Belief &b, const int division) const;
     
   int getMaxIteration() const;
-  vector<OneShotExtension> getOneShotExtensions() const;
   vector<Belief> getFailure() const;
   PreProcess makeFixedPoint();
   Belief getFixedPoint() const;
@@ -174,8 +166,6 @@ class RepeatedGame {
 
   bool isPolytopeInTargetBeliefDivision(const vector<Belief> &polytope);
   bool isPolytopeInTargetBeliefDivisionWithBeliefDivision(const vector<Belief> &polytope);
-
-  
 
   void set_history_flag(const bool flag);
   void set_preprocess_flag(const bool flag);
@@ -195,6 +185,6 @@ class RepeatedGame {
   //  Belief getNextBelief(const Belief &b, const int myAction, const int mySignal) const ;
 };
 
-string oneShotToString(const Players &pls, const OneShotExtension& oneShot);
+string oneShotToString(const vector<Automaton> &pls, const OneShotExtension& oneShot);
 
 #endif /* REPEATEDGAME_H_ */

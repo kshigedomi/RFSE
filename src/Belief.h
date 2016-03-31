@@ -30,7 +30,7 @@ public:
 	int getDimension() const;
 	void configure(const int dimension);
 	PreciseNumber get(const int index) const;
-	void set(int index, PreciseNumber value);
+	void set(const int index, const PreciseNumber& value);
     vector<PreciseNumber> getVector() const;
 	bool checkValidity() const;
     string toString() const;
@@ -48,7 +48,5 @@ bool operator != (const Belief& lhs, const Belief& rhs);
 PreciseNumber operator - (const Belief& lhs, const Belief& rhs);
 ostream& operator<<(ostream &os, const Belief& b);
 vector<Belief> makeBeliefSpace(const int opStates);
-vector<string> gnuplotString(const vector<Belief> &poly);
-vector<string> gnuplotString2(const vector<Belief> &poly);
 //PreciseNumber dist(const Belief &lhs, const Belief& rhs) ;
 #endif /* BELIEF_H_ */

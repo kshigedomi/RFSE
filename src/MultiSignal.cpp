@@ -10,10 +10,10 @@ int main(int argc, char *argv[]) {
       exit(1);
    }
    const string option(argv[1]);
-   const int numPlayers = toInteger(string(argv[1]));
-   const int numMarkets = toInteger(string(argv[2]));
-   const int numActions = toInteger(string(argv[3]));
-   const int numSignals = toInteger(string(argv[4]));
+   const int numPlayers = MyUtil::toInteger(string(argv[1]));
+   const int numMarkets = MyUtil::toInteger(string(argv[2]));
+   const int numActions = MyUtil::toInteger(string(argv[3]));
+   const int numSignals = MyUtil::toInteger(string(argv[4]));
   
    MultiSignal multiSignal(numPlayers, numMarkets, numActions, numSignals);
    vector<string> actionsString(argc - 5);
@@ -113,7 +113,7 @@ vector<int> toProfile(int index, const int radix, const int size) {
 string toString(const vector<int> &vec) {
    string res;
    for (vector<int>::size_type i = 0; i < vec.size(); ++i)
-      res += ::toString(vec[i]);
+      res += MyUtil::toString(vec[i]);
    return res;
 }
 

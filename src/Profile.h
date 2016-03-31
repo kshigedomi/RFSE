@@ -17,42 +17,102 @@
 #endif
 
 class Profile {
+ private:
 	int dimension;
 	vector<int> data;
-public:
-	Profile();
-	Profile(int index, const vector<int> &bounds);
-    Profile(const int myData, int index, const vector<int> &bounds);
-    Profile(const int myData, const Profile &p);
-    Profile(const vector<int> &vec);
-	Profile(int a);
-	Profile(int a, int b);
-	Profile(int a, int b, int c);
-	Profile(int a, int b, int c, int d);
-	Profile(int a, int b, int c, int d, int e);
-	Profile(int a, int b, int c, int d, int e, int f);
+    vector<int> bounds;
+    vector<vector<string> > nameData;
+ public:
+    /*
+     * Function: コンストラクタ
+     * Input: index: index of jointFSA. bounds: numStatesOfPlayer のような既定
+     */
+	Profile(int index, const vector<int> &argBounds, const vector<vector<string> >& name);
+    Profile(const int playerData, const Profile &opData, const vector<int> &argBounds, const vector<vector<string> > &name);
 	virtual ~Profile();
 	int getSize() const;
-	int getIndex(const vector<int> &bounds) const;
-	int operator[] (int index) const;
-    void swap(const int i, const int j);
-	void view() const;
-	Profile getOpponentProfile() const;
-    
-    //added by Dengji
-    void setValue(int index, int value);
-    int getValue(int index);
-    //end
-
+    /*
+     * Name: getIndex
+     * Function: get index as joint FSA.
+     * Input: bounds: radix like numActionsOfPlayers, numStatesOfPlayers, or numSignalsOfPlayer.
+     */
+	int getIndex() const;
+	int& operator[] (const int index);
+	const int& operator[] (const int index) const ;
+    int& at(const int index);
+    const int& at(const int index) const ;
+    vector<int>::iterator begin(void) ;
+    vector<int>::const_iterator begin(void) const ;
+    vector<int>::iterator end(void) ;
+    vector<int>::const_iterator end(void) const ;
     string toString() const;
-	string toString(const vector<string> &name) const;
+    bool next() ;
 };
 
 ostream& operator<<(ostream &os, const Profile &p);
 bool operator==(const Profile &lp, const Profile &rp);
 
-typedef Profile StateProfile;
-typedef Profile ActionProfile;
-typedef Profile SignalProfile;
+class OpponentActionProfile : public Profile {
+ public:
+    // 自分以外のプレイヤの行動数
+    static vector<int> numActionsOfOpponentPlayer;
+    // 自分プレイヤの行動の名前
+    static vector<vector<string> > nameActionsOfOpponentPlayer;
+    // コンストラクタ
+    OpponentActionProfile(int index = 0);
+};
+
+class ActionProfile : public Profile {
+ public:
+    // 各プレイヤの行動数
+    static vector<int> numActionsOfPlayer;
+    // 各プレイヤの行動の名前
+    static vector<vector<string> > nameActionsOfPlayer;
+    // コンストラクタ
+    ActionProfile(int index = 0);
+    ActionProfile(const int myAction, const OpponentActionProfile& opAction);
+};
+
+class OpponentStateProfile : public Profile {
+ public:
+    // 自分以外のプレイヤの状態数
+    static vector<int> numStatesOfOpponentPlayer;
+    // 自分プレイヤの状態の名前
+    static vector<vector<string> > nameStatesOfOpponentPlayer;
+    // コンストラクタ
+    OpponentStateProfile(int index = 0);
+};
+
+class StateProfile : public Profile {
+ public:
+    // 各プレイヤの状態数
+    static vector<int> numStatesOfPlayer;
+    // 各プレイヤの状態の名前
+    static vector<vector<string> > nameStatesOfPlayer;
+    // コンストラクタ
+    StateProfile(int index = 0);
+    StateProfile(const int myState, const OpponentStateProfile &opState);
+};
+
+class OpponentSignalProfile : public Profile {
+ public:
+    // 自分以外のプレイヤのシグナル数
+    static vector<int> numSignalsOfOpponentPlayer;
+    // 自分以外のプレイヤのシグナルの名前
+    static vector<vector<string> > nameSignalsOfOpponentPlayer;
+    // コンストラクタ
+    OpponentSignalProfile(int index = 0);
+};
+
+class SignalProfile : public Profile {
+ public:
+    // 各プレイヤのシグナル数
+    static vector<int> numSignalsOfPlayer;
+    // 各プレイヤのシグナルの名前
+    static vector<vector<string> > nameSignalsOfPlayer;
+    // コンストラクタ
+    SignalProfile(int index = 0);
+    SignalProfile(const int mySignal, const OpponentSignalProfile& opSignal);
+};
 
 #endif /* PROFILE_H_ */

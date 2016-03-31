@@ -1,0 +1,120 @@
+REGULAR AUTOMATON
+ActionChoice
+0 1
+1 0
+StateTransition
+0 0 1
+0 1 0
+1 0 0
+1 1 0
+
+REGULAR AUTOMATON
+ActionChoice
+0 0
+1 1
+StateTransition
+0 0 1
+0 1 0
+1 0 0
+1 1 0
+
+REGULAR AUTOMATON
+ActionChoice
+0 1
+1 0
+StateTransition
+0 0 0
+0 1 1
+1 0 0
+1 1 0
+
+REGULAR AUTOMATON
+ActionChoice
+0 0
+1 1
+StateTransition
+0 0 0
+0 1 1
+1 0 0
+1 1 0
+
+REGULAR AUTOMATON
+ActionChoice
+0 1
+1 0
+StateTransition
+0 0 1
+0 1 0
+1 0 1
+1 1 0
+
+REGULAR AUTOMATON
+ActionChoice
+0 0
+1 1
+StateTransition
+0 0 1
+0 1 0
+1 0 1
+1 1 0
+
+REGULAR AUTOMATON
+ActionChoice
+0 1
+1 0
+StateTransition
+0 0 0
+0 1 1
+1 0 1
+1 1 0
+
+REGULAR AUTOMATON
+ActionChoice
+0 0
+1 1
+StateTransition
+0 0 0
+0 1 1
+1 0 1
+1 1 0
+
+REGULAR AUTOMATON
+ActionChoice
+0 1
+1 0
+StateTransition
+0 0 1
+0 1 0
+1 0 0
+1 1 1
+
+REGULAR AUTOMATON
+ActionChoice
+0 0
+1 1
+StateTransition
+0 0 1
+0 1 0
+1 0 0
+1 1 1
+
+REGULAR AUTOMATON
+ActionChoice
+0 1
+1 0
+StateTransition
+0 0 0
+0 1 1
+1 0 0
+1 1 1
+
+REGULAR AUTOMATON
+ActionChoice
+0 0
+1 1
+StateTransition
+0 0 0
+0 1 1
+1 0 0
+1 1 1
+

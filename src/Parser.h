@@ -18,9 +18,13 @@
 
 typedef pair<PreciseNumber, int> result;
 
-PreciseNumber parseEquation(const string &s, map<string, PreciseNumber> &var);
-result equation(const string &s, map<string, PreciseNumber> &var, int p = 0);
-result factor(const string &s, map<string, PreciseNumber> &var, int p = 0);
-result term(const string &s, map<string, PreciseNumber> &var, int p = 0);
+namespace Parser {
+
+    PreciseNumber parseEquation(const string &s, const map<string, PreciseNumber> &var);
+    result equation(const string &s, const map<string, PreciseNumber> &var, int p = 0);
+    result factor(const string &s, const map<string, PreciseNumber> &var, int p = 0);
+    result term(const string &s, const map<string, PreciseNumber> &var, int p = 0);
+
+};
 
 #endif /* PARSER_H_ */

@@ -28,10 +28,6 @@
 #include "Payoff.h"
 #endif
 
-#ifndef PLAYERS_H_
-#include "Players.h"
-#endif
-
 #ifndef REPEATEDGAME_H_
 #include "RepeatedGame.h"
 #endif
@@ -50,22 +46,20 @@ public:
 		fout << val << endl;
 	}
 
-    // write
-    void writeVariables(map<string,PreciseNumber> &values);
-    void writeEnvironment(const RepeatedGame &rg, const Environment &env,const Payoff &pd,const Players &pls, map<string,PreciseNumber> &values);
-    void writePlayers(const Players &pls);
+    void writeVariables(const map<string,PreciseNumber> &values);
+    void writeEnvironment(const RepeatedGame &rg, const Environment &env,const Payoff &pd, const map<string,PreciseNumber> &values);
     void writeResult(const Result &result);
-    void writeInvariantDistribution(const vector<Belief> &id, Players &pls);
-    void writeAveragePayoff(const Environment &env, const RepeatedGame &rg, const Players &pls);
-    void writeProfitableOneShot(const vector<Belief> &set, const RepeatedGame &rg, Players &pls);
-    void writeOffPathMaxReward(const Belief &b, const RepeatedGame &rg, Players &pls);
-    void writeOffPath(const Belief &b, const OneShotExtension &oneShot, const Players &pls, const PreciseNumber &oneShotReward);
-    void writeBeliefSpace(const RepeatedGame &rg, Players &pls);
-    void writeProfitableOneShot(const Belief &b,const RepeatedGame &rg, Players &pls);
+    void writeInvariantDistribution(const vector<Belief> &id, const vector<Automaton> &ms);
+    void writeAveragePayoff(const Environment &env, const RepeatedGame &rg, const vector<Automaton>& ms);
+    void writeProfitableOneShot(const vector<Belief> &set, const RepeatedGame &rg, const vector<Automaton>& ms);
+    void writeOffPathMaxReward(const Belief &b, const RepeatedGame &rg, const vector<Automaton>& ms);
+    void writeOffPath(const Belief &b, const OneShotExtension &oneShot, const vector<Automaton>& ms, const PreciseNumber &oneShotReward);
+    void writeBeliefSpace(const RepeatedGame &rg, const vector<Automaton>& ms);
+    void writeProfitableOneShot(const Belief &b,const RepeatedGame &rg, const vector<Automaton>& ms);
     void writeMaxIteration(const RepeatedGame &rg);
     void writeChangeVariables(const char &start, const char &end);
     void writeEqRange(const PreciseNumber &x, const PreciseNumber &under, const PreciseNumber &over);
-	void writeAverageSignal(const Environment &env, const Players &pls, const PreciseNumber &value);
+	void writeAverageSignal(const Environment &env, const vector<Automaton>& ms, const PreciseNumber &value);
     void writeOptions(const RepeatedGame &rg);
 };
 
