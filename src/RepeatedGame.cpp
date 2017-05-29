@@ -29,11 +29,11 @@ void RepeatedGame::configure(const Environment &env, const Payoff &po, const vec
     playerStates = ms[PLAYER].getNumberOfStates();
     playerActions = ms[PLAYER].getNumberOfActions();
     playerSignals = ms[PLAYER].getNumberOfSignals();
-    opponentStates = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), Automaton::getNumberOfStates);
-    opponentSignals = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), Automaton::getNumberOfSignals);
-    numJointStates = JointFSA::getMultipleAccumulate(ms.begin(), ms.end(), Automaton::getNumberOfStates);
-    numJointActions = JointFSA::getMultipleAccumulate(ms.begin(), ms.end(), Automaton::getNumberOfActions);
-    numJointSignals = JointFSA::getMultipleAccumulate(ms.begin(), ms.end(), Automaton::getNumberOfSignals);
+    opponentStates = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), &Automaton::getNumberOfStates);
+    opponentSignals = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), &Automaton::getNumberOfSignals);
+    numJointStates = JointFSA::getMultipleAccumulate(ms.begin(), ms.end(), &Automaton::getNumberOfStates);
+    numJointActions = JointFSA::getMultipleAccumulate(ms.begin(), ms.end(), &Automaton::getNumberOfActions);
+    numJointSignals = JointFSA::getMultipleAccumulate(ms.begin(), ms.end(), &Automaton::getNumberOfSignals);
     alphaVectors = rewardEquation.getAlphaVectors();
     failure.clear();
     maxIteration = 0;

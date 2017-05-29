@@ -35,7 +35,7 @@
 #include <queue>
 #include <gmpxx.h>
 #include <boost/regex.hpp>
-#include <boost/algorithm/string.hpp> 
+#include <boost/algorithm/string.hpp>
 #include <boost/functional.hpp>
 #include <boost/bind.hpp>
 
@@ -45,7 +45,7 @@ typedef double Number;
 typedef mpq_class PreciseNumber;
 
 const PreciseNumber EPS = PreciseNumber("1/1000000000");
-const PreciseNumber EPS2= PreciseNumber("1/1000000000");
+const PreciseNumber EPS2= PreciseNumber("1/10000");
 const PreciseNumber INF = PreciseNumber("1000000000");
 const PreciseNumber ONE = PreciseNumber(1);
 const PreciseNumber ZERO = PreciseNumber(0);

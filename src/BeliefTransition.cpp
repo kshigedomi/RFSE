@@ -16,8 +16,8 @@
 void BeliefTransition::make(const Environment& env, const Payoff &pd, const vector<Automaton>& ms) {
     this->playerActions = ms[PLAYER].getNumberOfActions();
     this->playerSignals = ms[PLAYER].getNumberOfSignals();
-    this->opponentStates = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), Automaton::getNumberOfStates);
-    this->opponentSignals = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), Automaton::getNumberOfSignals);
+    this->opponentStates = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), &Automaton::getNumberOfStates);
+    this->opponentSignals = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), &Automaton::getNumberOfSignals);
     this->beliefTransition.clear();
     this->beliefTransition.resize(playerActions, vector<vector<vector<PreciseNumber> > > (playerSignals, vector<vector<PreciseNumber> >(opponentStates, vector<PreciseNumber>(opponentStates, ZERO))));
     OpponentStateProfile opState;
@@ -158,7 +158,7 @@ Belief BeliefTransition::oldNextBelief(const Environment &env, const vector<Auto
  */
 string BeliefTransition::toString(const Environment &environment, const vector<Automaton> &ms) const{
     string res;
-    int opponentStates = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), Automaton::getNumberOfStates);
+    int opponentStates = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), &Automaton::getNumberOfStates);
     vector<Belief> beliefSpace = makeBeliefSpace(opponentStates);
 
     for (int myAction = 0; myAction < ms[PLAYER].getNumberOfActions(); ++myAction) {

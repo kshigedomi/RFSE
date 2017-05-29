@@ -13,8 +13,8 @@ void RewardEquation::configure(const Environment& env, const Payoff& po, const v
     this->payoff = po;
     this->numPlayers = ms.size();
     this->playerStates = ms[PLAYER].getNumberOfStates();
-    this->opponentStates = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), Automaton::getNumberOfStates);
-    this->numJointStates = JointFSA::getMultipleAccumulate(ms.begin(), ms.end(), Automaton::getNumberOfStates);
+    this->opponentStates = JointFSA::getMultipleAccumulate(ms.begin()+1, ms.end(), &Automaton::getNumberOfStates);
+    this->numJointStates = JointFSA::getMultipleAccumulate(ms.begin(), ms.end(), &Automaton::getNumberOfStates);
     alphaVectors.clear();
 }
 

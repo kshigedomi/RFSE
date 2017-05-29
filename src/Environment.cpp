@@ -34,12 +34,13 @@ Environment::~Environment() {
 bool Environment::isValidEnvironment( void ) const {
 	PreciseNumber sum = ZERO;
     ActionProfile ap;
-    
+
     for (int apIndex = 0; apIndex < this->getNumberOfActionProfiles(); ++apIndex) {
         sum = ZERO;
         for (int spIndex = 0; spIndex < this->getNumberOfSignalProfiles(); ++spIndex) {
             const PreciseNumber prob = this->getSignalDistribution(apIndex, spIndex);
-            if (prob <= ZERO  || prob >= ONE ) {
+            // if (prob <= ZERO  || prob >= ONE ) {
+						if (prob < ZERO  || prob > ONE ) {
                 return false;
             }
             sum += prob;
@@ -57,12 +58,13 @@ bool Environment::isValidEnvironment( void ) const {
 void Environment::checkEnvironment( void ) const {
 	PreciseNumber sum = ZERO;
     ActionProfile ap;
-    
+
     for (int apIndex = 0; apIndex < this->getNumberOfActionProfiles(); ++apIndex) {
         sum = ZERO;
         for (int spIndex = 0; spIndex < this->getNumberOfSignalProfiles(); ++spIndex) {
             const PreciseNumber prob = this->getSignalDistribution(apIndex, spIndex);
-            if (prob <= ZERO  || prob >= ONE ) {
+						// if (prob <= ZERO  || prob >= ONE ) {
+            if (prob < ZERO  || prob > ONE ) {
                 throw EnvironmentException("Signal Distiribution Error\n"
                                            "Actions : " + ActionProfile(apIndex).toString() + "\n"
                                            "Signals : " + SignalProfile(spIndex).toString() + "\n"
@@ -198,5 +200,3 @@ void Environment::setSignalDistributionFromRawSignalDistribution(const map<strin
         }
     }
 }
-
-

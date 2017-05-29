@@ -62,7 +62,7 @@ void Writer::writeInvariantDistribution(const vector<Belief> &id, const vector<A
  * 引数: 情報 rg, pls
  */
 void Writer::writeBeliefSpace(const RepeatedGame &rg, const vector<Automaton>& ms) {
-    int opponentStates = JointFSA::getMultipleAccumulate(ms.begin() + 1, ms.end(), Automaton::getNumberOfStates);
+    int opponentStates = JointFSA::getMultipleAccumulate(ms.begin() + 1, ms.end(), &Automaton::getNumberOfStates);
     if (opponentStates != 2)
         return;
     put("Belief Space");

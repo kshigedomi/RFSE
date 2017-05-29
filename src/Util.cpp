@@ -36,7 +36,7 @@ namespace MyUtil {
         os << "\n";
         return os;
     }
-   
+
     /*
      * 機能: 転置をした行列を生成
      * 引数: 転置前の行列
@@ -66,7 +66,7 @@ namespace MyUtil {
         }
         return res;
     }
-      
+
     /*
      * 機能: 行列の乗算を行う
      * 引数: 対象となる行列
@@ -121,7 +121,7 @@ namespace MyUtil {
         }
         return res;
     }
-   
+
     /*
      * 機能: 行列とベクトルの乗算
      * 引数: 対象となる行列とベクトル
@@ -138,7 +138,7 @@ namespace MyUtil {
         }
         return res;
     }
-   
+
     /*
      * 機能: 数字の文字列を有理数化
      * 例1: 0.1 -> 1/10
@@ -186,7 +186,7 @@ namespace MyUtil {
         for (int i = size - 1; i >= 0; --i) {
             if (i != 0) {
                 v[i] += interval[i];
-                if (v[i] <= end[i]) 
+                if (v[i] <= end[i])
                     return true;
             } else {
                 v[i] -= interval[i];
@@ -221,7 +221,7 @@ namespace MyUtil {
         vector<PreciseNumber>::size_type size = v.size();
         for (vector<PreciseNumber>::size_type i = 0; i < size; ++i) {
             v[i] += interval;
-            if (v[i] <= end[i]) 
+            if (v[i] <= end[i])
                 return true;
             v[i] = start[i];
         }
@@ -293,7 +293,7 @@ namespace MyUtil {
         if (i < 0) {// ベクトルの中身がすべて1
             return false;
         }
-        while (i >= 0 && !vec[i]) 
+        while (i >= 0 && !vec[i])
             --i;
         if (i < 0) { // すべての1が後ろに寄っている（例3）
             return false;
@@ -439,7 +439,7 @@ namespace MyUtil {
         }
         return MyUtil::checkRegularity(tmp, endTurn);
     }
-      
+
     /*
      * 機能: 行列が regular か確かめる
      * 引数: 行列 matrix, 何回繰り返したもので確かめるか endTurn
@@ -474,7 +474,7 @@ namespace MyUtil {
      * 返り値: 結果
      */
     bool equal(const PreciseNumber &a, const PreciseNumber &b) {
-        return abs(a - b) < EPS;
+        return abs(a - b) < EPS2;
     }
 
     /*

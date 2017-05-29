@@ -52,9 +52,19 @@
 #include "Writer.h"
 #endif
 
+// #ifndef MAKERAWCHAIN_H_
+// #include "MakeRawChain.h"
+// #endif
+
+#ifndef POMRG_H_
+#include "PomRG.h"
+#endif
+
+
 enum Option {
     NONE,AUTOMATONS,PARA,
     REGULAR,SPECIAL,REWARD,
+    PARTICULAR,FILTER,POMDP,POMREG
 };
 
 class RFSE {
@@ -87,7 +97,7 @@ class RFSE {
     ///</summary>
     ///<param name=out>出力ファイル名</param>
     void checkReward(const string &out);
-  
+
     ///<summary>
     ///均衡になるパラメータの範囲を計算する．
     ///x軸，y軸をコード中で指定された値にして動かす．"[x軸の値]\t[y軸の始まり]\t[y軸の終わり]"がファイルに記入される．
@@ -111,7 +121,9 @@ class RFSE {
     ///特に使用意図を指定しない関数．
     ///</summary>
     ///<param name=out>出力ファイル名</param>
+    ///読み込むファイルが他にある→Particular, ないとき→Special
     void checkSpecial(const string &out);
+    void checkParticular(const string &in, const string &out);
 
     ///<summary>
     ///<paramref name=in>の中のオートマトンに対し均衡判定を行う．
@@ -126,6 +138,22 @@ class RFSE {
     ///</summary>
     ///<param name=out>出力ファイル名</param>
     void checkAllInformations(const string &out);
+
+	//  All-C,All-D による判定のために 2016/12/06 に追加
+	// AlphaVectors だけを計算するための関数
+	 vector<vector<PreciseNumber> > setAndGetAlphaVectors();
+
+	 // 2016/12/07追加
+	 // Rawオートマトンデータを読み出し，All-CDに勝つもの（厳密には入力データの戦略）で，かつ利得が一定値（初期状態の利得がtargetPayoff）以上のものだけを選別し，Rawオートマトンで書きだす
+	 void payoff_AllCD_filter(const string &in, const string &out);
+
+ 	 //2017/03/18追加，pomdpで判定する
+ 	 //入力:出力する.pomdp, .alpha, .pg のファイル名
+ 	 void checkPomdp(const string &pomdpFile);
+	 //regularとcheckPomdpを合わせて，オートマトンリストから読みだして判定する
+	 void checkRegularByPomdp(const string &in, const string &out);
+
+
 
  public:
     ///<summary>

@@ -67,7 +67,7 @@ struct IterationInfo {
   pair<int, int> lastOb; //last observation
   BeliefMatrix bMatrix;
 };
-  
+
 
 class RepeatedGame {
   bool history_flag;
@@ -80,7 +80,7 @@ class RepeatedGame {
   bool no_fixed_flag;
   bool global_flag;
   bool nobd_flag;
-  
+
   int numPlayers;
   int playerStates;
   int playerActions;
@@ -154,7 +154,7 @@ class RepeatedGame {
 
   bool isInnerPointOfInitialDivision(const Belief &b, const int division) const;
   bool isInnerPointOfDivision(const Belief &b, const int division) const;
-    
+
   int getMaxIteration() const;
   vector<Belief> getFailure() const;
   PreProcess makeFixedPoint();
@@ -178,7 +178,7 @@ class RepeatedGame {
   void set_global_flag(const bool flag);
   void set_nobd_flag(const bool flag);
   void setAllFlag(const bool flag);
-  
+
   string optionsToString() const;
   vector<PreciseNumber> getOneShotAlphaVector(const OneShotExtension&);
   PreciseNumber getRewardFromOneShotAndBelief(const OneShotExtension&, const Belief&);
