@@ -171,6 +171,8 @@ namespace MyUtil {
                 if (nn[i] != '0') ck = true;
                 if (ck) n += nn[i]; //0以降をnに保存
             }
+            // part1 + part2 = "0...0" であった場合
+            if (!ck) n += "0";
             res = (negative ? "-" : "") + n + "/" + d;
         }
         return res;
