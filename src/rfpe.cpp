@@ -282,9 +282,9 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 	//initialState: 自分と相手の初期状態（厳密には，pomdpの範囲では相手のみ，rgのときは自分と相手の初期状態）
 	//基本的に0でいいと思う（入力データのはじめの状態がinitialになるから）
 	//horizon: pomdpSolver の horizon を指定する
-	const int horizon_begin = 4;
+	const int horizon_begin = 3;
 	const int horizon_step = 1;
-	const int horizon_end = 10;
+	const int horizon_end = 7;
 	// int initialState = 0;
 
 
@@ -397,9 +397,9 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 void RFSE::checkRegularByPomdp(const string &in, const string &out) {
 	//直接入力の変数
 	//horizon: pomdpSolver の horizon を指定する
-	const int horizon_begin = 4;
+	const int horizon_begin = 5;
 	const int horizon_step = 1;
-	const int horizon_end = 10;
+	const int horizon_end = 20;
 
 	// string pomdpFile = out + "-converted";
 	string pomdpFile = out;
@@ -620,7 +620,7 @@ void RFSE::checkRFSE(const string &datafile, const string &prefix, int argc, cha
 	}
 
 	// オプションの設定
-	boost::regex expr("([a-zA-Z]+)=(.+)");
+	boost::regex expr("([a-zA-Z0-9]+)=(.+)");
 	boost::smatch what;
 
 	PreciseNumber value;
