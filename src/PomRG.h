@@ -41,7 +41,7 @@ public:
 namespace PomUtil{
 	vector< vector<PreciseNumber> > getPomdpAlpha(const Automaton aut, const Payoff po, const Environment env, const int initialState, const int horizon, string pomdpFile);
 	void writeTerminalAlpha(vector<Automaton> ams, vector< vector<PreciseNumber> > matrixAlpha, string pomdpFile);
-	void solvePomdp(const string &pomdpFile, const int horizon);
+	int solvePomdp(const string &pomdpFile, const int horizon);
 	vector< vector<PreciseNumber> > makePomdpAlpha(const string &pomdpFile);
 	int maxStateAlphaForInitial(const vector<vector<PreciseNumber> > &alphaMatrix, const int initialState);
 };

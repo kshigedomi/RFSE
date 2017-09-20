@@ -188,7 +188,10 @@ namespace PomUtil{
 		pomrg.makePomdpFile(pomdpFile, initialState);
 
 		//.pomdp実行	horizon は pomdp の動作回数を指定するオプション
-		PomUtil::solvePomdp(pomdpFile, horizon);
+		int result = PomUtil::solvePomdp(pomdpFile, horizon);
+		if(result < 0){
+			throw result;
+		}
 
 		//pomdp の出力 .alpha を読みとる
 		//PreciseNumber pomdpMatrixAlpha = PomUtil::makeAlphaVector(pomdpFile);
@@ -220,14 +223,15 @@ namespace PomUtil{
 	// }
 
 	//.pomdp の実行 (初期alpha渡す)
-	const int TIME_LIMIT = 600;  //sec
-	void solvePomdp(const string &pomdpFile, const int horizon){
+	const int TIME_LIMIT = 3000000;  //sec
+	int solvePomdp(const string &pomdpFile, const int horizon){
 		// string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + "_terminal.alpha -horizon "
 		// string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + ".alpha -horizon "
 		// 	+ MyUtil::toString(horizon) + " -stop_criteria bellman -time_limit " + MyUtil::toString(TIME_LIMIT);
 		string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + ".alpha -horizon "
 			+ MyUtil::toString(horizon) + " -stop_criteria bellman";
-		system(pomdpCmd.c_str());
+		// system(pomdpCmd.c_str());
+		return MyUtil::systemWithTimeout(pomdpCmd.c_str(), TIME_LIMIT);
 	}
 
 	//solverから返ってきたファイルを読んで，状態0の alphaVector の [0][initialState] の要素を取り出して，pomdpAlpha に入れる
