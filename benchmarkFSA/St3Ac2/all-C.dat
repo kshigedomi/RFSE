@@ -1,0 +1,14 @@
+Automaton Player1
+States : R P1 P2
+Actions : C D
+Signals : g b
+R C
+P1 C
+P2 C
+R g P1
+R b P1
+P1 g P2
+P1 b P2
+P2 g R
+P2 b R
+

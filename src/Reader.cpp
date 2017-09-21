@@ -278,7 +278,7 @@ void Reader::readPayoffMatrix(Payoff &po, const vector<Automaton> &ms) {
 void Reader::read(string &title, Environment &env, Payoff &po, vector<Automaton>& ms, map<string, PreciseNumber>& var) {
     if (!fin) {
         throw ReaderException("File is not found");
-    }      
+    }
     this->readTitle(title);
     this->readDiscountRate(env);
     this->readVariables(var);
@@ -291,7 +291,7 @@ void Reader::read(string &title, Environment &env, Payoff &po, vector<Automaton>
     vector<vector<string> > nameActionsOfPlayer(this->numPlayers);
     vector<vector<string> > nameSignalsOfPlayer(this->numPlayers);
     ms.resize(this->numPlayers);
-   
+
     for (int pl = 0; pl < numPlayers; pl++) {
         readAutomaton(playerNames[pl], ms[pl]);
         numStatesOfPlayer[pl] = ms[pl].getNumberOfStates();
@@ -324,4 +324,3 @@ void Reader::read(string &title, Environment &env, Payoff &po, vector<Automaton>
     po.configure(numPlayers, numActionsOfPlayer);
     readPayoffMatrix(po, ms);
 }
-

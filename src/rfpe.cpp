@@ -179,30 +179,68 @@ void RFSE::checkRegularAutomatons(const string &in, const string &out) {
  * 比較の結果，ALL-C，ALL-Dよりも大きい利得を与える戦略のみを出力として書き出す．
  *option2=======
  * 初期状態の利得で足切りする
+ *
+ * 2017-09-21 変更
+ * 上記のoption1のみを用いる
+ * 利得の比較対象を all_C, all-D, GT, TFT, 1-MP, 2-MP に増やした
+ * 比較方法
+ * m: 調査対象のFSA m': 比較対象のFSA (all-C, all-D など)
+ * (1) 自分mで相手m,どちらも状態w のときと (2) 自分m'で相手m, 状態は自分がw'で相手がw を比較して
+ * すべてのw'で (1) が (2) の割引期待利得が下回らない
+ * これがすべての w で成り立つ → m'に勝った
  */
 void RFSE::payoff_AllCD_filter(const string &in, const string &out) {
 
 	//all-C,D での判定を行うか
-	bool beatCD = false;
-	//足切りする利得の大きさ（現状だとintで比較してるからPreciseNumberで入れる意味ないかも?）
-	PreciseNumber targetPayoff = PreciseNumber("7/10");
+	bool beatCD = true;
 
-  	Message::display("check regular start");
-  	Writer writer(out);
-  	writer.put("beat All-C and All-D strategies");
-	Loader loader(automatons[PLAYER], in); // 元のオートマトンをセット
+	// 利得比較対象の pre-FSA
+	// 現状では調べるFSAと比較対象のFSAが同じ状態数でないと動かないため，差を埋めるために冗長な状態を付け加えている．
+	vector<Automaton> benchmarkFSA;
+	int consideringStateOfPlayer[] = {1, 1, 2, 2, 2, 3}; // いくつめの状態までが必要な状態であるか？ それぞれbenchmarkFSANameの各要素と対応
+	int numOfBenchmarkFSA[] = {0, 5, 6, 0}; // 最初からいくつのFSAを利得比較対象に用いるか？ (2状態FSAとの比較対象に3状態FSAを使わないようにしている)
+	string benchmarkFSAName[] = {"all-C", "all-D", "GT", "TFT", "1-MP", "2-MP"};
 
-  	long count_clearAut = 0;
-  	long count_Aut = 0;
-  	setVariablesToEnvironmentAndPayoff();
-  	//問題設定の書き出し
-	writer.put("R1-R1 payoff is greater than: " + MyUtil::rationalToString(targetPayoff));
-  	writer.put(environment.toString());
-  	writer.put(payoff.toString());
+	Message::display("check regular start");
+	Writer writer(out);
+	string buf = "beat ";
+	for(int i=0; i<numOfBenchmarkFSA[automatons[0].getNumberOfStates()-1]; i++){
+		if(i == numOfBenchmarkFSA[automatons[0].getNumberOfStates()-1]-1){
+			buf += " and ";
+		}else if(i>0){
+			buf += ", ";
+		}
+		buf += benchmarkFSAName[i];
+	}
+	writer.put(buf + " strategies");
+	Loader loader(automatons[PLAYER], in); // 調べるオートマトンのリストをセット
+
+	long count_clearAut = 0;
+	long count_Aut = 0;
+	setVariablesToEnvironmentAndPayoff();
+	//問題設定の書き出し
+	// writer.put("R1-R1 payoff is greater than: " + MyUtil::rationalToString(targetPayoff));
+	writer.put(environment.toString());
+	writer.put(payoff.toString());
 
 	//元データのオートマトン プレイヤ１が ALL-C，プレイヤ2が ALL-D を仮定
-	Automaton all_C = automatons[0];
-	Automaton all_D = automatons[1];
+	// Automaton all_C = automatons[0];
+	// Automaton all_D = automatons[1];
+	string FSApath = "../benchmarkFSA/St" + MyUtil::toString(automatons[0].getNumberOfStates()) + "Ac" + MyUtil::toString(automatons[0].getNumberOfActions()) + "/";
+
+	// 利得比較対象のpre-FSAの読み込み (ファイルパス: RFSE/benchmarkFSA/St?Ac? )
+	for(int i=0; i<numOfBenchmarkFSA[automatons[0].getNumberOfStates()-1]; i++){
+		Automaton am(automatons[0].getNumberOfStates(), automatons[0].getNumberOfActions(), automatons[0].getNumberOfSignals());
+		Reader automatonFile(FSApath + benchmarkFSAName[i] + ".dat");
+		automatonFile.readAutomaton("Player1", am);
+		benchmarkFSA.push_back(am);
+		// Message::display(am);
+	}
+
+	// Automaton all_C(automatons[0].getNumberOfStates(), automatons[0].getNumberOfActions(), automatons[0].getNumberOfSignals());
+	// Reader allC_file(FSApath + "all-C.dat");
+	// allC_file.readAutomaton("Player1", all_C);
+	// Message::display(all_C);
 
 	while (loader.setNextAutomatonFromRawString()) {
 		Message::display("Cleared count: " + MyUtil::toString(count_clearAut));
@@ -214,55 +252,102 @@ void RFSE::payoff_AllCD_filter(const string &in, const string &out) {
 		//challenge で対challenge のときの利得
 		automatons[0] = m;
 		vector<vector<PreciseNumber> > ex_challenge = setAndGetAlphaVectors();
+		// count_Aut=238: State3Action2Signal2 における 2-MP
+		// if(count_Aut == 238){
+		// 	Message::display("2-MP vs 2-MP");
+		// 	Message::display(automatons[0]);
+		// 	Message::display(automatons[1]);
+		// }
 
-		//all-C,D判定
+		// ここから利得の比較
 		bool challenge_defeated = false;
 		if(beatCD){
+			for(int FSAid=0; FSAid<numOfBenchmarkFSA[automatons[0].getNumberOfStates()-1]; FSAid++){
+				automatons[0] = benchmarkFSA[FSAid];
+				// Message::display(automatons[0]);
+				vector<vector<PreciseNumber> > ex_benchmark = setAndGetAlphaVectors();
+
+				// todo: 3プレイヤ以上の場合をどうするか？
+				// クラス OpponentStateProfile を用いていたが全員 (？) 同じ初期ステートの場合だけ調べるということを表現できるか？
+				for(int opState = 0; opState < automatons[PLAYER].getNumberOfStates(); ++opState){
+					for(int myState=0; myState<consideringStateOfPlayer[FSAid]; myState++){
+						// if(count_Aut == 238){
+						// 	Message::display("My: " + MyUtil::toString(opState) + " (in FSA #" + MyUtil::toString(count_Aut) + ") vs " + MyUtil::toString(opState) + " (in " + benchmarkFSAName[FSAid] + ") / OpponentState: " + MyUtil::toString(opState));
+						// 	cout << "m: " << ex_challenge[opState][opState] << " " << benchmarkFSAName[FSAid] << ": " << ex_benchmark[myState][opState] << endl << endl;
+						// }
+						if(ex_challenge[opState][opState] < ex_benchmark[myState][opState]){
+							challenge_defeated = true;
+						}
+					}
+				}
+				// if(challenge_defeated) break;
+			}
+
+			// while(true){}
 			//all_C で対challenge のときの利得
-			automatons[0] = all_C;
-			vector<vector<PreciseNumber> > ex_all_C = setAndGetAlphaVectors();
+			// automatons[0] = all_C;
+			// vector<vector<PreciseNumber> > ex_all_C = setAndGetAlphaVectors();
+			// if(count_Aut == 238){
+			// 	Message::display("all-C vs 2-MP");
+			// 	Message::display(automatons[0]);
+			// 	Message::display(automatons[1]);
+			// }
 
 			//all_D で対challenge のときの利得
-			automatons[0] = all_D;
-			vector<vector<PreciseNumber> > ex_all_D = setAndGetAlphaVectors();
+			// automatons[0] = all_D;
+			// vector<vector<PreciseNumber> > ex_all_D = setAndGetAlphaVectors();
+			// if(count_Aut == 238){
+			// 	Message::display("all-D vs 2-MP");
+			// 	Message::display(automatons[0]);
+			// 	Message::display(automatons[1]);
+			// }
 
 			//All-C,All-Dに勝つかを判定
-			for (int myState = 0; myState < automatons[PLAYER].getNumberOfStates(); ++myState)
-			{
-				OpponentStateProfile opState;
-				do {
-					//all-C に負けたら flag を立てる
-					if(ex_challenge[myState][opState.getIndex()] < ex_all_C[myState][opState.getIndex()])
-					{
-						challenge_defeated = true;
-					}
-					//all-D に負けても flag を立てる
-					if(ex_challenge[myState][opState.getIndex()] < ex_all_D[myState][opState.getIndex()])
-					{
-						challenge_defeated = true;
-					}
-				} while (opState.next());
-			}
+			// for (int myState = 0; myState < automatons[PLAYER].getNumberOfStates(); ++myState)
+			// {
+			// 	OpponentStateProfile opState;
+			// 	do {
+			// 		if(count_Aut == 238){
+			// 			cout << "State of the opponent:" << myState<< endl;
+			// 			cout << "m: " << ex_challenge[myState][myState] << " all-C: " << ex_all_C[myState][myState] << " all-D: " << ex_all_D[myState][myState] << endl;
+			// 		}
+			// 		//all-C に負けたら flag を立てる
+			// 		if(ex_challenge[myState][myState] < ex_all_C[myState][myState])
+			// 		{
+			// 			if(count_Aut == 238)
+			// 				cout << "vs all-C: " << ex_challenge[myState][myState] << " " << ex_all_C[myState][myState] << endl;
+			// 			challenge_defeated = true;
+			// 		}
+			// 		//all-D に負けても flag を立てる
+			// 		if(ex_challenge[myState][myState] < ex_all_D[myState][myState])
+			// 		{
+			// 			if(count_Aut == 238)
+			// 				// cout << "vs all-D: " << ex_challenge[myState][opState.getIndex()] << " " << ex_all_D[myState][opState.getIndex()] << endl;
+			// 				cout << "vs all-D: " << ex_challenge[myState][myState] << " " << ex_all_D[myState][myState] << endl;
+			// 			challenge_defeated = true;
+			// 		}
+			// 	} while (opState.next());
+			// }
 		}
 
 		//書き出す
-  		if(!challenge_defeated){
+		if(!challenge_defeated){
  			//R1-R1 の利得で振り分ける，指定値以上のものだけを書き出す
- 			if(((1-environment.getDiscountRate())*ex_challenge[0][0]) > targetPayoff){
-				Message::display(m);
- 				writer.put("REGULAR AUTOMATON");
- 				writer.put(m.toRawString());
- 				count_clearAut++;
- 			}
-  		}
-  		count_Aut++;
-  	}
-  	writer.put("num of cleared Automaton: " + MyUtil::toString(count_clearAut));
-  	writer.put("num of checked Automaton: " + MyUtil::toString(count_Aut));
-  	writer.put("End gracufully");
-  	Message::display("num of cleared Automaton: " + MyUtil::toString(count_clearAut));
-  	Message::display("num of checked Automaton: " + MyUtil::toString(count_Aut));
-  	Message::display("End gracufully");
+ 			// 	if(((1-environment.getDiscountRate())*ex_challenge[0][0]) > targetPayoff){
+			Message::display(m);
+ 			writer.put("REGULAR AUTOMATON");
+ 			writer.put(m.toRawString());
+ 			count_clearAut++;
+ 			// 	}
+		}
+		count_Aut++;
+	}
+	writer.put("num of cleared Automaton: " + MyUtil::toString(count_clearAut));
+	writer.put("num of checked Automaton: " + MyUtil::toString(count_Aut));
+	writer.put("End gracufully");
+	Message::display("num of cleared Automaton: " + MyUtil::toString(count_clearAut));
+	Message::display("num of checked Automaton: " + MyUtil::toString(count_Aut));
+	Message::display("End gracufully");
 }
 
 
@@ -416,9 +501,9 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 void RFSE::checkRegularByPomdp(const string &in, const string &out) {
 	//直接入力の変数
 	//horizon: pomdpSolver の horizon を指定する
-	const int horizon_begin = 5;
+	const int horizon_begin = 0;
 	const int horizon_step = 1;
-	const int horizon_end = 20;
+	const int horizon_end = 0;
 
 	// string pomdpFile = out + "-converted";
 	string pomdpFile = out;
