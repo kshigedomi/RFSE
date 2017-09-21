@@ -223,13 +223,16 @@ namespace PomUtil{
 	// }
 
 	//.pomdp の実行 (初期alpha渡す)
-	const int TIME_LIMIT = 3000000;  //sec
+	const int TIME_LIMIT = 43200;  //sec
 	int solvePomdp(const string &pomdpFile, const int horizon){
 		// string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + "_terminal.alpha -horizon "
 		// string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + ".alpha -horizon "
 		// 	+ MyUtil::toString(horizon) + " -stop_criteria bellman -time_limit " + MyUtil::toString(TIME_LIMIT);
-		string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + ".alpha -horizon "
-			+ MyUtil::toString(horizon) + " -stop_criteria bellman";
+		string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + ".alpha -stop_criteria bellman";
+		if(horizon > 0){
+			// 有限のhorizonで回す場合
+			pomdpCmd += " -horizon " + MyUtil::toString(horizon);
+		}
 		// system(pomdpCmd.c_str());
 		return MyUtil::systemWithTimeout(pomdpCmd.c_str(), TIME_LIMIT);
 	}
