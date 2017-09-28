@@ -559,7 +559,27 @@ void RFSE::checkRegularByPomdp(const string &in, const string &out) {
 				}
 
 				//pomdpMatrixAlpha を作成
-				vector< vector<PreciseNumber> > pomdpMatrixAlpha = PomUtil::getPomdpAlpha(m, payoff, environment, initialState, (horizon == horizon_begin ? horizon : horizon_step), pomdpFileName);
+				vector< vector<PreciseNumber> > pomdpMatrixAlpha;
+				//pomdpMatrixAlpha を作成
+				try{
+					pomdpMatrixAlpha = PomUtil::getPomdpAlpha(automatons[1], payoff, environment, initialState, (horizon == horizon_begin ? horizon : horizon_step), pomdpFileName);
+				}
+
+				catch(int s){
+					if(s == -1){
+						Message::display("pomdp-solve timeout");
+					}else{
+						Message::display("pomdp-solve terminated abnormally");
+					}
+					improved = true;
+					break;
+				}
+
+				catch(...){
+					Message::display("pomdp-solve error?");
+					improved = true;
+					break;
+				}
 
 				//initialState に対して，最大となる要素を maxState とする
 				//maxPomdpState = argmax_{i \in State} pomdpMatrixAlpha[i][initialState]
