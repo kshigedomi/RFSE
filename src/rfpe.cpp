@@ -417,7 +417,7 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 			}
 
 			catch(int s){
-				if(s == -1){
+				if(s == 124){
 					Message::display("pomdp-solve timeout");
 				}else{
 					Message::display("pomdp-solve terminated abnormally");
@@ -566,7 +566,7 @@ void RFSE::checkRegularByPomdp(const string &in, const string &out) {
 				}
 
 				catch(int s){
-					if(s == -1){
+					if(s == 124){
 						Message::display("pomdp-solve timeout");
 					}else{
 						Message::display("pomdp-solve terminated abnormally");

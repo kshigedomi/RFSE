@@ -67,10 +67,6 @@ namespace MyUtil {
     bool nonumber(const char &c);
     bool nextWord(istream &is, string &buf);
 
-    // For command
-    void system_timeout(int sig);
-    static jmp_buf env;
-    int systemWithTimeout(const char *cmd, int timeout);
 
 };
 

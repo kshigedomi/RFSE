@@ -189,7 +189,7 @@ namespace PomUtil{
 
 		//.pomdp実行	horizon は pomdp の動作回数を指定するオプション
 		int result = PomUtil::solvePomdp(pomdpFile, horizon);
-		if(result < 0){
+		if(result != 0){
 			throw result;
 		}
 
@@ -223,18 +223,22 @@ namespace PomUtil{
 	// }
 
 	//.pomdp の実行 (初期alpha渡す)
-	const int TIME_LIMIT = 43200;  //sec
+	const string TIME_LIMIT = "5m";  //sec
 	int solvePomdp(const string &pomdpFile, const int horizon){
 		// string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + "_terminal.alpha -horizon "
 		// string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + ".alpha -horizon "
 		// 	+ MyUtil::toString(horizon) + " -stop_criteria bellman -time_limit " + MyUtil::toString(TIME_LIMIT);
-		string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + ".alpha -stop_criteria bellman";
+		string pomdpCmd = "timeout " + TIME_LIMIT + " pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + ".alpha -stop_criteria bellman";
 		if(horizon > 0){
 			// 有限のhorizonで回す場合
 			pomdpCmd += " -horizon " + MyUtil::toString(horizon);
 		}
-		// system(pomdpCmd.c_str());
-		return MyUtil::systemWithTimeout(pomdpCmd.c_str(), TIME_LIMIT);
+		int status = system(pomdpCmd.c_str());
+		if(WIFEXITED(status)){
+			return WEXITSTATUS(status);
+		}else{
+			return -1;
+		}
 	}
 
 	//solverから返ってきたファイルを読んで，状態0の alphaVector の [0][initialState] の要素を取り出して，pomdpAlpha に入れる
