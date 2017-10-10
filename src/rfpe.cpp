@@ -367,13 +367,14 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 	//initialState: 自分と相手の初期状態（厳密には，pomdpの範囲では相手のみ，rgのときは自分と相手の初期状態）
 	//基本的に0でいいと思う（入力データのはじめの状態がinitialになるから）
 	//horizon: pomdpSolver の horizon を指定する
-	const int horizon_begin = 3;
+	const int horizon_begin = 0;
 	const int horizon_step = 1;
-	const int horizon_end = 10;
+	const int horizon_end = 0;
 	// int initialState = 0;
 
-
-
+	//出力用ファイルの準備
+	Writer writer(pomdpFile);
+	writer.writeEnvironment(rg, environment, payoff, variables);
 
 	//入力戦略組の利得行列を rgMatrixAlpha とする
 	this->setRepeatedGame();
@@ -388,12 +389,20 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 	//いらないとのこと (170331)
 
 
-	bool improved = false;
+	// bool improved = false;
 
 
 	for(int initialState = 0; initialState < automatons[1].getNumberOfStates(); initialState++){
+		Message::display("------------");
+		Message::display("initialState: " + MyUtil::toString(initialState));
+		Message::display("------------");
+
+		writer.put("------------");
+		writer.put("initialState: " + MyUtil::toString(initialState));
+
 		int horizon = horizon_begin;
 		int horizon_count = 0;
+		bool improved = false;
 
 		// string pomdpFileName = pomdpFile + "_no" + MyUtil::toString(automaton_count) + "_state" + MyUtil::toString(initialState);
 		string pomdpFileName = pomdpFile;
@@ -407,6 +416,8 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 		PomUtil::writeTerminalAlpha(automatons, rgMatrixAlpha, pomdpFileName);
 		// }
 
+		PreciseNumber pomdpAlpha, rgAlpha;
+
 
 		while(horizon <= horizon_end){
 
@@ -419,8 +430,10 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 			catch(int s){
 				if(s == 124){
 					Message::display("pomdp-solve timeout");
+					writer.put("pomdp-solve timeout");
 				}else{
 					Message::display("pomdp-solve terminated abnormally");
+					writer.put("pomdp-solve terminated abnormally");
 				}
 				improved = true;
 				break;
@@ -438,8 +451,8 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 			int maxRgState = PomUtil::maxStateAlphaForInitial(rgMatrixAlpha, initialState);
 
 			//比較対象の確定
-			PreciseNumber pomdpAlpha = pomdpMatrixAlpha[maxPomdpState][initialState];
-			PreciseNumber rgAlpha = rgMatrixAlpha[maxRgState][initialState];
+			pomdpAlpha = pomdpMatrixAlpha[maxPomdpState][initialState];
+			rgAlpha = rgMatrixAlpha[maxRgState][initialState];
 
 			Message::display("pomdpAlpha: " + MyUtil::rationalToString(pomdpAlpha));
 			Message::display("rpgamAlpha: " + MyUtil::rationalToString(rgAlpha));
@@ -451,19 +464,37 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 			}else{
 				//incorrect (improved)
 				improved = true;
+				writer.put("pomdpAlpha: " + MyUtil::rationalToString(pomdpAlpha));
+				writer.put("rpgamAlpha: " + MyUtil::rationalToString(rgAlpha));
 				break;
 			}
 
 			horizon += horizon_step;
 			horizon_count++;
+
+			// not improved
+			// if(!improved){
+			//
+			// }else{
+			// 	break;
+			// }
 		}
 
-		// not improved
+
+
+		//170329
+		//pomdpAlpha と rgAlpha を比較して，誤差を許して同じならばcorrectとする
 		if(!improved){
-
+			writer.put("pomdpAlpha: " + MyUtil::rationalToString(pomdpAlpha));
+			writer.put("rpgamAlpha: " + MyUtil::rationalToString(rgAlpha));
+			writer.put("correct");
+			Message::display("correct");
 		}else{
-			break;
+			Message::display("fail");
+			writer.put("fail");
 		}
+
+
 	}
 
 
@@ -485,13 +516,8 @@ void RFSE::checkPomdp(const string &pomdpFile) {
 	// 	Message::display("correct");
 	// }
 
-	//170329
-	//pomdpAlpha と rgAlpha を比較して，誤差を許して同じならばcorrectとする
-	if(!improved){
-		Message::display("correct");
-	}else{
-		Message::display("fail");
-	}
+
+	writer.put("------------");
 
 	Message::display("End");
 }

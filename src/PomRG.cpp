@@ -223,7 +223,7 @@ namespace PomUtil{
 	// }
 
 	//.pomdp の実行 (初期alpha渡す)
-	const string TIME_LIMIT = "5m";  //sec
+	const string TIME_LIMIT = "5m";
 	int solvePomdp(const string &pomdpFile, const int horizon){
 		// string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + "_terminal.alpha -horizon "
 		// string pomdpCmd = "pomdp-solve -pomdp " + pomdpFile + ".pomdp -o " + pomdpFile + " -terminal_values " + pomdpFile + ".alpha -horizon "
