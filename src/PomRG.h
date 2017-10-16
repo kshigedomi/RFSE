@@ -44,6 +44,8 @@ namespace PomUtil{
 	int solvePomdp(const string &pomdpFile, const int horizon);
 	vector< vector<PreciseNumber> > makePomdpAlpha(const string &pomdpFile);
 	int maxStateAlphaForInitial(const vector<vector<PreciseNumber> > &alphaMatrix, const int initialState);
+
+	const string POMDP_SOLVE_TIME_LIMIT = "5m";
 };
 
 

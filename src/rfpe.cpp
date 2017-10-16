@@ -535,9 +535,19 @@ void RFSE::checkRegularByPomdp(const string &in, const string &out) {
 	string pomdpFile = out;
 
 	Message::display("check POMDP regular start");
+
+	//結果 (チェックを通ったもの) 出力用ファイル
 	Writer writer(out);
 	writer.put("AutomatonList: " + in);
 	writer.writeEnvironment(rg, environment, payoff, variables);
+
+	//タイムアウト・異常終了の出力用ファイル
+	Writer writerTimeOut(out + "-timeout");
+	writerTimeOut.put("AutomatonList: " + in);
+	writerTimeOut.writeEnvironment(rg, environment, payoff, variables);
+
+	writerTimeOut.put("----------------");
+	writerTimeOut.put("pomdp-solve time limit : " + PomUtil::POMDP_SOLVE_TIME_LIMIT);
 
 	Loader loader(automatons[PLAYER], in); // 元のオートマトンをセット
 	setVariablesToEnvironmentAndPayoff();
@@ -594,6 +604,11 @@ void RFSE::checkRegularByPomdp(const string &in, const string &out) {
 				catch(int s){
 					if(s == 124){
 						Message::display("pomdp-solve timeout");
+						writerTimeOut.put("================");
+						writerTimeOut.put("pomdp-solve timeout");
+						writerTimeOut.put("No. " + MyUtil::toString(automaton_count));
+						writerTimeOut.put("InitialState: " + MyUtil::toString(initialState));
+						writerTimeOut.put(automatons[PLAYER].toString());
 					}else{
 						Message::display("pomdp-solve terminated abnormally");
 					}
